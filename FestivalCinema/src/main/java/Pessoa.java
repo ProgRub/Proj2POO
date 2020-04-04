@@ -1,9 +1,9 @@
 public class Pessoa {
-    private String primeiroNome;
-    private String ultimoNome;
-    private String genero;
+    private final String primeiroNome;
+    private final String ultimoNome;
+    private final boolean genero; //true->Homem false->Mulher
     
-    public Pessoa(String primeiroNome, String ultimoNome, String genero){
+    public Pessoa(String primeiroNome, String ultimoNome, boolean genero){
         this.primeiroNome = primeiroNome;
         this.ultimoNome = ultimoNome;
         this.genero = genero;
