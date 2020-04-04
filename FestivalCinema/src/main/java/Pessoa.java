@@ -8,5 +8,15 @@ public class Pessoa {
         this.ultimoNome = ultimoNome;
         this.genero = genero;
     }
+    
+    public String getPrimeiroNome(){
+        return primeiroNome;
+    }
+     public String getUltimoNome(){
+        return ultimoNome;
+    }
+      public String getGenero(){
+        return genero;
+    }
 
 }
