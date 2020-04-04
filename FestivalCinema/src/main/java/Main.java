@@ -1,10 +1,12 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         boolean novo = true;
+        ArrayList<Ator> atores = new ArrayList();
         int numEdicao = 1;
         System.out.println("\t\t\tFESTIVAL CINEMA");
         System.out.print("(n): Começar um novo programa\t(c): Carregar um programa anterior\nOpção: ");
@@ -21,7 +23,7 @@ public class Main {
         boolean quebra = false;
         while (!quebra) {
             System.out.println("*********************");
-            System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\nOpção: ");
+            System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\t(p) Atribui Papel\t(s): Sair\nOpção: ");
             opcao = scan.nextLine();
             while (opcao.length() > 1) {
                 System.out.println("Por favor selecione uma das opções disponíveis.");
@@ -61,9 +63,35 @@ public class Main {
                     }
                     System.out.print("Anos de carreira do Ator/Atriz: ");
                     int anosCarreira = scan.nextInt();
-                    Ator a = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
-                    System.out.print(a);
+                    Ator ator = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
+                    atores.add(ator);
+                    System.out.print(ator);
                     break;
+                case "p":
+                    int i = 1;
+                    for (Ator a : atores) {
+                        System.out.printf("%d. %s", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
+                    }
+                    System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
+                    int pos = scan.nextInt();
+                    try {
+                        Ator mudar = atores.get(pos);
+                        System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
+                        String papel = scan.nextLine();
+                        while (papel.length() > 1) {
+                            System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
+                            papel = scan.nextLine();
+                        }
+                        switch (papel.toLowerCase())
+                        {
+                            case "p":
+                                break;
+                            case "s":
+                                break;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Posição errada.");
+                    }
             }
             quebra = true;
         }
