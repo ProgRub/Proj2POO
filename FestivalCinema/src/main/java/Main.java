@@ -1,8 +1,33 @@
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        // TODO code application logic here
+        boolean novo = true;
+        System.out.println("\t\t\tFESTIVAL CINEMA");
+        System.out.print("(n): Começar um novo programa \t(c): Carregar um programa anterior\nOpção:");
+        Scanner scan = new Scanner(System.in,"cp1252");
+        String opcao = scan.nextLine();
+        while (opcao.length() >= 2) {
+            System.out.print("Por favor selecione uma das opções disponíveis.");
+            try {
+                Runtime.getRuntime().exec("cls");
+            } catch (Exception e) {
+
+            }
+            System.out.println("\t\t\tFESTIVAL CINEMA");
+            System.out.print("(n): Começar um novo programa \t(c): Carregar um programa anterior\nOpção:");
+            opcao = scan.nextLine();
+        }
+        if (opcao.equalsIgnoreCase("c")) {
+            novo = false;
+        }
+        boolean quebra = false;
+        while (!quebra) {
+            System.out.println("CHEGOU");
+            quebra = true;
+        }
     }
 
 }
