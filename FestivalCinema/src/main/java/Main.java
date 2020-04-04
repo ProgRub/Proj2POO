@@ -49,6 +49,20 @@ public class Main {
                     System.out.println(f);
                     break;
                 case "a":
+                    System.out.print("NOVO ATOR\nPrimeiro Nome do Ator/Atriz: ");
+                    String primeiroNomeAtor = scan.nextLine();
+                    System.out.print("Último Nome do Ator/Atriz: ");
+                    String ultimoNomeAtor = scan.nextLine();
+                    System.out.print("Ator ou Atriz (M-Masculino; F-Feminino): ");
+                    String generoAtor = scan.nextLine();
+                    while (generoAtor.length() > 1 || !(generoAtor.equalsIgnoreCase("M") || generoAtor.equalsIgnoreCase("F"))) {
+                        System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
+                        generoAtor = scan.nextLine();
+                    }
+                    System.out.print("Anos de carreira do Ator/Atriz: ");
+                    int anosCarreira = scan.nextInt();
+                    Ator a = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
+                    System.out.print(a);
                     break;
             }
             quebra = true;
