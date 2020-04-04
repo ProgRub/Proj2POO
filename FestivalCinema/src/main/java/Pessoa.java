@@ -15,7 +15,7 @@ public class Pessoa {
      public String getUltimoNome(){
         return ultimoNome;
     }
-      public String getGenero(){
+      public boolean getGenero(){
         return genero;
     }
 

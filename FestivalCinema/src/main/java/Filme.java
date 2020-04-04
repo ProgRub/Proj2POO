@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class Filme {
-    private String nome;
-    private String genero;
-    private int edição;
-    private Realizador realizador;
+    private final String nome;
+    private final String genero;
+    private final int edição;
+    private final Realizador realizador;
     private ArrayList<Pessoa> atores;
     private int posição = 0;
     
@@ -29,22 +29,22 @@ public class Filme {
         filme += "Género: "+genero+"\n";
         filme += "Edição: "+edição+"\n";
         filme += "Realizador: "+realizador.getPrimeiroNome()+" "+realizador.getUltimoNome()+"\n";
-        while(posição < atores.size()){
-            if(posição == 0){
-                 filme += "Ator Principal: "+atores.get(0).getPrimeiroNome()+atores.get(0).getUltimoNome()+"\n";
-            }
-            else if(posição == 1){
-                 filme += "Atriz Principal: "+atores.get(1).getPrimeiroNome()+atores.get(1).getUltimoNome()+"\n";
-            }
-            else if (posição == 2){
-                filme += "Atores Secundários: \n";
-                filme += atores.get(2).getPrimeiroNome()+atores.get(2).getUltimoNome()+"\n";
-            }
-            else{
-                filme += atores.get(posição).getPrimeiroNome()+atores.get(posição).getUltimoNome()+"\n";
-            }
-            posição++;
-        }
+//        while(posição < atores.size()){
+//            if(posição == 0){
+//                 filme += "Ator Principal: "+atores.get(0).getPrimeiroNome()+atores.get(0).getUltimoNome()+"\n";
+//            }
+//            else if(posição == 1){
+//                 filme += "Atriz Principal: "+atores.get(1).getPrimeiroNome()+atores.get(1).getUltimoNome()+"\n";
+//            }
+//            else if (posição == 2){
+//                filme += "Atores Secundários: \n";
+//                filme += atores.get(posição).getPrimeiroNome()+atores.get(posição).getUltimoNome()+"\n";
+//            }
+//            else{
+//                filme += atores.get(posição).getPrimeiroNome()+atores.get(posição).getUltimoNome()+"\n";
+//            }
+//            posição++;
+//        }
         posição = 0;
         
         return filme;
