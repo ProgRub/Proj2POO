@@ -8,7 +8,7 @@ public class Edicao {
     private int posicao = 0;
 
 
-    public Edicao(int numEdicao, int ano,ArrayList <Premio> premios ){
+    public Edicao(int numEdicao, int ano,ArrayList <String> premios ){
 
     this.numEdicao = numEdicao;
     this.ano = ano;
