@@ -4,7 +4,7 @@ public class Premio {
     
     private String nome;
     ArrayList <Integer> pontuacoes;
-    ArrayList <String> filmes;
-    ArrayList <String> atores;
+    ArrayList <Filme> filmes;
+    ArrayList <Pessoa> atores;
        
 }
