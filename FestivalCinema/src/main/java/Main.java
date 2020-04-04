@@ -32,7 +32,7 @@ public class Main {
                 case "f":
                     System.out.print("NOVO FILME\nNome do Filme: ");
                     String nome = scan.nextLine();
-                    System.out.print("\nGénero do Filme: ");
+                    System.out.print("Género do Filme: ");
                     String genero = scan.nextLine();
                     System.out.print("Primeiro Nome do Realizador: ");
                     String primeiroNomeRealizador = scan.nextLine();
@@ -40,14 +40,29 @@ public class Main {
                     String ultimoNomeRealizador = scan.nextLine();
                     System.out.print("Género do Realizador (M-Masculino; F-Feminino): ");
                     String generoRealizador = scan.nextLine();
-                    while (generoRealizador.length() > 1 || !generoRealizador.equalsIgnoreCase("M") || !generoRealizador.equalsIgnoreCase("F")) {
+                    while (generoRealizador.length() > 1 || !(generoRealizador.equalsIgnoreCase("M") || generoRealizador.equalsIgnoreCase("F"))) {
                         System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
                         generoRealizador = scan.nextLine();
                     }
-                    Pessoa realizador = new Pessoa(primeiroNomeRealizador, ultimoNomeRealizador, generoRealizador.equalsIgnoreCase("M"));
+                    Realizador realizador = new Realizador(primeiroNomeRealizador, ultimoNomeRealizador, generoRealizador.equalsIgnoreCase("M"));
                     Filme f = new Filme(nome, genero, numEdicao, realizador);
+                    System.out.println(f);
                     break;
                 case "a":
+                    System.out.print("NOVO ATOR\nPrimeiro Nome do Ator/Atriz: ");
+                    String primeiroNomeAtor = scan.nextLine();
+                    System.out.print("Último Nome do Ator/Atriz: ");
+                    String ultimoNomeAtor = scan.nextLine();
+                    System.out.print("Ator ou Atriz (M-Masculino; F-Feminino): ");
+                    String generoAtor = scan.nextLine();
+                    while (generoAtor.length() > 1 || !(generoAtor.equalsIgnoreCase("M") || generoAtor.equalsIgnoreCase("F"))) {
+                        System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
+                        generoAtor = scan.nextLine();
+                    }
+                    System.out.print("Anos de carreira do Ator/Atriz: ");
+                    int anosCarreira = scan.nextInt();
+                    Ator a = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
+                    System.out.print(a);
                     break;
             }
             quebra = true;

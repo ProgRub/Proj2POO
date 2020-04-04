@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class Filme {
-    private String nome;
-    private String genero;
-    private int edição;
-    private Realizador realizador;
+    private final String nome;
+    private final String genero;
+    private final int edição;
+    private final Realizador realizador;
     private ArrayList<Pessoa> atores;
     private int posição = 0;
     
@@ -38,7 +38,7 @@ public class Filme {
             }
             else if (posição == 2){
                 filme += "Atores Secundários: \n";
-                filme += atores.get(2).getPrimeiroNome()+atores.get(2).getUltimoNome()+"\n";
+                filme += atores.get(posição).getPrimeiroNome()+atores.get(posição).getUltimoNome()+"\n";
             }
             else{
                 filme += atores.get(posição).getPrimeiroNome()+atores.get(posição).getUltimoNome()+"\n";
