@@ -1,10 +1,7 @@
 
-public class Realizador {
-    private String primeiroNome;
-    private String ultimoNome;
-    private String genero;
-    
-    public Realizador(String primeiroNome, String ultimoNome, String genero){
-        super();
+public class Realizador extends Pessoa {
+
+    public Realizador(String primeiroNome, String ultimoNome, boolean genero) {
+        super(primeiroNome, ultimoNome, genero);
     }
 }
