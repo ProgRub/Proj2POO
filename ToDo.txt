@@ -1,0 +1,29 @@
+Classes:
+Edicao
+Filme
+Pessoa
+Pessoa >> Ator
+Pessoa >> Realizador
+Premio
+
+Atributos:
+Edicao:
+    Numero de edição
+    Ano
+    Lista Filmes
+Filme:
+    Lista Atores (Posição 0 indica o ator principal, posição 1 indica a atriz principal, outras posições são atores secundários)
+    Pessoa Realizador
+    Genero
+    Numero de edição
+Pessoa:
+    Primeiro Nome
+    Ultimo Nome
+    Genero
+Ator: 
+    Anos de Carreira
+    Lista Filmes
+Premio:
+    Lista Filmes ou Atores
+    Nome
+    Lista de Listas com pontuacoes
