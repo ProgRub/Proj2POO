@@ -24,10 +24,10 @@ public class Ator extends Pessoa {
         ator += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
         ator += "Anos de Carreira: " + anosCarreira + "\n";
         ator += "Filmes em que participa: \n";
-//        while (posição < filmesParticipa.size()) {
-//            ator += filmesParticipa.get(posição).getNome() + "\n";
-//            posição++;
-//        }
+        while (posição < filmesParticipa.size()) {
+            ator += filmesParticipa.get(posição).getNome() + "\n";
+            posição++;
+        }
         posição = 0;
         return ator;
     }

@@ -71,20 +71,28 @@ public class Main {
                     int i = 1;
                     for (Ator a : atores) {
                         System.out.printf("%d. %s", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
+                        i++;
                     }
                     System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
                     int pos = scan.nextInt();
                     try {
-                        Ator mudar = atores.get(pos);
+                        Ator mudar = atores.get(pos-1);
+                        i = 1;
+//                        for (Filme f : edicao.getFilmes) {
+//                            System.out.printf("%d. %s", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
+//                            i++;
+//                        }
+                        System.out.println("Qual o filme?");
+                        int posFilme = scan.nextInt();
                         System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
                         String papel = scan.nextLine();
                         while (papel.length() > 1) {
                             System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
                             papel = scan.nextLine();
                         }
-                        switch (papel.toLowerCase())
-                        {
+                        switch (papel.toLowerCase()) {
                             case "p":
+
                                 break;
                             case "s":
                                 break;
