@@ -13,10 +13,22 @@ public class Filme {
         this.genero = genero;
         this.edição = edição;
         this.realizador = realizador;
+        atores = new ArrayList<Pessoa>(2);
     }
     
-    public void insereAtor(Ator ator){
-        this.atores.add(ator);
+    
+    public void insereAtor(Ator ator, int posição){
+        if (posição < atores.size()){
+            if((posição == 0 || posição == 1) && atores.get(posição) == null){
+                atores.add(posição, ator);
+            }
+            else{
+                System.out.println("OCUPADO!");
+            }
+        }
+        else{
+            atores.add(ator);
+        }
     }
     
     public String getNome(){

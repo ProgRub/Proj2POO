@@ -11,6 +11,7 @@ public class Ator extends Pessoa {
     public Ator(String primeiroNome, String ultimoNome, boolean genero, int anosCarreira) {
         super(primeiroNome, ultimoNome, genero);
         this.anosCarreira = anosCarreira;
+        filmesParticipa = new ArrayList<Filme>();
     }
 
     public void insereFilme(Filme filme) {

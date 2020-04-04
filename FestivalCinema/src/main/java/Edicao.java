@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Edicao {
     private int numEdicao;
     private int ano;
-    ArrayList <Filme> filmes;
-    ArrayList <String> premios;   
+    private ArrayList <Filme> filmes;
+    private ArrayList <String> premios;   
     private int posicao = 0;
 
 
@@ -23,7 +23,6 @@ public class Edicao {
     }
     
     public void inserePremios(){
-        
         premios.add("Melhor filme");
         premios.add("Melhor ator principal");
         premios.add("Melhor atriz principal");

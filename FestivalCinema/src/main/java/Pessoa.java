@@ -19,8 +19,8 @@ public class Pessoa {
         return ultimoNome;
     }
 
-    public boolean getGenero() {
-        return genero;
+    public boolean getGenero(){
+          return genero;
     }
-
+   
 }
