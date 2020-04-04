@@ -3,7 +3,6 @@ Edicao
 Filme
 Pessoa
 Pessoa >> Ator
-Pessoa >> Realizador
 Premio
 
 Atributos:
@@ -27,3 +26,10 @@ Premio:
     Lista Filmes ou Atores
     Nome
     Lista de Listas com pontuacoes
+    Categorias:
+        Melhor Ator Principal/secundário
+        Melhor Atriz Principal/Secundária
+        Melhor Filme
+        Melhor Realizador
+        Melhor Argumento
+        Melhor Cinematografia
