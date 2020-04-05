@@ -49,44 +49,12 @@ public class Main {
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {
-
                         case "f":
-                            System.out.print("NOVO FILME\nNome do Filme: ");
-                            String nome = scan.nextLine();
-                            System.out.print("Género do Filme: ");
-                            String genero = scan.nextLine();
-                            System.out.print("Primeiro Nome do Realizador: ");
-                            String primeiroNomeRealizador = scan.nextLine();
-                            System.out.print("Último Nome do Realizador: ");
-                            String ultimoNomeRealizador = scan.nextLine();
-                            System.out.print("Género do Realizador (M-Masculino; F-Feminino): ");
-                            String generoRealizador = scan.nextLine();
-                            while (generoRealizador.length() > 1 || !(generoRealizador.equalsIgnoreCase("M") || generoRealizador.equalsIgnoreCase("F"))) {
-                                System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
-                                generoRealizador = scan.nextLine();
-                            }
-                            Realizador realizador = new Realizador(primeiroNomeRealizador, ultimoNomeRealizador, generoRealizador.equalsIgnoreCase("M"));
-                            Filme filme = new Filme(nome, genero, numEdicao, realizador);
-                            edicoes.get(indexEdicoes).insereFilmes(filme);
+                            criarFilme(scan, numEdicao, indexEdicoes);
                             break;
                         case "a":
-                            System.out.print("NOVO ATOR\nPrimeiro Nome do Ator/Atriz: ");
-                            String primeiroNomeAtor = scan.nextLine();
-                            System.out.print("Último Nome do Ator/Atriz: ");
-                            String ultimoNomeAtor = scan.nextLine();
-                            System.out.print("Ator ou Atriz (M-Masculino; F-Feminino): ");
-                            String generoAtor = scan.nextLine();
-                            while (generoAtor.length() > 1 || !(generoAtor.equalsIgnoreCase("M") || generoAtor.equalsIgnoreCase("F"))) {
-                                System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
-                                generoAtor = scan.nextLine();
-                            }
-                            System.out.print("Anos de carreira do Ator/Atriz: ");
-                            int anosCarreira = scan.nextInt();
-                            scan.nextLine();
-                            Ator ator = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
-                            atores.add(ator);
+                            criarAtor(scan, atores);
                             break;
-
                         case "p":
                             int i = 1;
                             for (Ator a : atores) {
@@ -128,14 +96,20 @@ public class Main {
                     }
                     break;
                 case "l":
-                    System.out.print("\t\t\tOpções\n\t(i): Consultar Edição\nOpção: ");
+                    System.out.print("\t\t\tOpções\n(f): Listar Filmes\t(a): Listar Atores\t(i): Consultar Edição\nOpção: ");
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
                         System.out.print("(i): Consultar Edição\nOpção: ");
                         opcao = scan.nextLine();
                     }
-                    switch (opcao) {
+                    switch (opcao.toLowerCase()) {
+                        case "f":
+                            listarFilmes(edicoes);
+                            break;
+                        case "a":
+                            listarAtores(atores);
+                            break;
                         case "i":
                             consultarEdicoes();
                             break;
@@ -156,6 +130,44 @@ public class Main {
         }
     }
 
+    public static void criarFilme(Scanner scan, int numEdicao, int indexEdicoes) {
+        System.out.print("NOVO FILME\nNome do Filme: ");
+        String nome = scan.nextLine();
+        System.out.print("Género do Filme: ");
+        String genero = scan.nextLine();
+        System.out.print("Primeiro Nome do Realizador: ");
+        String primeiroNomeRealizador = scan.nextLine();
+        System.out.print("Último Nome do Realizador: ");
+        String ultimoNomeRealizador = scan.nextLine();
+        System.out.print("Género do Realizador (M-Masculino; F-Feminino): ");
+        String generoRealizador = scan.nextLine();
+        while (generoRealizador.length() > 1 || !(generoRealizador.equalsIgnoreCase("M") || generoRealizador.equalsIgnoreCase("F"))) {
+            System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
+            generoRealizador = scan.nextLine();
+        }
+        Realizador realizador = new Realizador(primeiroNomeRealizador, ultimoNomeRealizador, generoRealizador.equalsIgnoreCase("M"));
+        Filme filme = new Filme(nome, genero, numEdicao, realizador);
+        edicoes.get(indexEdicoes).insereFilmes(filme);
+    }
+
+    public static void criarAtor(Scanner scan, ArrayList<Ator> atores) {
+        System.out.print("NOVO ATOR\nPrimeiro Nome do Ator/Atriz: ");
+        String primeiroNomeAtor = scan.nextLine();
+        System.out.print("Último Nome do Ator/Atriz: ");
+        String ultimoNomeAtor = scan.nextLine();
+        System.out.print("Ator ou Atriz (M-Masculino; F-Feminino): ");
+        String generoAtor = scan.nextLine();
+        while (generoAtor.length() > 1 || !(generoAtor.equalsIgnoreCase("M") || generoAtor.equalsIgnoreCase("F"))) {
+            System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
+            generoAtor = scan.nextLine();
+        }
+        System.out.print("Anos de carreira do Ator/Atriz: ");
+        int anosCarreira = scan.nextInt();
+        scan.nextLine();
+        Ator ator = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
+        atores.add(ator);
+    }
+
     public static void consultarEdicoes() {
         int aux = 0;
         if (edicoes.isEmpty()) {
@@ -173,11 +185,11 @@ public class Main {
         if (!atores.isEmpty()) {
             while (posição < atores.size()) {
                 System.out.print(atores.get(posição));
+                posição++;
             }
         } else {
             System.out.println("Não existem atores nesta edição.");
         }
-
     }
 
     public static void listarFilmes(ArrayList<Edicao> edições) {
