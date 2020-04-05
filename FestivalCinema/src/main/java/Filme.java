@@ -38,6 +38,14 @@ public class Filme {
     public String getNome() {
         return nome;
     }
+    
+    public Pessoa getAtorPrincipal(){
+        return AtorPrincipal;
+    }
+    
+    public Pessoa getAtrizPrincipal(){
+        return AtrizPrincipal;
+    }
 
     public String toString() {
         String filme;

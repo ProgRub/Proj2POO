@@ -24,6 +24,10 @@ public class Premio{
         this.atores = atores;
     }
     
+    public String toString(){
+        return nome;
+    }
+    
 }
 
 
