@@ -144,29 +144,33 @@ public class Main {
         scan.nextLine();
         try {
             Ator mudar = atores.get(pos - 1);
-            i = 1;
-            for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
-                System.out.printf("%d. %s\n", i, f.getNome());
-                i++;
+            if (mudar.podeInserirFilme()) {
+                i = 1;
+                for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
+                    System.out.printf("%d. %s\n", i, f.getNome());
+                    i++;
+                }
+                System.out.println("Qual o filme?");
+                int posFilme = scan.nextInt();
+                Filme casting = edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1);
+                scan.nextLine();
+                System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
+                String papel = scan.nextLine();
+                while (papel.length() > 1) {
+                    System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
+                    papel = scan.nextLine();
+                }
+                switch (papel.toLowerCase()) {
+                    case "p":
+                        casting.insereAtor(mudar, mudar.getGenero() ? 0 : 1);
+                        mudar.inserirFilme(casting);
+                        break;
+                    case "s":
+                        casting.insereAtor(mudar, 2);
+                        mudar.inserirFilme(casting);
+                        break;
+                }
             }
-            System.out.println("Qual o filme?");
-            int posFilme = scan.nextInt();
-            scan.nextLine();
-            System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
-            String papel = scan.nextLine();
-            while (papel.length() > 1) {
-                System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
-                papel = scan.nextLine();
-            }
-            switch (papel.toLowerCase()) {
-                case "p":
-                    edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, mudar.getGenero() ? 0 : 1);
-                    break;
-                case "s":
-                    edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
-                    break;
-            }
-            System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1));
         } catch (Exception e) {
             System.out.println("Posição não existe.");
         }

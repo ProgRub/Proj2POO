@@ -13,14 +13,13 @@ public class Ator extends Pessoa {
         filmesParticipa = new ArrayList<Filme>(0);
     }
 
-    public void insereFilme(Filme filme){
-        if(filmes < 2){
-            this.filmesParticipa.add(filme);
-            this.filmes++;
-        }
-        else{
-           System.out.println("Não pode participar em mais nenhum filme!");
-        }
+    public boolean podeInserirFilme() {
+        return filmes < 2;
+    }
+
+    public void inserirFilme(Filme filme) {
+        this.filmesParticipa.add(filme);
+        this.filmes++;
     }
 
     public String toString() {
