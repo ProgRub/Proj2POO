@@ -65,4 +65,8 @@ public class Edicao {
         return numEdicao;
     }
 
+    public ArrayList<Filme> getFilmes() {
+        return this.filmes;
+    }
+
 }
