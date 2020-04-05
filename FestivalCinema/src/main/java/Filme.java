@@ -48,7 +48,7 @@ public class Filme {
             filme += "Ator Principal: " + AtorPrincipal.getPrimeiroNome() + " " + AtorPrincipal.getUltimoNome() + "\n";
         }
         if (AtrizPrincipal != null) {
-        filme += "Atriz Principal: " + AtrizPrincipal.getPrimeiroNome() + " " + AtrizPrincipal.getUltimoNome() + "\n";
+            filme += "Atriz Principal: " + AtrizPrincipal.getPrimeiroNome() + " " + AtrizPrincipal.getUltimoNome() + "\n";
         }
         int indice = 0;
         while (indice < atoresSecundarios.size()) {
