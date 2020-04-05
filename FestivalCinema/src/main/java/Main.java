@@ -10,7 +10,7 @@ public class Main {
         boolean novo = true;
         ArrayList<Ator> atores = new ArrayList();
 
-        int indexEdicoes = -1;
+        int indexEdicoes = 0;
         int numEdicao = 1;
         int ano = 3000;
         System.out.println("\t\t\tFESTIVAL CINEMA");
@@ -24,6 +24,8 @@ public class Main {
         }
         if (opcao.equalsIgnoreCase("c")) {
             novo = false;
+        } else {
+            edicoes.add(new Edicao(numEdicao, ano));
         }
         boolean quebra = false;
 
@@ -112,13 +114,14 @@ public class Main {
                                 }
                                 switch (papel.toLowerCase()) {
                                     case "p":
-                                        edicoes.get(0).getFilmes().get(posFilme - 1).insereAtor(mudar, mudar.getGenero() ? 0 : 1);
+                                        edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, mudar.getGenero() ? 0 : 1);
                                         break;
                                     case "s":
-                                        edicoes.get(0).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
+                                        edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
                                         break;
                                 }
-                                System.out.println(edicoes.get(0).getFilmes().get(posFilme - 1));
+                                System.out.println("CHEGOU");
+                                System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme-1));
                             } catch (Exception e) {
                                 System.out.println("Posição não existe.");
                             }
@@ -143,10 +146,9 @@ public class Main {
                     System.out.print("CRIAR EDIÇÃO:\nAno: ");
                     ano = scan.nextInt();
                     scan.nextLine();
-                    Edicao edicao = new Edicao(numEdicao, ano);
-                    edicoes.add(edicao);
-                    indexEdicoes++;
                     numEdicao++;
+                    edicoes.add(new Edicao(numEdicao, ano));
+                    indexEdicoes++;
                     break;
 
                 case "s":

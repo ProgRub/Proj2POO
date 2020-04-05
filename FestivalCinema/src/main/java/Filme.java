@@ -16,7 +16,9 @@ public class Filme {
         this.genero = genero;
         this.edição = edição;
         this.realizador = realizador;
-        this.atoresSecundarios = new ArrayList<Pessoa>();
+        this.AtorPrincipal = null;
+        this.AtrizPrincipal = null;
+        this.atoresSecundarios = new ArrayList<Pessoa>(0);
     }
 
     public void insereAtor(Ator ator, int posição) {
@@ -42,18 +44,18 @@ public class Filme {
         filme = "Filme: " + nome + "\n";
         filme += "Género: " + genero + "\n";
         filme += "Realizador: " + realizador.getPrimeiroNome() + " " + realizador.getUltimoNome() + "\n";
+        if (AtorPrincipal != null) {
+            filme += "Ator Principal: " + AtorPrincipal.getPrimeiroNome() + " " + AtorPrincipal.getUltimoNome() + "\n";
+        }
+        if (AtrizPrincipal != null) {
+        filme += "Atriz Principal: " + AtrizPrincipal.getPrimeiroNome() + " " + AtrizPrincipal.getUltimoNome() + "\n";
+        }
         int indice = 0;
-        while (indice < atoresSecundarios.size()+2) {
+        while (indice < atoresSecundarios.size()) {
             if (indice == 0) {
-                filme += "Ator Principal: " + AtorPrincipal.getPrimeiroNome() + " " + AtorPrincipal.getUltimoNome() + "\n";
-            } else if (indice == 1) {
-                filme += "Atriz Principal: " + AtrizPrincipal.getPrimeiroNome() + " " + AtrizPrincipal.getUltimoNome() + "\n";
-            } else if (indice == 2) {
-                filme += "Atores Secundários: \n";
-                filme += atoresSecundarios.get(indice-2).getPrimeiroNome() + " " + atoresSecundarios.get(indice-2).getUltimoNome() + "\n";
-            } else {
-                filme += atoresSecundarios.get(indice-2).getPrimeiroNome() + " " + atoresSecundarios.get(indice-2).getUltimoNome() + "\n";
+                filme += "Atores Secundários:\n";
             }
+            filme += atoresSecundarios.get(indice).getPrimeiroNome() + " " + atoresSecundarios.get(indice).getUltimoNome() + "\n";
             indice++;
         }
 
