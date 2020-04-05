@@ -4,9 +4,7 @@ public class Edicao {
     private final int numEdicao;
     private final int ano;
     private final ArrayList <Filme> filmes;
-    private final ArrayList <String> premios;   
-    private int posicao;
-    private int posicao1;
+    private final ArrayList <String> premios;  
 
 
     
@@ -16,8 +14,6 @@ public class Edicao {
     this.ano = ano;
     premios = new ArrayList <String>();
     filmes = new ArrayList <Filme>();
-    posicao = 0; 
-    posicao1 = 0;
     inserePremios();
     }
     
@@ -45,18 +41,20 @@ public class Edicao {
             System.out.println("! NÃO HÁ FILMES REGISTADOS !");
         }
         else{
-            while (posicao < filmes.size()){
-            System.out.println(filmes.get(posicao));
-            posicao++;  
+            int indice = 0;
+            while (indice < filmes.size()){
+            System.out.println(filmes.get(indice));
+            indice++;  
             }
         } 
     }
     
     public void imprimePremios(){
         System.out.println("PRÉMIOS:");
-        while (posicao1 < premios.size()){
-            System.out.println(premios.get(posicao1));
-            posicao1++;
+        int indice = 0;
+        while (indice < premios.size()){
+            System.out.println(premios.get(indice));
+            indice++;
         }
     }
     
