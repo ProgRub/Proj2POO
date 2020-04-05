@@ -30,6 +30,18 @@ public class Main {
         boolean quebra = false;
 
         while (!quebra) {
+
+            switch (opcao) {
+                case "n":
+                    System.out.print("CRIAR EDIÇÃO:\nAno: ");
+                    ano = scan.nextInt();
+                    scan.nextLine();
+                    Edicao edicao = new Edicao(numEdicao, ano);
+                    edicoes.add(edicao);
+                    indexEdicoes++;
+                    numEdicao++;
+                    break;
+            }
             System.out.println("*****************************************************************");
             System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(s): Sair\nOpção: ");
             String opcaoGeral = scan.nextLine();
@@ -121,7 +133,7 @@ public class Main {
                                         break;
                                 }
                                 System.out.println("CHEGOU");
-                                System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme-1));
+                                System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1));
                             } catch (Exception e) {
                                 System.out.println("Posição não existe.");
                             }
@@ -141,7 +153,6 @@ public class Main {
                             break;
                     }
                     break;
-
                 case "n":
                     System.out.print("CRIAR EDIÇÃO:\nAno: ");
                     ano = scan.nextInt();
@@ -150,7 +161,6 @@ public class Main {
                     edicoes.add(new Edicao(numEdicao, ano));
                     indexEdicoes++;
                     break;
-
                 case "s":
                     quebra = true;
                     break;
