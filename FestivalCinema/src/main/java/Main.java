@@ -37,6 +37,8 @@ public class Main {
                 opcaoGeral = scan.nextLine();
             }
             switch (opcaoGeral.toLowerCase()) {
+                
+                    
                 case "c":
                     System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\t(h): Criar Edição\nOpção: ");
                     opcao = scan.nextLine();
@@ -46,6 +48,7 @@ public class Main {
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {
+                        
                         case "f":
                             System.out.print("NOVO FILME\nNome do Filme: ");
                             String nome = scan.nextLine();
@@ -82,16 +85,7 @@ public class Main {
                             Ator ator = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
                             atores.add(ator);
                             break;
-                        case "h":
-                            System.out.print("CRIAR EDIÇÃO:\nNúmero de Edição: ");
-                            numEdicao = scan.nextInt();
-                            System.out.print("Ano: ");
-                            ano = scan.nextInt();
-                            scan.nextLine();
-                            Edicao edicao = new Edicao(numEdicao, ano);
-                            edicoes.add(edicao);
-                            indexEdicoes++;
-                            break;
+                        
                         case "p":
                             int i = 1;
                             for (Ator a : atores) {
@@ -147,6 +141,18 @@ public class Main {
                             break;
                     }
                     break;
+                    
+                case "n":
+                        System.out.print("CRIAR EDIÇÃO:\nAno: ");
+                        ano = scan.nextInt();
+                        scan.nextLine();
+                        Edicao edicao = new Edicao(numEdicao, ano);
+                        edicoes.add(edicao);
+                        indexEdicoes++;
+                        numEdicao++;
+                        break;
+                        
+                        
                 case "s":
                     quebra = true;
                     break;
