@@ -43,17 +43,17 @@ public class Filme {
         int indice = 0;
         while(indice < atores.size()){
             if(indice == 0){
-                 filme += "Ator Principal: "+atores.get(0).getPrimeiroNome()+atores.get(0).getUltimoNome()+"\n";
+                 filme += "Ator Principal: "+atores.get(0).getPrimeiroNome()+ " " +atores.get(0).getUltimoNome()+"\n";
             }
             else if(indice == 1){
-                 filme += "Atriz Principal: "+atores.get(1).getPrimeiroNome()+atores.get(1).getUltimoNome()+"\n";
+                 filme += "Atriz Principal: "+atores.get(1).getPrimeiroNome()+ " " +atores.get(1).getUltimoNome()+"\n";
             }
             else if (indice == 2){
                 filme += "Atores Secundários: \n";
-                filme += atores.get(indice).getPrimeiroNome()+atores.get(indice).getUltimoNome()+"\n";
+                filme += atores.get(indice).getPrimeiroNome()+ " " +atores.get(indice).getUltimoNome()+"\n";
             }
             else{
-                filme += atores.get(indice).getPrimeiroNome()+atores.get(indice).getUltimoNome()+"\n";
+                filme += atores.get(indice).getPrimeiroNome()+ " " +atores.get(indice).getUltimoNome()+"\n";
             }
             indice++;
         }

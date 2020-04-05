@@ -78,6 +78,7 @@ public class Main {
                             }
                             System.out.print("Anos de carreira do Ator/Atriz: ");
                             int anosCarreira = scan.nextInt();
+                            scan.nextLine();
                             Ator ator = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
                             atores.add(ator);
                             break;
