@@ -6,7 +6,6 @@ public class Filme {
     private final int edição;
     private final Realizador realizador;
     private ArrayList<Pessoa> atores;
-    private int posição = 0;
     
     public Filme(String nome, String genero, int edição, Realizador realizador){
         this.nome = nome;
@@ -41,23 +40,23 @@ public class Filme {
         filme += "Género: "+genero+"\n";
         filme += "Edição: "+edição+"\n";
         filme += "Realizador: "+realizador.getPrimeiroNome()+" "+realizador.getUltimoNome()+"\n";
-        while(posição < atores.size()){
-            if(posição == 0){
+        int indice = 0;
+        while(indice < atores.size()){
+            if(indice == 0){
                  filme += "Ator Principal: "+atores.get(0).getPrimeiroNome()+atores.get(0).getUltimoNome()+"\n";
             }
-            else if(posição == 1){
+            else if(indice == 1){
                  filme += "Atriz Principal: "+atores.get(1).getPrimeiroNome()+atores.get(1).getUltimoNome()+"\n";
             }
-            else if (posição == 2){
+            else if (indice == 2){
                 filme += "Atores Secundários: \n";
-                filme += atores.get(posição).getPrimeiroNome()+atores.get(posição).getUltimoNome()+"\n";
+                filme += atores.get(indice).getPrimeiroNome()+atores.get(indice).getUltimoNome()+"\n";
             }
             else{
-                filme += atores.get(posição).getPrimeiroNome()+atores.get(posição).getUltimoNome()+"\n";
+                filme += atores.get(indice).getPrimeiroNome()+atores.get(indice).getUltimoNome()+"\n";
             }
-            posição++;
+            indice++;
         }
-        posição = 0;
         
         return filme;
     }
