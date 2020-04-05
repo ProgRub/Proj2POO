@@ -91,6 +91,10 @@ public class Main {
                 case "i":
                     consultarEdicoes();
                     break;
+                    
+                case "s":
+                    sair = true;
+                    break;
            //--------------------------------------------
                 case "p":
                     int i = 1;
@@ -142,7 +146,7 @@ public class Main {
             while (aux < edicoes.size()){
             System.out.println(edicoes.get(aux));
             aux++;
-        }
+            }
         }
         
         
