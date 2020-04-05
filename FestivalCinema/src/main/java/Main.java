@@ -31,7 +31,7 @@ public class Main {
 
         while (!quebra) {
             System.out.println("*****************************************************************");
-            System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(s): Sair\nOpção: ");
+            System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(h): Criar Edição\t(s): Sair\nOpção: ");
             String opcaoGeral = scan.nextLine();
             while (opcaoGeral.length() > 1) {
                 System.out.println("Por favor selecione uma das opções disponíveis.");
@@ -41,7 +41,7 @@ public class Main {
             switch (opcaoGeral.toLowerCase()) {
 
                 case "c":
-                    System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\t(h): Criar Edição\t(p): Atribui Papel\nOpção: ");
+                    System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\t(p): Atribui Papel\nOpção: ");
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
@@ -153,9 +153,6 @@ public class Main {
                     quebra = true;
                     break;
             }
-
-            //---------------------------------------
-            //--------------------------------------------
         }
     }
 
