@@ -28,6 +28,18 @@ public class Main {
         boolean quebra = false;
 
         while (!quebra) {
+            
+            switch (opcao){
+                case "n":
+                    System.out.print("CRIAR EDIÇÃO:\nAno: ");
+                    ano = scan.nextInt();
+                    scan.nextLine();
+                    Edicao edicao = new Edicao(numEdicao, ano);
+                    edicoes.add(edicao);
+                    indexEdicoes++;
+                    numEdicao++;
+                    break;
+            }
             System.out.println("*****************************************************************");
             System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(s): Sair\nOpção: ");
             String opcaoGeral = scan.nextLine();
@@ -139,15 +151,7 @@ public class Main {
                     }
                     break;
 
-                case "n":
-                    System.out.print("CRIAR EDIÇÃO:\nAno: ");
-                    ano = scan.nextInt();
-                    scan.nextLine();
-                    Edicao edicao = new Edicao(numEdicao, ano);
-                    edicoes.add(edicao);
-                    indexEdicoes++;
-                    numEdicao++;
-                    break;
+                
 
                 case "s":
                     quebra = true;
