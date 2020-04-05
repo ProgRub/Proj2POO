@@ -35,7 +35,7 @@ public class Main {
             String opcaoGeral = scan.nextLine();
             while (opcaoGeral.length() > 1) {
                 System.out.println("Por favor selecione uma das opções disponíveis.");
-                System.out.print("(c): Criar algo\t(l): Listar algo\t(s): Sair\nOpção: ");
+                System.out.print("(c): Criar algo\t(l): Listar algo\t(h): Criar Edição\t(s): Sair\nOpção: ");
                 opcaoGeral = scan.nextLine();
             }
             switch (opcaoGeral.toLowerCase()) {
@@ -45,7 +45,7 @@ public class Main {
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
-                        System.out.print("(f): Criar Filme\t(a): Criar Ator\nOpção: ");
+                        System.out.print("(f): Criar Filme\t(a): Criar Ator\t(p): Atribui Papel\nOpção: ");
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {
@@ -56,43 +56,8 @@ public class Main {
                             criarAtor(scan, atores);
                             break;
                         case "p":
-                            int i = 1;
-                            for (Ator a : atores) {
-                                System.out.printf("%d. %s\n", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
-                                i++;
-                            }
-                            System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
-                            int pos = scan.nextInt();
-                            scan.nextLine();
-                            try {
-                                Ator mudar = atores.get(pos - 1);
-                                i = 1;
-                                for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
-                                    System.out.printf("%d. %s\n", i, f.getNome());
-                                    i++;
-                                }
-                                System.out.println("Qual o filme?");
-                                int posFilme = scan.nextInt();
-                                scan.nextLine();
-                                System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
-                                String papel = scan.nextLine();
-                                while (papel.length() > 1) {
-                                    System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
-                                    papel = scan.nextLine();
-                                }
-                                switch (papel.toLowerCase()) {
-                                    case "p":
-                                        edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, mudar.getGenero() ? 0 : 1);
-                                        break;
-                                    case "s":
-                                        edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
-                                        break;
-                                }
-                                System.out.println("CHEGOU");
-                                System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1));
-                            } catch (Exception e) {
-                                System.out.println("Posição não existe.");
-                            }
+                            atribuirPapel(atores, scan, indexEdicoes);
+                            break;
                     }
                     break;
                 case "l":
@@ -100,7 +65,7 @@ public class Main {
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
-                        System.out.print("(i): Consultar Edição\nOpção: ");
+                        System.out.print("(f): Listar Filmes\t(a): Listar Atores\t(i): Consultar Edição\nOpção: ");
                         opcao = scan.nextLine();
                     }
                     switch (opcao.toLowerCase()) {
@@ -166,6 +131,45 @@ public class Main {
         scan.nextLine();
         Ator ator = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
         atores.add(ator);
+    }
+
+    public static void atribuirPapel(ArrayList<Ator> atores, Scanner scan, int indexEdicoes) {
+        int i = 1;
+        for (Ator a : atores) {
+            System.out.printf("%d. %s\n", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
+            i++;
+        }
+        System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
+        int pos = scan.nextInt();
+        scan.nextLine();
+        try {
+            Ator mudar = atores.get(pos - 1);
+            i = 1;
+            for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
+                System.out.printf("%d. %s\n", i, f.getNome());
+                i++;
+            }
+            System.out.println("Qual o filme?");
+            int posFilme = scan.nextInt();
+            scan.nextLine();
+            System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
+            String papel = scan.nextLine();
+            while (papel.length() > 1) {
+                System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
+                papel = scan.nextLine();
+            }
+            switch (papel.toLowerCase()) {
+                case "p":
+                    edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, mudar.getGenero() ? 0 : 1);
+                    break;
+                case "s":
+                    edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
+                    break;
+            }
+            System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1));
+        } catch (Exception e) {
+            System.out.println("Posição não existe.");
+        }
     }
 
     public static void consultarEdicoes() {
