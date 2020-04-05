@@ -28,7 +28,7 @@ public class Main {
         boolean quebra = false;
 
         while (!quebra) {
-            System.out.println("*********************");
+            System.out.println("*****************************************************************");
             System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(s): Sair\nOpção: ");
             String opcaoGeral = scan.nextLine();
             while (opcaoGeral.length() > 1) {
@@ -38,7 +38,7 @@ public class Main {
             }
             switch (opcaoGeral.toLowerCase()) {
                 case "c":
-                    System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\t(h): Criar Edição\nOpção: ");
+                    System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\t(h): Criar Edição\t(p): Atribui Papel\nOpção: ");
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
@@ -95,10 +95,9 @@ public class Main {
                         case "p":
                             int i = 1;
                             for (Ator a : atores) {
-                                System.out.printf("%d. %s", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
+                                System.out.printf("%d. %s\n", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
                                 i++;
                             }
-                            System.out.println();
                             System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
                             int pos = scan.nextInt();
                             scan.nextLine();
@@ -106,10 +105,9 @@ public class Main {
                                 Ator mudar = atores.get(pos - 1);
                                 i = 1;
                                 for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
-                                    System.out.printf("%d. %s", i, f.getNome());
+                                    System.out.printf("%d. %s\n", i, f.getNome());
                                     i++;
                                 }
-                                System.out.println();
                                 System.out.println("Qual o filme?");
                                 int posFilme = scan.nextInt();
                                 scan.nextLine();
@@ -121,24 +119,24 @@ public class Main {
                                 }
                                 switch (papel.toLowerCase()) {
                                     case "p":
-                                        edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, mudar.getGenero() ? 0 : 1);
+                                        edicoes.get(0).getFilmes().get(posFilme - 1).insereAtor(mudar, mudar.getGenero() ? 0 : 1);
                                         break;
                                     case "s":
-                                        edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
+                                        edicoes.get(0).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
                                         break;
                                 }
-                                System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1));
+                                System.out.println(edicoes.get(0).getFilmes().get(posFilme - 1));
                             } catch (Exception e) {
                                 System.out.println("Posição não existe.");
                             }
                     }
                     break;
                 case "l":
-                    System.out.print("\t\t\tOpções\n(p): Atribui Papel\t(i): Consultar Edição\nOpção: ");
+                    System.out.print("\t\t\tOpções\n\t(i): Consultar Edição\nOpção: ");
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
-                        System.out.print("(f): Criar Filme\t(a): Criar Ator\nOpção: ");
+                        System.out.print("(i): Consultar Edição\nOpção: ");
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {

@@ -7,25 +7,29 @@ public class Filme {
     private final String genero;
     private final int edição;
     private final Realizador realizador;
-    private ArrayList<Pessoa> atores;
+    private Pessoa AtorPrincipal;
+    private Pessoa AtrizPrincipal;
+    private ArrayList<Pessoa> atoresSecundarios;
 
     public Filme(String nome, String genero, int edição, Realizador realizador) {
         this.nome = nome;
         this.genero = genero;
         this.edição = edição;
         this.realizador = realizador;
-        atores = new ArrayList<Pessoa>(2);
+        this.atoresSecundarios = new ArrayList<Pessoa>();
     }
 
     public void insereAtor(Ator ator, int posição) {
         if (posição < 2) {
-            if ((posição == 0 || posição == 1) && atores.get(posição) == null) {
-                atores.add(posição, ator);
+            if (posição == 0 && this.AtorPrincipal == null) {
+                this.AtorPrincipal = ator;
+            } else if (posição == 1 && this.AtrizPrincipal == null) {
+                this.AtrizPrincipal = ator;
             } else {
                 System.out.println("OCUPADO!");
             }
         } else {
-            atores.add(ator);
+            this.atoresSecundarios.add(ator);
         }
     }
 
@@ -39,16 +43,16 @@ public class Filme {
         filme += "Género: " + genero + "\n";
         filme += "Realizador: " + realizador.getPrimeiroNome() + " " + realizador.getUltimoNome() + "\n";
         int indice = 0;
-        while (indice < atores.size()) {
+        while (indice < atoresSecundarios.size()+2) {
             if (indice == 0) {
-                filme += "Ator Principal: " + atores.get(0).getPrimeiroNome() + " " + atores.get(0).getUltimoNome() + "\n";
+                filme += "Ator Principal: " + AtorPrincipal.getPrimeiroNome() + " " + AtorPrincipal.getUltimoNome() + "\n";
             } else if (indice == 1) {
-                filme += "Atriz Principal: " + atores.get(1).getPrimeiroNome() + " " + atores.get(1).getUltimoNome() + "\n";
+                filme += "Atriz Principal: " + AtrizPrincipal.getPrimeiroNome() + " " + AtrizPrincipal.getUltimoNome() + "\n";
             } else if (indice == 2) {
                 filme += "Atores Secundários: \n";
-                filme += atores.get(indice).getPrimeiroNome() + " " + atores.get(indice).getUltimoNome() + "\n";
+                filme += atoresSecundarios.get(indice-2).getPrimeiroNome() + " " + atoresSecundarios.get(indice-2).getUltimoNome() + "\n";
             } else {
-                filme += atores.get(indice).getPrimeiroNome() + " " + atores.get(indice).getUltimoNome() + "\n";
+                filme += atoresSecundarios.get(indice-2).getPrimeiroNome() + " " + atoresSecundarios.get(indice-2).getUltimoNome() + "\n";
             }
             indice++;
         }
