@@ -6,13 +6,13 @@ public class Edicao {
     private final int numEdicao;
     private final int ano;
     private final ArrayList<Filme> filmes;
-    private final ArrayList<String> premios;
+    private final ArrayList<Premio> premios;
 
     public Edicao(int numEdicao, int ano) {
 
         this.numEdicao = numEdicao;
         this.ano = ano;
-        premios = new ArrayList<String>();
+        premios = new ArrayList<Premio>(8);
         filmes = new ArrayList<Filme>();
         inserePremios();
     }
@@ -24,15 +24,23 @@ public class Edicao {
         return Edicao;
     }
 
-    public final void inserePremios() {
-        premios.add("Melhor filme");
-        premios.add("Melhor ator principal");
-        premios.add("Melhor atriz principal");
-        premios.add("Melhor ator secundário");
-        premios.add("Melhor atriz secundária");
-        premios.add("Melhor realizador");
-        premios.add("Melhor argumento");
-        premios.add("Melhor cinematografia");
+    public final void inserePremios(){
+        Premio premio1 = new Premio("Melhor Ator Principal");
+        this.premios.add(premio1);
+        Premio premio2 = new Premio("Melhor Atriz Principal");
+        this.premios.add(premio2);
+        Premio premio3 = new Premio("Melhor Ator Secundário");
+        this.premios.add(premio3);
+        Premio premio4 = new Premio("Melhor Atriz Secundária");
+        this.premios.add(premio4);
+        Premio premio5 = new Premio("Melhor Filme");
+        this.premios.add(premio5);
+        Premio premio6 = new Premio("Melhor Realizador");
+        this.premios.add(premio6);
+        Premio premio7 = new Premio("Melhor Argumento");
+        this.premios.add(premio7);
+        Premio premio8 = new Premio("Melhor Cinematografia");
+        this.premios.add(premio8);
     }
 
     public void imprimeFilmes() {
@@ -49,7 +57,6 @@ public class Edicao {
     }
 
     public void imprimePremios() {
-        System.out.println("PRÉMIOS:");
         int indice = 0;
         while (indice < premios.size()) {
             System.out.println(premios.get(indice));
@@ -68,5 +75,8 @@ public class Edicao {
     public ArrayList<Filme> getFilmes() {
         return this.filmes;
     }
-
+    
+    public ArrayList<Premio> getPremios() {
+        return this.premios;
+    }
 }

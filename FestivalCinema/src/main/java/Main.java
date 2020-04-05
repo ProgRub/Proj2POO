@@ -4,11 +4,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    static ArrayList<Edicao> edicoes = new ArrayList();
-
     public static void main(String[] args) {
         boolean novo = true;
-        ArrayList<Ator> atores = new ArrayList();
+        ArrayList<Edicao> edicoes = new ArrayList<Edicao>();
+        ArrayList<Ator> atores = new ArrayList<Ator>();
 
         int indexEdicoes = 0;
         int numEdicao = 1;
@@ -61,22 +60,25 @@ public class Main {
                     }
                     break;
                 case "l":
-                    System.out.print("\t\t\tOpções\n(f): Listar Filmes\t(a): Listar Atores\t(i): Consultar Edição\nOpção: ");
+                    System.out.print("\t\t\tOpções\n(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(i): Consultar Edição\nOpção: ");
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
                         System.out.print("(f): Listar Filmes\t(a): Listar Atores\t(i): Consultar Edição\nOpção: ");
                         opcao = scan.nextLine();
                     }
-                    switch (opcao.toLowerCase()) {
-                        case "f":
-                            listarFilmes(edicoes);
-                            break;
+                    switch (opcao) {
                         case "a":
                             listarAtores(atores);
                             break;
+                        case "f":
+                            listarFilmes(edicoes);
+                            break;
+                        case "p":
+                            listarPremios(edicoes);
+                            break;
                         case "i":
-                            consultarEdicoes();
+                            consultarEdicoes(edicoes);
                             break;
                     }
                     break;
@@ -176,7 +178,7 @@ public class Main {
         }
     }
 
-    public static void consultarEdicoes() {
+    public static void consultarEdicoes(ArrayList<Edicao> edicoes) {
         int aux = 0;
         if (edicoes.isEmpty()) {
             System.out.println("Ainda não há nehuma edição do festival!");
@@ -192,7 +194,7 @@ public class Main {
         int posição = 0;
         if (!atores.isEmpty()) {
             while (posição < atores.size()) {
-                System.out.print(atores.get(posição));
+                System.out.print(atores.get(posição) + "\n");
                 posição++;
             }
         } else {
@@ -203,7 +205,7 @@ public class Main {
     public static void listarFilmes(ArrayList<Edicao> edições) {
         int posiçãoFilme = 0;
         for (int posiçãoEdição = 0; posiçãoEdição < edições.size(); posiçãoEdição++) {
-            System.out.println("EDIÇÃO: " + edições.get(posiçãoEdição).getNumEdicao() + "\n");
+            System.out.println("EDIÇÃO: " + edições.get(posiçãoEdição).getNumEdicao());
             if (edições.get(posiçãoEdição).getFilmes().isEmpty()) {
                 System.out.println("Não existem filmes nesta edição.\n");
             } else {
@@ -213,6 +215,83 @@ public class Main {
                     posiçãoFilme++;
                 }
                 posiçãoFilme = 0;
+            }
+        }
+    }
+
+    public static void listarPremios(ArrayList<Edicao> edições) {
+        System.out.println("CATEGORIAS A PREMIAR:");
+        edições.get(0).imprimePremios();
+    }
+
+    public static void escolherCandidatos(ArrayList<Edicao> edições) {
+        System.out.println("Escolha o prémio:");
+        System.out.print("(1) Melhor Ator Principal\n" + "(2) Melhor Atriz Principal\n"
+                + "(3) Melhor Ator Secundário\n" + "(4) Melhor Atriz Secundária\n"
+                + "(5) Melhor Filme\n"
+                + "(6) Melhor Realizador\n"
+                + "(7) Melhor Argumento\n"
+                + "(8) Melhor Cinematografia)");
+        Scanner scan = new Scanner(System.in, "cp1252");
+        String opcao = scan.nextLine();
+        switch (opcao) {
+            case "1":
+                ArrayList<Pessoa> atoresCandidatos1 = new ArrayList<Pessoa>(4);
+                //listar e escolher ator:
+
+                edições.get(0).getPremios().get(0).setAtores(atoresCandidatos1);  //primeira ediçao apenas (mudar)
+                break;
+            case "2":
+                ArrayList<Pessoa> atoresCandidatos2 = new ArrayList<Pessoa>(4);
+                //listar e escolher atriz:
+
+                edições.get(0).getPremios().get(1).setAtores(atoresCandidatos2);  //primeira ediçao apenas (mudar)
+                break;
+            case "3":
+                ArrayList<Pessoa> atoresCandidatos3 = new ArrayList<Pessoa>(4);
+                //listar e escolher ator:
+
+                edições.get(0).getPremios().get(2).setAtores(atoresCandidatos3);  //primeira ediçao apenas (mudar)
+                break;
+            case "4":
+                ArrayList<Pessoa> atoresCandidatos4 = new ArrayList<Pessoa>(4);
+                //listar e escolher ator:
+
+                edições.get(0).getPremios().get(3).setAtores(atoresCandidatos4);  //primeira ediçao apenas (mudar)
+                break;
+            case "5":
+                ArrayList<Filme> filmesCandidatos1 = new ArrayList<Filme>(4);
+                escolherFilmesCandidatos(edições);
+                edições.get(0).getPremios().get(4).setFilmes(filmesCandidatos1);  //primeira ediçao apenas (mudar)
+                break;
+            case "6":
+                ArrayList<Filme> filmesCandidatos2 = new ArrayList<Filme>(4);
+                escolherFilmesCandidatos(edições);
+                edições.get(0).getPremios().get(5).setFilmes(filmesCandidatos2);  //primeira ediçao apenas (mudar)
+                break;
+            case "7":
+                ArrayList<Filme> filmesCandidatos3 = new ArrayList<Filme>(4);
+                escolherFilmesCandidatos(edições);
+                edições.get(0).getPremios().get(6).setFilmes(filmesCandidatos3);  //primeira ediçao apenas (mudar)
+                break;
+            case "8":
+                ArrayList<Filme> filmesCandidatos4 = new ArrayList<Filme>(4);
+                escolherFilmesCandidatos(edições);
+                edições.get(0).getPremios().get(7).setFilmes(filmesCandidatos4);  //primeira ediçao apenas (mudar)
+                break;
+        }
+    }
+
+    public static void escolherFilmesCandidatos(ArrayList<Edicao> edições) {
+        int posiçãoFilme = 0;
+        //MUDAR PARA COMO O RÚBEN FEZ
+        if (edições.get(0).getFilmes().isEmpty()) {
+            System.out.println("Não existem filmes nesta edição.\n");
+        } else {
+            System.out.println("Filmes: \n");
+            while (posiçãoFilme < edições.get(0).getFilmes().size()) {
+                System.out.print("(" + posiçãoFilme + 1 + ") " + edições.get(0).getFilmes().get(posiçãoFilme).getNome() + "\n");
+                posiçãoFilme++;
             }
         }
     }
