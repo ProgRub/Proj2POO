@@ -28,7 +28,7 @@ public class Filme {
             } else if (posição == 1 && this.AtrizPrincipal == null) {
                 this.AtrizPrincipal = ator;
             } else {
-                System.out.println("OCUPADO!");
+                System.out.println("Já existe!");
             }
         } else {
             this.atoresSecundarios.add(ator);
@@ -45,6 +45,10 @@ public class Filme {
     
     public Pessoa getAtrizPrincipal(){
         return AtrizPrincipal;
+    }
+    
+    public Realizador getRealizador(){
+        return realizador;
     }
 
     public String toString() {

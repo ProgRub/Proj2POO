@@ -63,11 +63,11 @@ public class Main {
                     }
                     break;
                 case "l":
-                    System.out.print("\t\t\tOpções\n(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(i): Consultar Edição\nOpção: ");
+                    System.out.print("\t\t\tOpções\n(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(c) : Listar Candidatos\t(i): Consultar Edição\nOpção: ");
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
-                        System.out.print("(f): Listar Filmes\t(a): Listar Atores\t(i): Consultar Edição\nOpção: ");
+                        System.out.print("(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(c) : Listar Candidatos\t(i): Consultar Edição\nOpção: ");
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {
@@ -82,6 +82,9 @@ public class Main {
                             break;
                         case "i":
                             consultarEdicoes(edicoes);
+                            break;
+                        case "c":
+                            listarCandidatos(scan, edicoes, atores);
                             break;
                     }
                     break;
@@ -237,52 +240,55 @@ public class Main {
                 + "(8) Melhor Cinematografia\nOPÇÃO: ");
         String opcao = scan.nextLine();
         switch (opcao) {
-            case "1":
-                ArrayList<Pessoa> atoresCandidatos1 = escolherAtoresPrincipaisCandidatos(scan,edições, true);
+            case "1": //MELHOR ATOR PRINCIPAL
+                ArrayList<Pessoa> atoresCandidatos1 = escolherAtoresPrincipaisCandidatos(scan, edições, true);
                 edições.get(0).getPremios().get(0).setAtores(atoresCandidatos1);  //primeira ediçao apenas (mudar)
                 break;
-            case "2":
-                ArrayList<Pessoa> atoresCandidatos2 = escolherAtoresPrincipaisCandidatos(scan,edições, false);
+            case "2": //MELHOR ATRIZ PRINCIPAL
+                ArrayList<Pessoa> atoresCandidatos2 = escolherAtoresPrincipaisCandidatos(scan, edições, false);
                 edições.get(0).getPremios().get(1).setAtores(atoresCandidatos2);  //primeira ediçao apenas (mudar)
                 break;
-            case "3":
+            case "3": //MELHOR ATOR SECUNDÁRIO
                 ArrayList<Pessoa> atoresCandidatos3 = new ArrayList<Pessoa>(4);
                 //listar e escolher ator:
 
+                //... FALTA
                 edições.get(0).getPremios().get(2).setAtores(atoresCandidatos3);  //primeira ediçao apenas (mudar)
                 break;
-            case "4":
+            case "4": //MELHOR ATRIZ SECUNDÁRIA
                 ArrayList<Pessoa> atoresCandidatos4 = new ArrayList<Pessoa>(4);
                 //listar e escolher ator:
 
+                //... FALTA
                 edições.get(0).getPremios().get(3).setAtores(atoresCandidatos4);  //primeira ediçao apenas (mudar)
                 break;
-            case "5":
+            case "5": //MELHOR FILME
                 ArrayList<Filme> filmesCandidatos1 = escolherFilmesCandidatos(scan, edições);
                 edições.get(0).getPremios().get(4).setFilmes(filmesCandidatos1);  //primeira ediçao apenas (mudar)
                 break;
-            case "6": //FALTA MOSTRAR APENAS REALIZADORES
-                ArrayList<Filme> filmesCandidatos2 = escolherFilmesCandidatos(scan, edições);
+            case "6": //MELHOR REALIZADOR
+                ArrayList<Filme> filmesCandidatos2 = escolherRealizadorCandidatos(scan, edições);
                 edições.get(0).getPremios().get(5).setFilmes(filmesCandidatos2);  //primeira ediçao apenas (mudar)
                 break;
-            case "7":
+            case "7": //MELHOR ARGUMENTO
                 ArrayList<Filme> filmesCandidatos3 = escolherFilmesCandidatos(scan, edições);
                 edições.get(0).getPremios().get(6).setFilmes(filmesCandidatos3);  //primeira ediçao apenas (mudar)
                 break;
-            case "8":
+            case "8": //MELHOR CINEMATOGRAFIA
                 ArrayList<Filme> filmesCandidatos4 = escolherFilmesCandidatos(scan, edições);
                 edições.get(0).getPremios().get(7).setFilmes(filmesCandidatos4);  //primeira ediçao apenas (mudar)
                 break;
         }
     }
 
+    //método que permite o utilizador escolher os filmes candidatos para um dado prémio:
     public static ArrayList<Filme> escolherFilmesCandidatos(Scanner scan, ArrayList<Edicao> edições) {
         ArrayList<Filme> filmesCandidatos = new ArrayList<Filme>();
         int escolhendo = 1;
         while (escolhendo <= 4) { //até escolher os 4 candidatos
             int i = 1;
-            for (Filme a : edições.get(0).getFilmes()) {
-                System.out.printf("%d. %s\n", i, a.getNome());
+            for (Filme filme : edições.get(0).getFilmes()) {
+                System.out.printf("%d. %s\n", i, filme.getNome());
                 i++;
             }
             System.out.println("Escolha um candidato: ");
@@ -300,14 +306,40 @@ public class Main {
         return filmesCandidatos;
     }
 
+    //método que permite o utilizador escolher os melhores realizadores (devolve os filmes dos melhores realizadores):
+    public static ArrayList<Filme> escolherRealizadorCandidatos(Scanner scan, ArrayList<Edicao> edições) {
+        ArrayList<Filme> filmesCandidatos = new ArrayList<Filme>();
+        int escolhendo = 1;
+        while (escolhendo <= 4) { //até escolher os 4 candidatos
+            int i = 1;
+            for (Filme filme : edições.get(0).getFilmes()) {
+                System.out.printf("%d. %s\n", i, filme.getRealizador().getPrimeiroNome() + " " + filme.getRealizador().getUltimoNome()); //mostra nome do realizador do filme
+                i++;
+            }
+            System.out.println("Escolha um candidato: ");
+            int pos = scan.nextInt();
+            scan.nextLine();
+            try {
+                Filme candidato = edições.get(0).getFilmes().get(pos - 1);
+                filmesCandidatos.add(candidato); //adiciona filme do realizador
+                escolhendo++;
+            } catch (Exception e) {
+                System.out.println("Porfavor, escolha um filme válido.");
+            }
+        }
+        // System.out.print(filmesCandidatos); //PARA TESTAR
+        return filmesCandidatos;
+    }
+
+    //método que permite o utilizador escolher os atores (e as atrizes) principais:
     public static ArrayList<Pessoa> escolherAtoresPrincipaisCandidatos(Scanner scan, ArrayList<Edicao> edições, boolean homem) {
         ArrayList<Pessoa> atoresCandidatos = new ArrayList<Pessoa>();
         int escolhendo = 1;
         while (escolhendo <= 4) { //até escolher os 4 candidatos
             int i = 1;
             if (homem) { //para ator principal
-                for (Filme a : edições.get(0).getFilmes()) {
-                    System.out.printf("%d. %s\n", i, a.getAtorPrincipal().getPrimeiroNome() + " " + a.getAtorPrincipal().getUltimoNome());
+                for (Filme filme : edições.get(0).getFilmes()) {
+                    System.out.printf("%d. %s\n", i, filme.getAtorPrincipal().getPrimeiroNome() + " " + filme.getAtorPrincipal().getUltimoNome());
                     i++;
                 }
                 System.out.println("Escolha um candidato: ");
@@ -320,9 +352,9 @@ public class Main {
                 } catch (Exception e) {
                     System.out.println("Porfavor, escolha um filme válido.");
                 }
-            }else{ //para atriz principal
-                for (Filme a : edições.get(0).getFilmes()) {
-                    System.out.printf("%d. %s\n", i, a.getAtrizPrincipal().getPrimeiroNome() + " " + a.getAtrizPrincipal().getUltimoNome());
+            } else { //para atriz principal
+                for (Filme filme : edições.get(0).getFilmes()) {
+                    System.out.printf("%d. %s\n", i, filme.getAtrizPrincipal().getPrimeiroNome() + " " + filme.getAtrizPrincipal().getUltimoNome());
                     i++;
                 }
                 System.out.println("Escolha um candidato: ");
@@ -340,4 +372,49 @@ public class Main {
         // System.out.print(atoresCandidatos); //PARA TESTAR
         return atoresCandidatos;
     }
+
+    //método que mostra os quatro candidatos ao prémio em cada categoria
+    public static void listarCandidatos(Scanner scan, ArrayList<Edicao> edições, ArrayList<Ator> atores) {
+        int contaPremios = 1;
+        System.out.println("CANDIDATOS AOS PRÉMIOS:");
+
+        for (Premio premio : edições.get(0).getPremios()) {
+            if (contaPremios == 1) {
+                System.out.println("- MELHOR ATOR PRINCIPAL:");
+            } else if (contaPremios == 2) {
+                System.out.println("- MELHOR ATRIZ PRINCIPAL:");
+            } else if (contaPremios == 3) {
+                System.out.println("- MELHOR ATOR SECUNDÁRIO:");
+            } else if (contaPremios == 4) {
+                System.out.println("- MELHOR ATRIZ SECUNDÁRIA:");
+            } else if (contaPremios == 5) {
+                System.out.println("- MELHOR FILME:");
+            } else if (contaPremios == 6) {
+                System.out.println("- MELHOR REALIZADOR:");
+            } else if (contaPremios == 7) {
+                System.out.println("- MELHOR ARGUMENTO:");
+            } else if (contaPremios == 8) {
+                System.out.println("- MELHOR CINEMATOGRAFIA:");
+            }
+            try {
+                if (contaPremios == 1 || contaPremios == 2 || contaPremios == 3 || contaPremios == 4) {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println(premio.getAtoresCandidatos().get(i).getPrimeiroNome() + " " + premio.getAtoresCandidatos().get(i).getUltimoNome());
+                    }
+                } else if (contaPremios == 5 || contaPremios == 7 || contaPremios == 8) {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println(premio.getFilmesCandidatos().get(i).getNome());
+                    }
+                } else if (contaPremios == 6) {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println(premio.getFilmesCandidatos().get(i).getRealizador().getPrimeiroNome() + " " + premio.getFilmesCandidatos().get(i).getRealizador().getUltimoNome());
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Não tem candidatos.");
+            }
+            contaPremios++;
+        }
+    }
+
 }

@@ -24,6 +24,14 @@ public class Premio{
         this.atores = atores;
     }
     
+    public ArrayList <Pessoa> getAtoresCandidatos(){
+        return atores;
+    }
+    
+     public ArrayList <Filme> getFilmesCandidatos(){
+        return filmes;
+    }
+    
     public String toString(){
         return nome;
     }
