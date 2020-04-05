@@ -167,6 +167,34 @@ public class Main {
                 aux++;
             }
         }
+    }
 
+    public static void listarAtores(ArrayList<Ator> atores) {
+        int posição = 0;
+        if (!atores.isEmpty()) {
+            while (posição < atores.size()) {
+                System.out.print(atores.get(posição));
+            }
+        } else {
+            System.out.println("Não existem atores nesta edição.");
+        }
+
+    }
+
+    public static void listarFilmes(ArrayList<Edicao> edições) {
+        int posiçãoFilme = 0;
+        for (int posiçãoEdição = 0; posiçãoEdição < edições.size(); posiçãoEdição++) {
+            System.out.println("EDIÇÃO: " + edições.get(posiçãoEdição).getNumEdicao() + "\n");
+            if (edições.get(posiçãoEdição).getFilmes().isEmpty()) {
+                System.out.println("Não existem filmes nesta edição.\n");
+            } else {
+                System.out.println("Filmes: \n");
+                while (posiçãoFilme < edições.get(posiçãoEdição).getFilmes().size()) {
+                    System.out.print(edições.get(posiçãoEdição).getFilmes().get(posiçãoFilme) + "\n");
+                    posiçãoFilme++;
+                }
+                posiçãoFilme = 0;
+            }
+        }
     }
 }
