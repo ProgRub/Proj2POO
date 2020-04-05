@@ -10,7 +10,7 @@ public class Main {
         boolean novo = true;
         ArrayList<Ator> atores = new ArrayList();
 
-        int indexEdicoes = 0;
+        int indexEdicoes = -1;
         int numEdicao = 1;
         int ano = 3000;
         System.out.println("\t\t\tFESTIVAL CINEMA");
@@ -86,8 +86,9 @@ public class Main {
                             numEdicao = scan.nextInt();
                             System.out.print("Ano: ");
                             ano = scan.nextInt();
+                            scan.nextLine();
                             Edicao edicao = new Edicao(numEdicao, ano);
-                            edicoes.add(indexEdicoes, edicao);
+                            edicoes.add(edicao);
                             indexEdicoes++;
                             break;
                         case "p":
@@ -96,8 +97,10 @@ public class Main {
                                 System.out.printf("%d. %s", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
                                 i++;
                             }
+                            System.out.println();
                             System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
                             int pos = scan.nextInt();
+                            scan.nextLine();
                             try {
                                 Ator mudar = atores.get(pos - 1);
                                 i = 1;
@@ -105,8 +108,10 @@ public class Main {
                                     System.out.printf("%d. %s", i, f.getNome());
                                     i++;
                                 }
+                                System.out.println();
                                 System.out.println("Qual o filme?");
                                 int posFilme = scan.nextInt();
+                                scan.nextLine();
                                 System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
                                 String papel = scan.nextLine();
                                 while (papel.length() > 1) {
@@ -121,6 +126,7 @@ public class Main {
                                         edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1).insereAtor(mudar, 2);
                                         break;
                                 }
+                                System.out.println(edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1));
                             } catch (Exception e) {
                                 System.out.println("Posição não existe.");
                             }
