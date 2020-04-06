@@ -1,23 +1,24 @@
 
 public class Perito extends Pessoa {
+
     private int pontuação;
-    
-    public Perito(String primeiroNome, String ultimoNome, boolean genero){
-        super(primeiroNome,ultimoNome,genero);
+
+    public Perito(String nome, boolean genero) {
+        super(nome, genero);
     }
-    
+
     public String toString() {
         String perito;
-        perito = "Nome: " + getPrimeiroNome() + " " + getUltimoNome() + "\n";
+        perito = "Nome: " + getNome() + "\n";
         perito += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
         return perito;
     }
-    
-    public void inserePontuacao(int pontuacao){
+
+    public void inserePontuacao(int pontuacao) {
         this.pontuação = pontuacao;
     }
-    
-    public int getPontuacao(){
+
+    public int getPontuacao() {
         return this.pontuação;
     }
 }

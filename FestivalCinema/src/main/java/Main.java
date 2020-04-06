@@ -103,83 +103,99 @@ public class Main {
         }
     }
 
+    /**
+     * Como o nome indica este método é para criar um filme
+     *
+     * @param scan - o scanner
+     * @param numEdicao - o numero da edição
+     * @param indexEdicoes - a edição onde é para inserir o filme
+     * @param edicoes - o array das edições
+     */
     public static void criarFilme(Scanner scan, int numEdicao, int indexEdicoes, ArrayList<Edicao> edicoes) {
         System.out.print("NOVO FILME\nNome do Filme: ");
         String nome = scan.nextLine();
         System.out.print("Género do Filme: ");
         String genero = scan.nextLine();
-        System.out.print("Primeiro Nome do Realizador: ");
-        String primeiroNomeRealizador = scan.nextLine();
-        System.out.print("Último Nome do Realizador: ");
-        String ultimoNomeRealizador = scan.nextLine();
+        System.out.print("Nome do Realizador: ");
+        String nomeRealizador = scan.nextLine();
         System.out.print("Género do Realizador (M-Masculino; F-Feminino): ");
         String generoRealizador = scan.nextLine();
-        while (generoRealizador.length() > 1 || !(generoRealizador.equalsIgnoreCase("M") || generoRealizador.equalsIgnoreCase("F"))) {
+        while (generoRealizador.length() > 1 || !(generoRealizador.equalsIgnoreCase("M") || generoRealizador.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
             System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
             generoRealizador = scan.nextLine();
         }
-        Realizador realizador = new Realizador(primeiroNomeRealizador, ultimoNomeRealizador, generoRealizador.equalsIgnoreCase("M"));
+        Realizador realizador = new Realizador(nomeRealizador, generoRealizador.equalsIgnoreCase("M"));
         Filme filme = new Filme(nome, genero, numEdicao, realizador);
-        edicoes.get(indexEdicoes).insereFilmes(filme);
+        edicoes.get(indexEdicoes).insereFilmes(filme); //insere na lista de filmes da edição atual o filme criado
     }
 
+    /**
+     *
+     * @param scan - o scanner
+     * @param atores - lista de atores criados durante a execução do programa
+     */
     public static void criarAtor(Scanner scan, ArrayList<Ator> atores) {
-        System.out.print("NOVO ATOR\nPrimeiro Nome do Ator/Atriz: ");
-        String primeiroNomeAtor = scan.nextLine();
-        System.out.print("Último Nome do Ator/Atriz: ");
-        String ultimoNomeAtor = scan.nextLine();
+        System.out.print("NOVO ATOR\nNome do Ator/Atriz: ");
+        String nomeAtor = scan.nextLine();
         System.out.print("Ator ou Atriz (M-Masculino; F-Feminino): ");
         String generoAtor = scan.nextLine();
-        while (generoAtor.length() > 1 || !(generoAtor.equalsIgnoreCase("M") || generoAtor.equalsIgnoreCase("F"))) {
+        while (generoAtor.length() > 1 || !(generoAtor.equalsIgnoreCase("M") || generoAtor.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
             System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
             generoAtor = scan.nextLine();
         }
         System.out.print("Anos de carreira do Ator/Atriz: ");
         int anosCarreira = scan.nextInt();
-        scan.nextLine();
-        Ator ator = new Ator(primeiroNomeAtor, ultimoNomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
-        atores.add(ator);
+        scan.nextLine(); //discarda o enter
+        Ator ator = new Ator(nomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
+        atores.add(ator); //adiciona o ator criado no array de atores
     }
 
+    /**
+     *
+     * @param atores - array de atores criado durante a execução do programa
+     * @param scan - o scanner
+     * @param indexEdicoes - o indice que indica a edição atual
+     * @param edicoes - o array das edições
+     */
     public static void atribuirPapel(ArrayList<Ator> atores, Scanner scan, int indexEdicoes, ArrayList<Edicao> edicoes) {
         int i = 1;
-        for (Ator a : atores) {
-            System.out.printf("%d. %s\n", i, a.getPrimeiroNome() + " " + a.getUltimoNome());
+        for (Ator a : atores) { //imprime os atores criados anteriormente na execução do programa
+            System.out.printf("%d. %s\n", i, a.getNome());
             i++;
         }
         System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
         int pos = scan.nextInt();
-        scan.nextLine();
+        scan.nextLine(); //discarda o enter
         try {
-            Ator mudar = atores.get(pos - 1);
-            if (mudar.podeInserirFilme()) {
+            Ator mudar = atores.get(pos - 1); //guarda o ator ao qual atribuir um papel, se possível, caso contrário apanha a excepção e imprime uma mensagem
+            if (mudar.podeInserirFilme()) { //verifica que o ator não participa em 2 filmes na edição atual
                 i = 1;
-                for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
+                for (Filme f : edicoes.get(indexEdicoes).getFilmes()) { //imprime a lista de filmes da edição atual
                     System.out.printf("%d. %s\n", i, f.getNome());
                     i++;
                 }
                 System.out.println("Qual o filme?");
                 int posFilme = scan.nextInt();
-                Filme casting = edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1);
-                scan.nextLine();
+                scan.nextLine(); //discarda o enter
+                Filme casting = edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1); //guarda o filme no qual se pretende inserir o ator
                 System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
                 String papel = scan.nextLine();
-                while (papel.length() > 1) {
+                while (papel.length() > 1 || !(papel.equalsIgnoreCase("P") || papel.equalsIgnoreCase("S"))) {//verifica que inseriu uma opção válida
                     System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
                     papel = scan.nextLine();
                 }
                 switch (papel.toLowerCase()) {
-                    case "p":
-                        casting.insereAtor(mudar, mudar.getGenero() ? 0 : 1);
-                        mudar.inserirFilme(casting);
+                    case "p": //se pretende-se que o ator/atriz seja principal
+                        casting.insereAtor(mudar, mudar.getGenero() ? 0 : 1); //ver o método insereAtor em Filmes
+                        mudar.inserirFilme(casting); //insere o filme na lista de filmes em que o ator/atriz participa
                         break;
-                    case "s":
-                        casting.insereAtor(mudar, 2);
-                        mudar.inserirFilme(casting);
+                    case "s": //se pretende-se que o ator/atriz seja secundário/a
+                        casting.insereAtor(mudar, 2); //ver o método insereAtor em Filmes
+                        mudar.inserirFilme(casting); //insere o filme na lista de filmes em que o ator/atriz participa
                         break;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception e) { //no caso de o utilizador quiser selecionar um ator ou filme que não exista (apanha a exceção NullPointerException)
             System.out.println("Posição não existe.");
         }
     }
@@ -313,7 +329,7 @@ public class Main {
         while (escolhendo <= 4) { //até escolher os 4 candidatos
             int i = 1;
             for (Filme filme : edições.get(0).getFilmes()) {
-                System.out.printf("%d. %s\n", i, filme.getRealizador().getPrimeiroNome() + " " + filme.getRealizador().getUltimoNome()); //mostra nome do realizador do filme
+                System.out.printf("%d. %s\n", i, filme.getRealizador().getNome()); //mostra nome do realizador do filme
                 i++;
             }
             System.out.println("Escolha um candidato: ");
@@ -339,7 +355,7 @@ public class Main {
             int i = 1;
             if (homem) { //para ator principal
                 for (Filme filme : edições.get(0).getFilmes()) {
-                    System.out.printf("%d. %s\n", i, filme.getAtorPrincipal().getPrimeiroNome() + " " + filme.getAtorPrincipal().getUltimoNome());
+                    System.out.printf("%d. %s\n", i, filme.getAtorPrincipal().getNome());
                     i++;
                 }
                 System.out.println("Escolha um candidato: ");
@@ -354,7 +370,7 @@ public class Main {
                 }
             } else { //para atriz principal
                 for (Filme filme : edições.get(0).getFilmes()) {
-                    System.out.printf("%d. %s\n", i, filme.getAtrizPrincipal().getPrimeiroNome() + " " + filme.getAtrizPrincipal().getUltimoNome());
+                    System.out.printf("%d. %s\n", i, filme.getAtrizPrincipal().getNome());
                     i++;
                 }
                 System.out.println("Escolha um candidato: ");
@@ -399,7 +415,7 @@ public class Main {
             try {
                 if (contaPremios == 1 || contaPremios == 2 || contaPremios == 3 || contaPremios == 4) {
                     for (int i = 0; i < 4; i++) {
-                        System.out.println(premio.getAtoresCandidatos().get(i).getPrimeiroNome() + " " + premio.getAtoresCandidatos().get(i).getUltimoNome());
+                        System.out.println(premio.getAtoresCandidatos().get(i).getNome());
                     }
                 } else if (contaPremios == 5 || contaPremios == 7 || contaPremios == 8) {
                     for (int i = 0; i < 4; i++) {
@@ -407,7 +423,7 @@ public class Main {
                     }
                 } else if (contaPremios == 6) {
                     for (int i = 0; i < 4; i++) {
-                        System.out.println(premio.getFilmesCandidatos().get(i).getRealizador().getPrimeiroNome() + " " + premio.getFilmesCandidatos().get(i).getRealizador().getUltimoNome());
+                        System.out.println(premio.getFilmesCandidatos().get(i).getRealizador().getNome());
                     }
                 }
             } catch (Exception e) {
