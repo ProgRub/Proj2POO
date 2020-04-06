@@ -59,7 +59,7 @@ public class Premio {
             for (int coluna = 0; coluna < 5; coluna++) {
                 somaPontuaçõesCandidato += pontuações[linha][coluna];
             }
-            médiaCandidato = somaPontuaçõesCandidato / 4;
+            médiaCandidato = somaPontuaçõesCandidato / 5;
             medias[linha] = médiaCandidato;
         }
         return medias;
