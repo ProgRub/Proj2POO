@@ -8,9 +8,7 @@ public class Perito extends Pessoa {
     }
 
     public String toString() {
-        String perito;
-        perito = "Nome: " + getNome() + "\n";
-        perito += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
+        String perito = super.toString();
         return perito;
     }
 

@@ -7,13 +7,15 @@ public class Edicao {
     private final int ano;
     private final ArrayList<Filme> filmes;
     private final ArrayList<Premio> premios;
+    private ArrayList<Perito> peritos;
 
     public Edicao(int numEdicao, int ano) {
 
         this.numEdicao = numEdicao;
         this.ano = ano;
-        premios = new ArrayList<Premio>(9);
-        filmes = new ArrayList<Filme>();
+        this.premios = new ArrayList<Premio>(9);
+        this.filmes = new ArrayList<Filme>();
+        this.peritos = new ArrayList<Perito>();
         inserePremios();
     }
 
@@ -22,6 +24,16 @@ public class Edicao {
         Edicao = "Edição: " + numEdicao + " | Ano: " + ano;
 
         return Edicao;
+    }
+    
+    public void inserePerito(Perito perito)
+    {
+        this.peritos.add(perito);
+    }
+    
+    public ArrayList<Perito> getPeritos()
+    {
+        return this.peritos;
     }
 
     public final void inserePremios(){

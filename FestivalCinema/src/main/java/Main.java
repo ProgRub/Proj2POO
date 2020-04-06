@@ -63,6 +63,15 @@ public class Main {
                         case "c":
                             escolherCandidatos(edicoes, scan, atores);
                             break;
+                        case "e":
+                            if (edicoes.get(indexEdicoes).getPeritos().size()<=5)
+                            {
+                                criarPerito(scan, edicoes, indexEdicoes);
+                            }
+                            else
+                            {
+                                System.out.println("Já criou 5 peritos, o número máximo de peritos!");
+                            }
                     }
                     break;
                 case "l":
@@ -154,6 +163,19 @@ public class Main {
         scan.nextLine(); //discarda o enter
         Ator ator = new Ator(nomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
         atores.add(ator); //adiciona o ator criado no array de atores
+    }
+
+    public static void criarPerito(Scanner scan, ArrayList<Edicao> edicoes, int indexEdicoes) {
+        System.out.print("NOVO PERITO\nNome do perito :");
+        String nome = scan.nextLine();
+        System.out.print("Género do Perito (M-Masculino; F-Feminino): ");
+        String genero = scan.nextLine();
+        while (genero.length() > 1 || !(genero.equalsIgnoreCase("M") || genero.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
+            System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
+            genero = scan.nextLine();
+        }
+        Perito perito = new Perito(nome, genero.equalsIgnoreCase("M"));
+        edicoes.get(indexEdicoes).inserePerito(perito);
     }
 
     /**
@@ -274,11 +296,7 @@ public class Main {
                 edições.get(0).getPremios().get(2).setAtores(escolherAtoresSecundariosCandidatos(scan, edições, true));  //primeira ediçao apenas (mudar)
                 break;
             case "4": //MELHOR ATRIZ SECUNDÁRIA
-                ArrayList<Pessoa> atoresCandidatos4 = new ArrayList<Pessoa>(4);
-                //listar e escolher ator:
-
-                //... FALTA
-                edições.get(0).getPremios().get(3).setAtores(atoresCandidatos4);  //primeira ediçao apenas (mudar)
+                edições.get(0).getPremios().get(3).setAtores(escolherAtoresSecundariosCandidatos(scan, edições, false));
                 break;
             case "5": //MELHOR FILME
                 edições.get(0).getPremios().get(4).setFilmes(escolherFilmesCandidatos(scan, edições));  //primeira ediçao apenas (mudar)
@@ -316,7 +334,7 @@ public class Main {
                 filmesCandidatos.add(candidato);
                 escolhendo++;
             } catch (Exception e) {
-                System.out.println("Porfavor, escolha um filme válido.");
+                System.out.println("Por favor, escolha um filme válido.");
             }
         }
         // System.out.print(filmesCandidatos); //PARA TESTAR
@@ -341,7 +359,7 @@ public class Main {
                 filmesCandidatos.add(candidato); //adiciona filme do realizador
                 escolhendo++;
             } catch (Exception e) {
-                System.out.println("Porfavor, escolha um filme válido.");
+                System.out.println("Por favor, escolha um realizador válido.");
             }
         }
         // System.out.print(filmesCandidatos); //PARA TESTAR
@@ -370,7 +388,7 @@ public class Main {
                     atoresCandidatos.add(candidato.getAtorPrincipal());
                     escolhendo++;
                 } catch (Exception e) {
-                    System.out.println("Porfavor, escolha um candidato válido.");
+                    System.out.println("Por favor, escolha um ator válido.");
                 }
             } else { //para atriz principal
                 for (Filme filme : edições.get(0).getFilmes()) {
@@ -387,7 +405,7 @@ public class Main {
                     atoresCandidatos.add(candidato.getAtrizPrincipal());
                     escolhendo++;
                 } catch (Exception e) {
-                    System.out.println("Porfavor, escolha um candidato válido.");
+                    System.out.println("Por favor, escolha um ator válido.");
                 }
             }
         }
@@ -396,60 +414,60 @@ public class Main {
     }
 
     public static ArrayList<Pessoa> escolherAtoresSecundariosCandidatos(Scanner scan, ArrayList<Edicao> edições, boolean homem) {
-        ArrayList<Pessoa> atoresCandidatos = new ArrayList<>();
-        ArrayList<Pessoa> auxiliar = new ArrayList<>();
+        ArrayList<Pessoa> atoresCandidatos = new ArrayList<Pessoa>();
+        ArrayList<Pessoa> auxiliar;
         int escolhendo = 1;
         int i, j;
         while (escolhendo <= 4) { //até escolher os 4 candidatos
+            auxiliar = new ArrayList<Pessoa>();
             i = 1;
-            if (homem) {
-                for (Filme filme : edições.get(0).getFilmes()) {
-                    System.out.printf("%d. %s\n\tAtores Secundários:\n", i, filme.getNome());
-                    for (Pessoa a : filme.getAtoresSecundarios()) {
-                        if (a.getGenero()) {
-                            System.out.printf("\t%s\n", a.getNome());
-                        }
+            for (Filme filme : edições.get(0).getFilmes()) {
+                System.out.printf("%d. %s\n\tAtores Secundários:\n", i, filme.getNome());
+                for (Pessoa a : filme.getAtoresSecundarios()) {
+                    if (a.getGenero() == homem) {
+                        System.out.printf("\t%s\n", a.getNome());
                     }
-                    i++;
                 }
-                System.out.println("Escolha o filme do candidato que pretende selecionar: ");
-                int posFilme = scan.nextInt();
+                i++;
+            }
+            System.out.println("Escolha o filme do candidato que pretende selecionar: ");
+            int posFilme = scan.nextInt();
+            scan.nextLine();
+            try {
+                Filme candidato = edições.get(0).getFilmes().get(posFilme - 1);
+                for (Pessoa a : candidato.getAtoresSecundarios()) {
+                    if (a.getGenero() == homem) {
+                        auxiliar.add(a);
+                    }
+                }
+                j = 1;
+                for (Pessoa a : auxiliar) {
+                    System.out.printf("%d. %s\n", j, a.getNome());
+                    j++;
+                }
+                System.out.print("Agora escolha o ator secundário nomeado ao prémio (pelo número associado): ");
+                int posCandidato = scan.nextInt();
                 scan.nextLine();
                 try {
-                    Filme candidato = edições.get(0).getFilmes().get(posFilme - 1);
+                    Pessoa escolhido = auxiliar.get(posCandidato - 1);
+                    Pessoa nomeado = null;
                     for (Pessoa a : candidato.getAtoresSecundarios()) {
-                        if (a.getGenero() == homem) {
-                            auxiliar.add(a);
+                        if (a == escolhido) {
+                            nomeado = a;
                         }
                     }
-                    j = 1;
-                    for (Pessoa a : auxiliar) {
-                        System.out.printf("%d. %s\n", j, a.getNome());
-                        j++;
+                    if (nomeado != null) {
+                        atoresCandidatos.add(nomeado);
                     }
-                    System.out.print("Agora escolha o ator secundário nomeado ao prémio (pelo número associado): ");
-                    int posCandidato = scan.nextInt();
-                    scan.nextLine();
-                    try {
-                        Pessoa escolhido = auxiliar.get(posCandidato - 1);
-                        Pessoa nomeado = null;
-                        for (Pessoa a : candidato.getAtoresSecundarios()) {
-                            if (a == escolhido) {
-                                nomeado = a;
-                            }
-                        }
-                        if (nomeado != null) {
-                            atoresCandidatos.add(nomeado);
-                        }
-                        escolhendo++;
-                    } catch (Exception e) {
-                        System.out.println("Esse ator não participa neste filme.");
-                    }
+                    escolhendo++;
                 } catch (Exception e) {
-                    System.out.println("Por favor, escolha um filme válido.");
+                    System.out.println("Esse ator não participa neste filme.");
                 }
+            } catch (Exception e) {
+                System.out.println("Por favor, escolha um filme válido.");
             }
         }
+        auxiliar = null;
         return atoresCandidatos;
     }
 
