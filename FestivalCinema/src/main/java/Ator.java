@@ -13,25 +13,32 @@ public class Ator extends Pessoa {
         filmesParticipa = new ArrayList<Filme>(0);
     }
 
+    /**
+     *
+     * @return true se o ator participa em menos de 2 filmes na edição atual,
+     * false caso contrario
+     */
     public boolean podeInserirFilme() {
         return filmes < 2;
     }
 
+    /**
+     * Método que guarda um filme no catalogo de filmes do ator
+     *
+     * @param filme - filme a inserir no catalogo de filmes do ator
+     */
     public void inserirFilme(Filme filme) {
         this.filmesParticipa.add(filme);
         this.filmes++;
     }
 
     public String toString() {
-        String ator;
-        int posição = 0;
-        ator = "Nome: " + getNome() + "\n";
-        ator += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
+        String ator = super.toString();
         ator += "Anos de Carreira: " + anosCarreira + "\n";
         ator += "Filmes em que participa: \n";
-        while (posição < filmesParticipa.size()) {
-            ator += filmesParticipa.get(posição).getNome() + "\n";
-            posição++;
+        for (int indice = 0; indice < filmesParticipa.size(); indice++) {
+            ator += filmesParticipa.get(indice).getNome() + "\n";
+            indice++;
         }
         return ator;
     }

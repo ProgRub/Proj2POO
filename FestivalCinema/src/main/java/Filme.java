@@ -21,6 +21,15 @@ public class Filme {
         this.atoresSecundarios = new ArrayList<Pessoa>(0);
     }
 
+    /**
+     * Método que insere um ator no filme, se é principal ou secundário depende da posição
+     * @param ator - ator a inserir no filme
+     * @param posição - se for menor que 2 indica que pretende-se inserir o
+     * ator/atriz como principal, caso contrário será secundário Se for
+     * principal, a posição distingue se é ator ou atriz principal (0 - ator
+     * principal, 1 - atriz principal) e só insere se não houver ator/atriz
+     * principal
+     */
     public void insereAtor(Ator ator, int posição) {
         if (posição < 2) {
             if (posição == 0 && this.AtorPrincipal == null) {
@@ -56,21 +65,12 @@ public class Filme {
         filme = "Filme: " + nome + "\n";
         filme += "Género: " + genero + "\n";
         filme += "Realizador: " + realizador.getNome() + "\n";
-        if (AtorPrincipal != null) {
-            filme += "Ator Principal: " + AtorPrincipal.getNome() + "\n";
-        }
-        if (AtrizPrincipal != null) {
-            filme += "Atriz Principal: " + AtrizPrincipal.getNome() + "\n";
-        }
-        int indice = 0;
-        while (indice < atoresSecundarios.size()) {
-            if (indice == 0) {
-                filme += "Atores Secundários:\n";
-            }
+        filme += "Ator Principal: " + (AtorPrincipal != null ? AtorPrincipal.getNome() : "") + "\n";
+        filme += "Atriz Principal: " + (AtrizPrincipal != null ? AtrizPrincipal.getNome() : "") + "\n";
+        filme += "Atores Secundários:\n";
+        for (int indice = 0; indice < atoresSecundarios.size(); indice++) {
             filme += atoresSecundarios.get(indice).getNome() + "\n";
-            indice++;
         }
-
         return filme;
     }
 

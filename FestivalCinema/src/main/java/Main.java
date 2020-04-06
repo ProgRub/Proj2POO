@@ -11,7 +11,7 @@ public class Main {
 
         int indexEdicoes = 0;
         int numEdicao = 1;
-        int ano;
+        int ano = 0;
         System.out.println("\t\t\tFESTIVAL CINEMA");
         System.out.print("(n): Começar um novo programa\t(c): Carregar um programa anterior\nOpção: ");
         Scanner scan = new Scanner(System.in, "cp1252");
@@ -92,12 +92,11 @@ public class Main {
                     }
                     break;
                 case "h":
-                    System.out.print("CRIAR NOVA EDIÇÃO:\nAno: ");
-                    ano = scan.nextInt();
-                    scan.nextLine();
+                    System.out.print("NOVA EDIÇÃO CRIADA");
                     numEdicao++;
-                    edicoes.add(new Edicao(numEdicao, ano));
+                    ano++;
                     indexEdicoes++;
+                    edicoes.add(new Edicao(numEdicao, ano));
                     break;
                 case "s":
                     quebra = true;

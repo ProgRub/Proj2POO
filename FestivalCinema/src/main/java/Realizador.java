@@ -6,9 +6,6 @@ public class Realizador extends Pessoa {
     }
 
     public String toString() {
-        String realizador;
-        realizador = "Nome: " + getNome() + "\n";
-        realizador += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
-        return realizador;
+        return super.toString();
     }
 }

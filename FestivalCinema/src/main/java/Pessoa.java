@@ -12,9 +12,14 @@ public class Pessoa {
     public String getNome() {
         return nome;
     }
-    
-    public boolean getGenero(){
-          return genero;
+
+    public boolean getGenero() {
+        return genero;
     }
-   
+    public String toString() {
+        String pessoa;
+        pessoa = "Nome: " + getNome() + "\n";
+        pessoa += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
+        return pessoa;
+    }
 }
