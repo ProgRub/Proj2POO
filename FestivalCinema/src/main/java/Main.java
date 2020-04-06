@@ -490,7 +490,7 @@ public class Main {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Não tem candidatos.");
+                System.out.println("Não tem candidatos.\n");
             }
             contaPremios++;
         }
