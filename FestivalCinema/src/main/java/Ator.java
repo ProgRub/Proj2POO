@@ -4,13 +4,24 @@ import java.util.ArrayList;
 public class Ator extends Pessoa {
 
     private int anosCarreira;
-    private int filmes;
+    private int numFilmesEdiçãoAtual;
+    private int numFilmesTotal;
     private ArrayList<Filme> filmesParticipa;
 
     public Ator(String nome, boolean genero, int anosCarreira) {
         super(nome, genero);
         this.anosCarreira = anosCarreira;
+        this.numFilmesTotal = 0;
+        this.numFilmesEdiçãoAtual = 0;
         filmesParticipa = new ArrayList<Filme>(0);
+    }
+
+    public void resetNumFilmesEdicaoAtual() {
+        this.numFilmesEdiçãoAtual = 0;
+    }
+
+    public void incrementaAnosCarreira() {
+        this.anosCarreira++;
     }
 
     /**
@@ -19,7 +30,7 @@ public class Ator extends Pessoa {
      * false caso contrario
      */
     public boolean podeInserirFilme() {
-        return filmes < 2;
+        return numFilmesEdiçãoAtual < 2;
     }
 
     /**
@@ -29,7 +40,8 @@ public class Ator extends Pessoa {
      */
     public void inserirFilme(Filme filme) {
         this.filmesParticipa.add(filme);
-        this.filmes++;
+        this.numFilmesEdiçãoAtual++;
+        this.numFilmesTotal++;
     }
 
     public String toString() {

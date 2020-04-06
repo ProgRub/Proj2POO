@@ -22,7 +22,9 @@ public class Filme {
     }
 
     /**
-     * Método que insere um ator no filme, se é principal ou secundário depende da posição
+     * Método que insere um ator no filme, se é principal ou secundário depende
+     * da posição
+     *
      * @param ator - ator a inserir no filme
      * @param posição - se for menor que 2 indica que pretende-se inserir o
      * ator/atriz como principal, caso contrário será secundário Se for
@@ -54,6 +56,10 @@ public class Filme {
 
     public Pessoa getAtrizPrincipal() {
         return AtrizPrincipal;
+    }
+
+    public ArrayList<Pessoa> getAtoresSecundarios() {
+        return atoresSecundarios;
     }
 
     public Realizador getRealizador() {
