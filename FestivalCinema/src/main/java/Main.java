@@ -474,25 +474,7 @@ public class Main {
         System.out.println("CANDIDATOS AOS PRÉMIOS:");
 
         for (Premio premio : edições.get(0).getPremios()) {
-            if (contaPremios == 1) {
-                System.out.println("- MELHOR ATOR PRINCIPAL:");
-            } else if (contaPremios == 2) {
-                System.out.println("- MELHOR ATRIZ PRINCIPAL:");
-            } else if (contaPremios == 3) {
-                System.out.println("- MELHOR ATOR SECUNDÁRIO:");
-            } else if (contaPremios == 4) {
-                System.out.println("- MELHOR ATRIZ SECUNDÁRIA:");
-            } else if (contaPremios == 5) {
-                System.out.println("- MELHOR FILME:");
-            } else if (contaPremios == 6) {
-                System.out.println("- MELHOR REALIZADOR:");
-            } else if (contaPremios == 7) {
-                System.out.println("- MELHOR ARGUMENTO:");
-            } else if (contaPremios == 8) {
-                System.out.println("- MELHOR CINEMATOGRAFIA:");
-            } else if (contaPremios == 9) {
-                System.out.println("- PRÉMIO CARREIRA:");
-            }
+            System.out.println(premio + ":");
             try {
                 if (contaPremios <= 4 || contaPremios == 9) {
                     for (int i = 0; i < 4; i++) {
