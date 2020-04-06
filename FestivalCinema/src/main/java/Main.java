@@ -43,11 +43,11 @@ public class Main {
             switch (opcaoGeral.toLowerCase()) {
 
                 case "c":
-                    System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator\t(p): Atribui Papel\t(c): Escolher candidatos\nOpção: ");
+                    System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator/Atriz\t(e): Criar Perito\t(p): Atribui Papel\t(c): Escolher candidatos\nOpção: ");
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
-                        System.out.print("(f): Criar Filme\t(a): Criar Ator\t(p): Atribui Papel\nOpção: ");
+                        System.out.print("(f): Criar Filme\t(a): Criar Ator/Atriz\t(e): Criar Perito\t(p): Atribui Papel\t(c): Escolher candidatos\nOpção: ");
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {
@@ -64,12 +64,9 @@ public class Main {
                             escolherCandidatos(edicoes, scan, atores);
                             break;
                         case "e":
-                            if (edicoes.get(indexEdicoes).getPeritos().size()<=5)
-                            {
+                            if (edicoes.get(indexEdicoes).getPeritos().size() < 5) {
                                 criarPerito(scan, edicoes, indexEdicoes);
-                            }
-                            else
-                            {
+                            } else {
                                 System.out.println("Já criou 5 peritos, o número máximo de peritos!");
                             }
                     }
@@ -166,7 +163,7 @@ public class Main {
     }
 
     public static void criarPerito(Scanner scan, ArrayList<Edicao> edicoes, int indexEdicoes) {
-        System.out.print("NOVO PERITO\nNome do perito :");
+        System.out.print("NOVO PERITO\nNome do perito: ");
         String nome = scan.nextLine();
         System.out.print("Género do Perito (M-Masculino; F-Feminino): ");
         String genero = scan.nextLine();
@@ -311,7 +308,7 @@ public class Main {
                 edições.get(0).getPremios().get(7).setFilmes(escolherFilmesCandidatos(scan, edições));  //primeira ediçao apenas (mudar)
                 break;
             case "9": //PRÉMIO CARREIRA
-                edições.get(0).getPremios().get(8).setAtores(escolherPremioCarreira(scan,atores));  //primeira ediçao apenas (mudar)
+                edições.get(0).getPremios().get(8).setAtores(escolherPremioCarreira(scan, atores));  //primeira ediçao apenas (mudar)
                 break;
         }
     }
@@ -517,7 +514,6 @@ public class Main {
         }
     }
 
-    
     public static ArrayList<Pessoa> escolherPremioCarreira(Scanner scan, ArrayList<Ator> atores) {
         ArrayList<Pessoa> atoresCandidatos = new ArrayList<Pessoa>();
         int escolhendo = 1;
