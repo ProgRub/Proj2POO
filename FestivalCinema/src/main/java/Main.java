@@ -357,8 +357,10 @@ public class Main {
             int i = 1;
             if (homem) { //para ator principal
                 for (Filme filme : edições.get(0).getFilmes()) {
-                    System.out.printf("%d. %s\n", i, filme.getAtorPrincipal().getNome());
-                    i++;
+                    if (filme.getAtorPrincipal() != null) {
+                        System.out.printf("%d. %s\n", i, filme.getAtorPrincipal().getNome());
+                        i++;
+                    }
                 }
                 System.out.println("Escolha um candidato: ");
                 int pos = scan.nextInt();
@@ -372,8 +374,10 @@ public class Main {
                 }
             } else { //para atriz principal
                 for (Filme filme : edições.get(0).getFilmes()) {
-                    System.out.printf("%d. %s\n", i, filme.getAtrizPrincipal().getNome());
-                    i++;
+                    if (filme.getAtrizPrincipal() != null) {
+                        System.out.printf("%d. %s\n", i, filme.getAtrizPrincipal().getNome());
+                        i++;
+                    }
                 }
                 System.out.println("Escolha um candidato: ");
                 int pos = scan.nextInt();
