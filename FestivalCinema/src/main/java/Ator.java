@@ -7,8 +7,8 @@ public class Ator extends Pessoa {
     private int filmes;
     private ArrayList<Filme> filmesParticipa;
 
-    public Ator(String primeiroNome, String ultimoNome, boolean genero, int anosCarreira) {
-        super(primeiroNome, ultimoNome, genero);
+    public Ator(String nome, boolean genero, int anosCarreira) {
+        super(nome, genero);
         this.anosCarreira = anosCarreira;
         filmesParticipa = new ArrayList<Filme>(0);
     }
@@ -25,7 +25,7 @@ public class Ator extends Pessoa {
     public String toString() {
         String ator;
         int posição = 0;
-        ator = "Nome: " + getPrimeiroNome() + " " + getUltimoNome() + "\n";
+        ator = "Nome: " + getNome() + "\n";
         ator += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
         ator += "Anos de Carreira: " + anosCarreira + "\n";
         ator += "Filmes em que participa: \n";
@@ -33,7 +33,6 @@ public class Ator extends Pessoa {
             ator += filmesParticipa.get(posição).getNome() + "\n";
             posição++;
         }
-        posição = 0;
         return ator;
     }
 
