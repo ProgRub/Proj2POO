@@ -17,6 +17,19 @@ public class Premio {
         }
         this.pontuacoes = new int[4][5]; //4 candidatos, 5 peritos
     }
+    
+    public String getNome()
+    {
+        return this.nome;
+    }
+
+    public int[][] getPontuacoes() {
+        return this.pontuacoes;
+    }
+
+    public void setPontuacao(int candidato, int perito, int pontuacao) {
+        this.pontuacoes[candidato][perito] = pontuacao;
+    }
 
     public void setFilmes(ArrayList<Filme> filmes) {
         this.filmes = filmes;

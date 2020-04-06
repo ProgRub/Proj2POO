@@ -148,17 +148,17 @@ public class Main {
      */
     public static void criarAtor(Scanner scan, ArrayList<Ator> atores) {
         System.out.print("NOVO ATOR\nNome do Ator/Atriz: ");
-        String nomeAtor = scan.nextLine();
+        String nome = scan.nextLine();
         System.out.print("Ator ou Atriz (M-Masculino; F-Feminino): ");
-        String generoAtor = scan.nextLine();
-        while (generoAtor.length() > 1 || !(generoAtor.equalsIgnoreCase("M") || generoAtor.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
+        String genero = scan.nextLine();
+        while (genero.length() > 1 || !(genero.equalsIgnoreCase("M") || genero.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
             System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
-            generoAtor = scan.nextLine();
+            genero = scan.nextLine();
         }
         System.out.print("Anos de carreira do Ator/Atriz: ");
         int anosCarreira = scan.nextInt();
         scan.nextLine(); //discarda o enter
-        Ator ator = new Ator(nomeAtor, generoAtor.equalsIgnoreCase("M"), anosCarreira);
+        Ator ator = new Ator(nome, genero.equalsIgnoreCase("M"), anosCarreira);
         atores.add(ator); //adiciona o ator criado no array de atores
     }
 
@@ -533,4 +533,26 @@ public class Main {
         return atoresCandidatos;
     }
 
+    public static void pontuarCandidatos(Scanner scan, ArrayList<Edicao> edicoes, int indexEdicoes, Premio premio) {
+        System.out.println("AVALIAÇÃO DO PRÉMIO " + premio.toString().toUpperCase());
+        if (premio.getNome().contains("Ator") || premio.getNome().contains("Ator")) {
+            for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
+                for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
+                    System.out.printf((p.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação (de 1 a 10): ", p.getNome());
+                    p.inserePontuacao(scan.nextInt(), premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p));
+                    scan.nextLine();
+                }
+            }
+        }
+        else if (!premio.getNome().contains("Carreira"))
+        {
+            for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
+                for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
+                    System.out.printf((p.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação (de 1 a 10): ", p.getNome());
+                    p.inserePontuacao(scan.nextInt(), premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p));
+                    scan.nextLine();
+                }
+            }
+        }
+    }
 }

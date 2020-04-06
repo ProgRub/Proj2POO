@@ -1,8 +1,5 @@
 
 public class Perito extends Pessoa {
-
-    private int pontuação;
-
     public Perito(String nome, boolean genero) {
         super(nome, genero);
     }
@@ -12,11 +9,8 @@ public class Perito extends Pessoa {
         return perito;
     }
 
-    public void inserePontuacao(int pontuacao) {
-        this.pontuação = pontuacao;
-    }
-
-    public int getPontuacao() {
-        return this.pontuação;
+    public void inserePontuacao(int pontuacao, Premio premio, int indiceCandidato, int indicePerito) {
+        premio.setPontuacao(indiceCandidato, indicePerito, pontuacao);
+        System.out.println(premio.getPontuacoes());
     }
 }
