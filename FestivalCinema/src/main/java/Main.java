@@ -11,7 +11,7 @@ public class Main {
 
         int indexEdicoes = 0;
         int numEdicao = 1;
-        int ano = 3000;
+        int ano;
         System.out.println("\t\t\tFESTIVAL CINEMA");
         System.out.print("(n): Começar um novo programa\t(c): Carregar um programa anterior\nOpção: ");
         Scanner scan = new Scanner(System.in, "cp1252");
@@ -24,17 +24,20 @@ public class Main {
         if (opcao.equalsIgnoreCase("c")) {
             novo = false;
         } else {
+            System.out.print("CRIAR EDIÇÃO:\nAno: ");
+            ano = scan.nextInt();
+            scan.nextLine();
             edicoes.add(new Edicao(numEdicao, ano));
         }
         boolean quebra = false;
 
         while (!quebra) {
             System.out.println("*****************************************************************");
-            System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(h): Criar Edição\t(s): Sair\nOpção: ");
+            System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(h): Criar nova Edição\t(s): Sair\nOpção: ");
             String opcaoGeral = scan.nextLine();
             while (opcaoGeral.length() > 1) {
                 System.out.println("Por favor selecione uma das opções disponíveis.");
-                System.out.print("(c): Criar algo\t(l): Listar algo\t(h): Criar Edição\t(s): Sair\nOpção: ");
+                System.out.print("(c): Criar algo\t(l): Listar algo\t(h): Criar nova Edição\t(s): Sair\nOpção: ");
                 opcaoGeral = scan.nextLine();
             }
             switch (opcaoGeral.toLowerCase()) {
@@ -85,8 +88,8 @@ public class Main {
                             break;
                     }
                     break;
-                case "n":
-                    System.out.print("CRIAR EDIÇÃO:\nAno: ");
+                case "h":
+                    System.out.print("CRIAR NOVA EDIÇÃO:\nAno: ");
                     ano = scan.nextInt();
                     scan.nextLine();
                     numEdicao++;
