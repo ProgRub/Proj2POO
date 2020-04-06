@@ -6,6 +6,7 @@ public class Filme {
     private final String nome;
     private final String genero;
     private final int edição;
+    private int numeroPremios;
     private final Realizador realizador;
     private Pessoa AtorPrincipal;
     private Pessoa AtrizPrincipal;
@@ -19,6 +20,7 @@ public class Filme {
         this.AtorPrincipal = null;
         this.AtrizPrincipal = null;
         this.atoresSecundarios = new ArrayList<Pessoa>(0);
+        this.numeroPremios = 0;
     }
 
     /**
@@ -66,6 +68,12 @@ public class Filme {
         return realizador;
     }
     
+    public int getNumeroPremios() {
+        return numeroPremios;
+    }
+    public void incrementaNumeroPremios() {
+        numeroPremios++;
+    }
 
     public String toString() {
         String filme;
