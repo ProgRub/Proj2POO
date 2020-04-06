@@ -12,7 +12,7 @@ public class Edicao {
 
         this.numEdicao = numEdicao;
         this.ano = ano;
-        premios = new ArrayList<Premio>(8);
+        premios = new ArrayList<Premio>(9);
         filmes = new ArrayList<Filme>();
         inserePremios();
     }
@@ -41,6 +41,8 @@ public class Edicao {
         this.premios.add(premio7);
         Premio premio8 = new Premio("Melhor Cinematografia");
         this.premios.add(premio8);
+        Premio premio9 = new Premio("Premio Carreira");
+        this.premios.add(premio9);
     }
 
     public void imprimeFilmes() {

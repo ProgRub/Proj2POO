@@ -44,6 +44,10 @@ public class Ator extends Pessoa {
         this.numFilmesTotal++;
     }
 
+    
+    public int getAnosCarreira(){
+        return anosCarreira;
+    }
     public String toString() {
         String ator = super.toString();
         ator += "Anos de Carreira: " + anosCarreira + "\n";

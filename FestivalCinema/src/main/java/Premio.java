@@ -8,7 +8,7 @@ public class Premio{
     
     public Premio(String nome){
         this.nome = nome;
-        if(nome.contains("Ator")|| nome.contains("Atriz")){
+        if(nome.contains("Ator")|| nome.contains("Atriz") || nome.contains("Carreira")){
             this.filmes = null;
         }
         else{
