@@ -130,34 +130,33 @@ public class Premio {
         double pont2 = pont[1]; //média do filme/ator da segunda linha
         double pont3 = pont[2]; //média do filme/ator da terceira linha
         pont = ordenaPontuações(mediasPontuações(pontuações));
-        System.out.println(nome + ": ");
+        System.out.print(nome + ": ");
         try{
             if (pont[0] == pont1) {
             if (filmes == null && atores != null) {
-                System.out.print(atores.get(0).getNome());
+                System.out.println(atores.get(0).getNome()+"\n");
             } else {  
-                System.out.print(filmes.get(0).getNome());
+                System.out.println(filmes.get(0).getNome()+"\n");
             }
         } else if (pont[0] == pont2) { 
             if (filmes == null && atores != null) {
-                System.out.print(atores.get(1).getNome());
+                System.out.println(atores.get(1).getNome()+"\n");
             } else {
-                System.out.print(filmes.get(1).getNome());
+                System.out.println(filmes.get(1).getNome()+"\n");
             }
         } else if (pont[0] == pont3) {
             if (filmes == null && atores != null) {
-                System.out.print(atores.get(2).getNome());
+                System.out.println(atores.get(2).getNome()+"\n");
             } else {
-                System.out.print(filmes.get(2).getNome());
+                System.out.println(filmes.get(2).getNome()+"\n");
             }
         } else { 
             if (filmes == null && atores != null) {
-                System.out.print(atores.get(3).getNome());
+                System.out.println(atores.get(3).getNome()+"\n");
             } else {
-                System.out.print(filmes.get(3).getNome());
+                System.out.println(filmes.get(3).getNome()+"\n");
             }
         }
-        System.out.print(pont[0]); //imprime pontuação
         }catch (Exception e){
             System.out.println("Ainda sem vencedor.\n");
         }
