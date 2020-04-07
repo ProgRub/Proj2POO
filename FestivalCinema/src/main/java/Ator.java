@@ -60,14 +60,6 @@ public class Ator extends Pessoa {
     }
 
     public boolean equals(Ator a, Ator b) {
-        if (a.filmesParticipa.size() != b.filmesParticipa.size()) {
-            return false;
-        }
-        for (int indice = 0; indice < a.filmesParticipa.size(); indice++) {
-            if (a.filmesParticipa.get(indice) != b.filmesParticipa.get(indice)) {
-                return false;
-            }
-        }
         return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero()) && (a.numFilmesEdiçãoAtual == b.numFilmesEdiçãoAtual) && (a.numFilmesTotal == b.numFilmesTotal) && (a.anosCarreira == b.anosCarreira);
     }
 }
