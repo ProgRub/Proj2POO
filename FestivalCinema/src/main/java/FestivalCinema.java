@@ -58,7 +58,7 @@ public class FestivalCinema {
             System.out.println("*****************************************************************");
             System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(h): Criar nova Edição\t(s): Sair\nOpção: ");
             String opcaoGeral = scan.nextLine();
-            while (!(opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("l") || opcao.equalsIgnoreCase("h") || opcao.equalsIgnoreCase("s"))) {
+            while (!(opcaoGeral.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("l") || opcao.equalsIgnoreCase("h") || opcao.equalsIgnoreCase("s"))) {
                 System.out.println("Por favor selecione uma das opções disponíveis.");
                 System.out.print("(c): Criar algo\t(l): Listar algo\t(h): Criar nova Edição\t(s): Sair\nOpção: ");
                 opcaoGeral = scan.nextLine();
@@ -561,18 +561,16 @@ public class FestivalCinema {
         System.out.println("AVALIAÇÃO DO PRÉMIO " + premio.toString().toUpperCase());
         if (premio.getNome().contains("Ator") || premio.getNome().contains("Ator")) {
             for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
+                System.out.printf("CANDIDATO %d: %s\n", indiceCandidato + 1,premio.getAtoresCandidatos().get(indiceCandidato).getNome());
                 for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
-                    System.out.printf((p.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação (de 1 a 10): ", p.getNome());
-                    p.inserePontuacao(scan.nextInt(), premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p));
-                    scan.nextLine();
+                    while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p),scan));
                 }
             }
         } else if (!premio.getNome().contains("Carreira")) {
             for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
+                System.out.printf("CANDIDATO %d: %s\n", indiceCandidato + 1,premio.getFilmesCandidatos().get(indiceCandidato).getNome());
                 for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
-                    System.out.printf((p.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação (de 1 a 10): ", p.getNome());
-                    p.inserePontuacao(scan.nextInt(), premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p));
-                    scan.nextLine();
+                    while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p),scan));
                 }
             }
         }
