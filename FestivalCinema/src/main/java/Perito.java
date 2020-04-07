@@ -13,10 +13,10 @@ public class Perito extends Pessoa {
     }
 
     public boolean inserePontuacao(Premio premio, int indiceCandidato, int indicePerito, Scanner scan) {
-        System.out.printf((this.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação (de 1 a 10): ", this.getNome());
+        System.out.printf((this.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação: ", this.getNome());
         double pontuacao = scan.nextDouble();
         scan.nextLine();
-        if (pontuacao > 0 && pontuacao < 10 && pontuacao == (int)pontuacao) {
+        if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int)pontuacao) {
             premio.setPontuacao(indiceCandidato, indicePerito, (int)pontuacao);
         }
         else
