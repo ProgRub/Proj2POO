@@ -971,5 +971,203 @@ public class Main {
     }
     
     
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+    //---------------------------------------------------------------------
+    
+    public static void insereAtoresCarregados(int indexEdicoes, ArrayList<Edicao> edicoes, File ficheiro){
+        String nomeAtor = " ";
+        Boolean generoAtor = false;
+        //int anosCarreiraAtor = 0;
+        Boolean criarAtorP = false;
+        Boolean criarAtrizP = false;
+        Boolean criarAtoresS = false;
+        Boolean auxVazio;
+         
+        int i = 0;
+        int indexFilmes = -1;
+        
+        try {
+            FileReader lerFicheiro = new FileReader(ficheiro);
+            BufferedReader lerDados = new BufferedReader(lerFicheiro);
+            String line;
+            while ((line = lerDados.readLine()) != null) {   
+                StringBuilder aux = new StringBuilder();
+                aux.append(line).append(" ");
+                String auxString = aux.toString();
+                
+                if(auxString.equals("-------------------------------- ")){
+                    criarAtoresS=false;
+                    indexFilmes++;
+                }
+                if(auxString.equals(" ")){
+                    
+                    auxVazio = true;
+                }               
+                else
+                    auxVazio = false;
+               
+                if (criarAtorP && !auxVazio){
+                    
+                    switch (i){
+                        case 0:
+                            nomeAtor = auxString;
+                            break;
+                        case 1:
+                            if (auxString.equals("F ")){
+                                generoAtor= false;
+                            }
+                            else{
+                                generoAtor= true;
+                            }
+                            break;
+                            
+                        case 2:
+                            Ator ator = new Ator(nomeAtor, generoAtor, 9); //ANOS DE CARREIRA!!! ERRO
+                            edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, 0);                           
+                            criarAtorP=false;
+                            break;
+                    }                   
+                    if (i==2)
+                        i=0;
+                    else
+                        i++;                   
+                }
+                
+                if (criarAtrizP && !auxVazio){
+                    
+                    switch (i){
+                        case 0:
+                            nomeAtor = auxString;
+                            break;
+                        case 1:
+                            if (auxString.equals("F ")){
+                                generoAtor= false;
+                            }
+                            else{
+                                generoAtor= true;
+                            }
+                            break;
+                        case 2:
+                            Ator ator = new Ator(nomeAtor, generoAtor,9);
+                            edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, 1);
+                            criarAtrizP = false;
+                            break;
+                    }
+                    if (i==2)
+                        i=0;
+                    else
+                        i++;   
+                }
+                
+                if (criarAtoresS && !auxVazio){ 
+                    
+                    switch (i){
+                        case 0:
+                            nomeAtor = auxString;
+                            break;
+                        case 1:
+                            if (auxString.equals("F ")){
+                                generoAtor= false;
+                            }
+                            else{
+                                generoAtor= true;
+                            }
+                            break;  
+                        case 2:                           
+                            Ator ator = new Ator(nomeAtor, generoAtor,9);
+                            edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, 3);
+                            
+                            break;
+                    }
+                    if (i==2)
+                        i=0;
+                    else
+                        i++;                                         
+                }
+                if(auxString.equals("Ator principal: ")){
+                    criarAtorP = true;
+                }              
+                if(auxString.equals("Atriz principal: ")){
+                    criarAtrizP = true;
+                    
+                }               
+                if(auxString.equals("Atores Secundarios: ")){
+                    criarAtoresS = true;
+                }  
+            }
+        }catch (IOException ioe) {
+            System.out.println("Ocorreu um Erro"); }
+    }
+    
+    
+    public static void insereFilmesCarregados(ArrayList<Edicao> edições, File ficheiro, int numEdicao, int indexEdicoes){
+        String nomeFilme= " ";    
+        String generoFilme= " ";   
+        String nomeRealizador = " ";
+        Boolean generoRealizador = false;
+        int i = 0;
+        String tracinhos = "-------------------------------- ";
+        Boolean criarNovoFilme=false;    
+        
+        try {
+            FileReader lerFicheiro = new FileReader(ficheiro);
+            BufferedReader lerDados = new BufferedReader(lerFicheiro);
+            String line;
+            Boolean auxVazio = false;
+            while ((line = lerDados.readLine()) != null) {   
+                StringBuilder aux = new StringBuilder();
+                aux.append(line).append(" ");
+                String auxString = aux.toString();
+                
+                if(auxString.equals(" ")){
+                    
+                    auxVazio = true;
+                }               
+                else
+                    auxVazio = false;
+                
+                
+                if(criarNovoFilme && !auxVazio){
+                    switch(i){
+                        case 0:
+                            nomeFilme = auxString;
+                            break;
+                        case 1:
+                            generoFilme = auxString;
+                            break;
+                        case 2:
+                            nomeRealizador = auxString;
+                            break;
+                        case 3:
+                            if (auxString.equals("F ")){
+                                generoRealizador= false;
+                            }
+                            else{
+                                generoRealizador= true;
+                            }
+                            
+                            criarNovoFilme=false;
+                            Realizador realizador = new Realizador(nomeRealizador, generoRealizador);
+                            Filme filme = new Filme(nomeFilme, generoFilme, numEdicao, realizador);
+                            edições.get(indexEdicoes).insereFilmes(filme);
+                            break;     
+                    }
+                    if (i==3)
+                        i=0;
+                    else
+                        i++;
+                }
+                
+                if (auxString.equals(tracinhos)){
+                    criarNovoFilme = true;                   
+                }
+            }
+          } catch (IOException ioe) {
+            System.out.println("Ocorreu um Erro"); }
+    }
+    
+    
 >>>>>>> Stashed changes
 }
