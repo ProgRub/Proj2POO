@@ -565,7 +565,7 @@ public class FestivalCinema {
                 }
 
             } catch (Exception e) {
-                System.out.println("Porfavor, escolha um candidato válido.");
+                System.out.println("Por favor, escolha um candidato válido.");
             }
         }
         //System.out.print(atoresCandidatos); //PARA TESTAR
