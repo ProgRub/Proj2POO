@@ -53,28 +53,34 @@ public class Premio {
     public double[] mediasPontuações(int pontuações[][]) {
         double[] medias = new double[4]; //guarda medias dos filmes/atores pela ordem
         for (int linha = 0; linha < 4; linha++) {
-            int somaPontuaçõesCandidato = 0;
+            double somaPontuaçõesCandidato = 0;
             double médiaCandidato = 0;
+            int numPontuacoes = 0;
             for (int coluna = 0; coluna < 5; coluna++) {
                 somaPontuaçõesCandidato += pontuações[linha][coluna];
+                if (pontuações[linha][coluna] != 0)
+                {
+                    numPontuacoes++;
+                }
             }
-            médiaCandidato = somaPontuaçõesCandidato / 5;
+            médiaCandidato = somaPontuaçõesCandidato / numPontuacoes;
             medias[linha] = médiaCandidato;
         }
         return medias;
     }
 
-    public void ordenaPontuações(double[] pontuações) {
+    public double[] ordenaPontuações(double[] pontuações) {
         int n = pontuações.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (pontuações[j] > pontuações[j + 1]) {
+                if (pontuações[j] <= pontuações[j + 1]) {
                     double aux = pontuações[j];
                     pontuações[j] = pontuações[j + 1];
                     pontuações[j + 1] = aux;
                 }
             }
         }
+        return pontuações;
     }
 
     public void imprimePontuações(int pontuações[][]) {
@@ -82,7 +88,7 @@ public class Premio {
         double pont1 = pont[0]; //média do filme/ator da primeira linha
         double pont2 = pont[1]; //média do filme/ator da segunda linha
         double pont3 = pont[2]; //média do filme/ator da terceira linha
-        ordenaPontuações(pont);
+        pont = ordenaPontuações(mediasPontuações(pontuações));
         int n = pont.length;
         System.out.println("PONTUAÇÕES: ");
         for (int i = 0; i < n; ++i) {

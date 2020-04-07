@@ -70,7 +70,7 @@ public class FestivalCinema {
                     opcao = scan.nextLine();
                     while (opcao.length() > 1) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
-                        System.out.print("(f): Criar Filme\t(a): Criar Ator/Atriz\t(e): Criar Perito\t(p): Atribui Papel\t(c): Escolher candidatos\nOpção: ");
+                        System.out.print("(f): Criar Filme\t(a): Criar Ator/Atriz\t(e): Criar Perito\t(p): Atribui Papel\t(c): Escolher candidatos\t(s): Atribuir Pontuação\nOpção: ");
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {
@@ -80,18 +80,22 @@ public class FestivalCinema {
                         case "a":
                             criarAtor();
                             break;
-                        case "p":
-                            atribuirPapel();
-                            break;
-                        case "c":
-                            escolherCandidatos();
-                            break;
                         case "e":
                             if (edicoes.get(indexEdicoes).getPeritos().size() < 5) {
                                 criarPerito();
                             } else {
                                 System.out.println("Já criou 5 peritos, o número máximo de peritos!");
                             }
+                            break;
+                        case "p":
+                            atribuirPapel();
+                            break;
+                        case "c":
+                            escolherCandidatos();
+                            break;
+                        case "s":
+                            pontuarCandidatos(edicoes.get(indexEdicoes).getPremios().get(4));
+                            break;
                     }
                     break;
                 case "l":
@@ -564,6 +568,7 @@ public class FestivalCinema {
                 }
             }
         }
+        premio.imprimePontuações(premio.getPontuacoes());
     }
     
     
