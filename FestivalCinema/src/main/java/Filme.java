@@ -11,6 +11,7 @@ public class Filme {
     private Ator AtorPrincipal;
     private Ator AtrizPrincipal;
     private ArrayList<Ator> atoresSecundarios;
+    private ArrayList<Ator> todosAtores;
 
     public Filme(String nome, String genero, int edição, Realizador realizador) {
         this.nome = nome;
@@ -20,6 +21,7 @@ public class Filme {
         this.AtorPrincipal = null;
         this.AtrizPrincipal = null;
         this.atoresSecundarios = new ArrayList<Ator>(0);
+        this.todosAtores = new ArrayList<Ator>();
         this.numeroPremios = 0;
     }
 
@@ -75,7 +77,19 @@ public class Filme {
     public void incrementaNumeroPremios() {
         numeroPremios++;
     }
-
+    
+    public ArrayList<Ator> juntaAtores(){
+        this.todosAtores.add(AtorPrincipal);
+        this.todosAtores.add(AtrizPrincipal);
+        
+        for(int i =0; i < atoresSecundarios.size(); i++){
+            this.todosAtores.add(atoresSecundarios.get(i));
+        }
+        
+        return todosAtores;
+   
+    }
+    
     public String toString() {
         String filme;
         filme = "Filme: " + nome + "\n";
