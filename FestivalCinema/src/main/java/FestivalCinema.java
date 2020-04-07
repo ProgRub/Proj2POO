@@ -57,7 +57,7 @@ public class FestivalCinema {
             System.out.println("*****************************************************************");
             System.out.print("\t\t\tOpções:\n(c): Criar algo\t(l): Listar algo\t(h): Criar nova Edição\t(s): Sair\nOpção: ");
             String opcaoGeral = scan.nextLine();
-            while (opcaoGeral.length() > 1) {
+            while (!(opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("l") || opcao.equalsIgnoreCase("h") || opcao.equalsIgnoreCase("s"))) {
                 System.out.println("Por favor selecione uma das opções disponíveis.");
                 System.out.print("(c): Criar algo\t(l): Listar algo\t(h): Criar nova Edição\t(s): Sair\nOpção: ");
                 opcaoGeral = scan.nextLine();
@@ -67,7 +67,7 @@ public class FestivalCinema {
                 case "c":
                     System.out.print("\t\t\tOpções\n(f): Criar Filme\t(a): Criar Ator/Atriz\t(e): Criar Perito\t(p): Atribui Papel\t(c): Escolher candidatos\t(s): Atribuir Pontuação\nOpção: ");
                     opcao = scan.nextLine();
-                    while (opcao.length() > 1) {
+                    while (!(opcao.equalsIgnoreCase("f") || opcao.equalsIgnoreCase("a") || opcao.equalsIgnoreCase("e") || opcao.equalsIgnoreCase("p") || opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("s"))) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
                         System.out.print("(f): Criar Filme\t(a): Criar Ator/Atriz\t(e): Criar Perito\t(p): Atribui Papel\t(c): Escolher candidatos\t(s): Atribuir Pontuação\nOpção: ");
                         opcao = scan.nextLine();
@@ -108,7 +108,7 @@ public class FestivalCinema {
                 case "l":
                     System.out.print("\t\t\tOpções\n(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(c) : Listar Candidatos\t(i): Consultar Edição\nOpção: ");
                     opcao = scan.nextLine();
-                    while (opcao.length() > 1) {
+                    while (!(opcao.equalsIgnoreCase("a") || opcao.equalsIgnoreCase("f") || opcao.equalsIgnoreCase("p") || opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("i"))) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
                         System.out.print("(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(c) : Listar Candidatos\t(i): Consultar Edição\nOpção: ");
                         opcao = scan.nextLine();
@@ -166,7 +166,7 @@ public class FestivalCinema {
         String nomeRealizador = scan.nextLine();
         System.out.print("Género do Realizador (M-Masculino; F-Feminino): ");
         String generoRealizador = scan.nextLine();
-        while (generoRealizador.length() > 1 || !(generoRealizador.equalsIgnoreCase("M") || generoRealizador.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
+        while (!(generoRealizador.equalsIgnoreCase("M") || generoRealizador.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
             System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
             generoRealizador = scan.nextLine();
         }
@@ -185,7 +185,7 @@ public class FestivalCinema {
         String nome = scan.nextLine();
         System.out.print("Ator ou Atriz (M-Masculino; F-Feminino): ");
         String genero = scan.nextLine();
-        while (genero.length() > 1 || !(genero.equalsIgnoreCase("M") || genero.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
+        while (!(genero.equalsIgnoreCase("M") || genero.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
             System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
             genero = scan.nextLine();
         }
@@ -201,7 +201,7 @@ public class FestivalCinema {
         String nome = scan.nextLine();
         System.out.print("Género do Perito (M-Masculino; F-Feminino): ");
         String genero = scan.nextLine();
-        while (genero.length() > 1 || !(genero.equalsIgnoreCase("M") || genero.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
+        while (!(genero.equalsIgnoreCase("M") || genero.equalsIgnoreCase("F"))) { //verifica que inseriu uma opção válida
             System.out.print("Género Inválido. Género (M-Masculino; F-Feminino): ");
             genero = scan.nextLine();
         }
@@ -262,7 +262,7 @@ public class FestivalCinema {
     private void consultarEdicoes() {
         int aux = 0;
         if (edicoes.isEmpty()) {
-            System.out.println("Ainda não há nehuma edição do festival!");
+            System.out.println("Ainda não há nenhuma edição do festival!");
         } else {
             while (aux < edicoes.size()) {
                 System.out.println(edicoes.get(aux));
@@ -308,10 +308,10 @@ public class FestivalCinema {
     private void escolherCandidatos() {
         Premio premioEscolhido = escolherPremio();
         switch (premioEscolhido.getNome()) {
-            case "Melhor Ator Principal": 
+            case "Melhor Ator Principal":
                 premioEscolhido.setAtores(escolherAtoresPrincipaisCandidatos(true));  //primeira ediçao apenas (mudar)
                 break;
-            case "Melhor Atriz Principal": 
+            case "Melhor Atriz Principal":
                 premioEscolhido.setAtores(escolherAtoresPrincipaisCandidatos(false));  //primeira ediçao apenas (mudar)
                 break;
             case "Melhor Ator Secundário":
@@ -331,8 +331,8 @@ public class FestivalCinema {
                 break;
         }
     }
-    
-    private Premio escolherPremio(){
+
+    private Premio escolherPremio() {
         System.out.println("Escolha o prémio:");
         System.out.print("(1) Melhor Ator Principal\n" + "(2) Melhor Atriz Principal\n"
                 + "(3) Melhor Ator Secundário\n" + "(4) Melhor Atriz Secundária\n"
@@ -344,7 +344,7 @@ public class FestivalCinema {
                 + "\nOPÇÃO: ");
         int opcao = scan.nextInt();
         scan.nextLine();
-        return edicoes.get(indexEdicoes).getPremios().get(opcao-1);
+        return edicoes.get(indexEdicoes).getPremios().get(opcao - 1);
     }
 
     //método que permite o utilizador escolher os filmes candidatos para um dado prémio:
