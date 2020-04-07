@@ -46,6 +46,7 @@ public class FestivalCinema {
             edicoes.add(new Edicao(numEdicao, ano));
             insereFilmesCarregados(edicoes, ficheiroFilmes, numEdicao, indexEdicoes);
             insereAtoresCarregados(indexEdicoes, edicoes, ficheiroAtores);
+            insereAtoresLista(atores, ficheiroAtores,edicoes,indexEdicoes);
 
         } else {
             numEdicao++;
@@ -772,6 +773,83 @@ public class FestivalCinema {
         } catch (IOException ioe) {
             System.out.println("Ocorreu um Erro");
         }
+    }
+    
+    
+    public static void insereAtoresLista(ArrayList<Ator> atores, File ficheiro, ArrayList<Edicao> edições, int indexEdicoes){
+        String nomeAtor = " ";
+        Boolean generoAtor = false;
+        //int anosCarreiraAtor = 0;
+        Boolean criarAtor;
+        int i = 0;
+        int posiçãoFilme = -1;
+        
+        
+        try {
+            FileReader lerFicheiro = new FileReader(ficheiro);
+            BufferedReader lerDados = new BufferedReader(lerFicheiro);
+            String line;
+            ArrayList<Ator> listaProvisoria = new ArrayList<Ator>();
+            
+            while ((line = lerDados.readLine()) != null) {   
+                StringBuilder aux = new StringBuilder();
+                aux.append(line).append(" ");
+                String auxString = aux.toString();
+                
+                if(auxString.equals("Ator principal: ") || auxString.equals("Atriz principal: ") || auxString.equals("Atores Secundarios: ") || auxString.equals("-------------------------------- ") || auxString.equals(" ") || auxString.equals("ATORES: ")){
+                    criarAtor = false;
+                }
+                
+                else
+                    criarAtor = true;
+                
+                if (auxString.equals("-------------------------------- ")){
+                    posiçãoFilme++;
+                }
+                
+ 
+                
+
+                if (criarAtor){ 
+                    
+                    switch (i){
+                        case 0:
+                            nomeAtor = auxString;
+                            break;
+                        case 1:
+                            if (auxString.equals("F ")){
+                                generoAtor= false;
+                            }
+                            else{
+                                generoAtor= true;
+                            }
+                            break;  
+                        case 2:
+                            
+                            Ator ator = new Ator(nomeAtor, generoAtor,9);
+                            Filme filmeAtual = edições.get(indexEdicoes).getFilmes().get(posiçãoFilme);
+                            ator.inserirFilme(filmeAtual);
+                            atores.add(ator);
+                            
+                            break;
+                    }
+                    if (i==2){
+                        i=0;
+                        
+                    }
+                    else
+                        i++;                                         
+                }
+                
+                           
+                
+            }
+        }catch (IOException ioe) {
+            System.out.println("Ocorreu um Erro"); }
+        
+       
+           
+        
     }
 
 }
