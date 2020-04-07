@@ -101,7 +101,7 @@ public class FestivalCinema {
                             escolherCandidatos();
                             break;
                         case "s":
-                            pontuarCandidatos(edicoes.get(indexEdicoes).getPremios().get(4));
+                            pontuarCandidatos(escolherPremio());
                             break;
                     }
                     break;
