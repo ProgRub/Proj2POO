@@ -8,8 +8,8 @@ public class Filme {
     private final int edição;
     private int numeroPremios;
     private final Realizador realizador;
-    private Pessoa AtorPrincipal;
-    private Pessoa AtrizPrincipal;
+    private Ator AtorPrincipal;
+    private Ator AtrizPrincipal;
     private ArrayList<Ator> atoresSecundarios;
 
     public Filme(String nome, String genero, int edição, Realizador realizador) {
@@ -52,11 +52,11 @@ public class Filme {
         return nome;
     }
 
-    public Pessoa getAtorPrincipal() {
+    public Ator getAtorPrincipal() {
         return AtorPrincipal;
     }
 
-    public Pessoa getAtrizPrincipal() {
+    public Ator getAtrizPrincipal() {
         return AtrizPrincipal;
     }
 
