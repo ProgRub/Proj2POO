@@ -38,13 +38,16 @@ public class Filme {
         if (posição < 2) {
             if (posição == 0 && this.AtorPrincipal == null) {
                 this.AtorPrincipal = ator;
+                ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator participa
             } else if (posição == 1 && this.AtrizPrincipal == null) {
                 this.AtrizPrincipal = ator;
+                ator.inserirFilme(this); //insere o filme na lista de filmes em que o atriz participa
             } else {
                 System.out.println("Já existe!");
             }
         } else {
             this.atoresSecundarios.add(ator);
+            ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator/atriz participa
         }
     }
 
