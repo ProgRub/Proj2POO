@@ -10,7 +10,7 @@ public class Filme {
     private final Realizador realizador;
     private Pessoa AtorPrincipal;
     private Pessoa AtrizPrincipal;
-    private ArrayList<Pessoa> atoresSecundarios;
+    private ArrayList<Ator> atoresSecundarios;
 
     public Filme(String nome, String genero, int edição, Realizador realizador) {
         this.nome = nome;
@@ -19,7 +19,7 @@ public class Filme {
         this.realizador = realizador;
         this.AtorPrincipal = null;
         this.AtrizPrincipal = null;
-        this.atoresSecundarios = new ArrayList<Pessoa>(0);
+        this.atoresSecundarios = new ArrayList<Ator>(0);
         this.numeroPremios = 0;
     }
 
@@ -60,7 +60,7 @@ public class Filme {
         return AtrizPrincipal;
     }
 
-    public ArrayList<Pessoa> getAtoresSecundarios() {
+    public ArrayList<Ator> getAtoresSecundarios() {
         return atoresSecundarios;
     }
 

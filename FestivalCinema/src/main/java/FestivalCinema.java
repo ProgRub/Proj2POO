@@ -46,7 +46,7 @@ public class FestivalCinema {
             edicoes.add(new Edicao(numEdicao, ano));
             insereFilmesCarregados(edicoes, ficheiroFilmes, numEdicao, indexEdicoes);
             insereAtoresCarregados(indexEdicoes, edicoes, ficheiroAtores);
-            insereAtoresLista(atores, ficheiroAtores,edicoes,indexEdicoes);
+            insereAtoresLista(atores, ficheiroAtores, edicoes, indexEdicoes);
 
         } else {
             numEdicao++;
@@ -595,7 +595,7 @@ public class FestivalCinema {
     }
 
     //-------------------------------------------------------------------------------------------
-    public void insereAtoresCarregados(int indexEdicoes, ArrayList<Edicao> edicoes, File ficheiro) {
+    private void insereAtoresCarregados(int indexEdicoes, ArrayList<Edicao> edicoes, File ficheiro) {
         String nomeAtor = " ";
         Boolean generoAtor = false;
         //int anosCarreiraAtor = 0;
@@ -724,7 +724,7 @@ public class FestivalCinema {
         }
     }
 
-    public static void insereFilmesCarregados(ArrayList<Edicao> edições, File ficheiro, int numEdicao, int indexEdicoes) {
+    private void insereFilmesCarregados(ArrayList<Edicao> edições, File ficheiro, int numEdicao, int indexEdicoes) {
         String nomeFilme = " ";
         String generoFilme = " ";
         String nomeRealizador = " ";
@@ -789,82 +789,71 @@ public class FestivalCinema {
             System.out.println("Ocorreu um Erro");
         }
     }
-    
-    
-    public static void insereAtoresLista(ArrayList<Ator> atores, File ficheiro, ArrayList<Edicao> edições, int indexEdicoes){
+
+    private void insereAtoresLista(ArrayList<Ator> atores, File ficheiro, ArrayList<Edicao> edições, int indexEdicoes) {
         String nomeAtor = " ";
         Boolean generoAtor = false;
         //int anosCarreiraAtor = 0;
         Boolean criarAtor;
         int i = 0;
         int posiçãoFilme = -1;
-        
-        
+
         try {
             FileReader lerFicheiro = new FileReader(ficheiro);
             BufferedReader lerDados = new BufferedReader(lerFicheiro);
             String line;
             ArrayList<Ator> listaProvisoria = new ArrayList<Ator>();
-            
-            while ((line = lerDados.readLine()) != null) {   
+
+            while ((line = lerDados.readLine()) != null) {
                 StringBuilder aux = new StringBuilder();
                 aux.append(line).append(" ");
                 String auxString = aux.toString();
-                
-                if(auxString.equals("Ator principal: ") || auxString.equals("Atriz principal: ") || auxString.equals("Atores Secundarios: ") || auxString.equals("-------------------------------- ") || auxString.equals(" ") || auxString.equals("ATORES: ")){
+
+                if (auxString.equals("Ator principal: ") || auxString.equals("Atriz principal: ") || auxString.equals("Atores Secundarios: ") || auxString.equals("-------------------------------- ") || auxString.equals(" ") || auxString.equals("ATORES: ")) {
                     criarAtor = false;
-                }
-                
-                else
+                } else {
                     criarAtor = true;
-                
-                if (auxString.equals("-------------------------------- ")){
+                }
+
+                if (auxString.equals("-------------------------------- ")) {
                     posiçãoFilme++;
                 }
-                
- 
-                
 
-                if (criarAtor){ 
-                    
-                    switch (i){
+                if (criarAtor) {
+
+                    switch (i) {
                         case 0:
                             nomeAtor = auxString;
                             break;
                         case 1:
-                            if (auxString.equals("F ")){
-                                generoAtor= false;
+                            if (auxString.equals("F ")) {
+                                generoAtor = false;
+                            } else {
+                                generoAtor = true;
                             }
-                            else{
-                                generoAtor= true;
-                            }
-                            break;  
+                            break;
                         case 2:
-                            
-                            Ator ator = new Ator(nomeAtor, generoAtor,9);
+
+                            Ator ator = new Ator(nomeAtor, generoAtor, 9);
                             Filme filmeAtual = edições.get(indexEdicoes).getFilmes().get(posiçãoFilme);
                             ator.inserirFilme(filmeAtual);
                             atores.add(ator);
-                            
+
                             break;
                     }
-                    if (i==2){
-                        i=0;
-                        
+                    if (i == 2) {
+                        i = 0;
+
+                    } else {
+                        i++;
                     }
-                    else
-                        i++;                                         
                 }
-                
-                           
-                
+
             }
-        }catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro"); }
-        
-       
-           
-        
+        } catch (IOException ioe) {
+            System.out.println("Ocorreu um Erro");
+        }
+
     }
 
 }
