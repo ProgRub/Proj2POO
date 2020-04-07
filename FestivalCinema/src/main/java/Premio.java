@@ -82,7 +82,7 @@ public class Premio {
         double pont1 = pont[0]; //média do filme/ator da primeira linha
         double pont2 = pont[1]; //média do filme/ator da segunda linha
         double pont3 = pont[2]; //média do filme/ator da terceira linha
-        ordenaPontuações(mediasPontuações(pontuações));
+        ordenaPontuações(pont);
         int n = pont.length;
         System.out.println("PONTUAÇÕES: ");
         for (int i = 0; i < n; ++i) {
