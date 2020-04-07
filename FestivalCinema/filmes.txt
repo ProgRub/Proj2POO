@@ -1,0 +1,42 @@
+FILMES:
+
+nome do filme
+género do filme
+realizador
+género do realizador
+
+--------------------------------
+Saw
+terror
+James Wan
+
+
+
+M
+--------------------------------
+The Hunger Games
+acao
+Gary Ross 
+M
+
+--------------------------------
+Passengers
+fantasia
+
+Morten Tyldum
+M
+--------------------------------
+Bad moms
+comedia
+
+
+
+
+Jon Lucas
+M
+--------------------------------
+Fast & Furious
+acao
+Justin Lin
+
+M

@@ -1,0 +1,124 @@
+ATORES:
+
+--------------------------------
+Ator principal:
+Tobin Bell
+M
+10
+
+Atriz principal:
+Shawnee Smith
+F
+5
+
+Atores Secundarios:
+Cary Elwes
+M
+7
+
+Danny Glover
+M
+5
+
+Leigh Whannell
+M
+22
+
+Michael Emerson
+M
+10
+
+Dina Meyer
+F
+25
+
+--------------------------------
+Ator principal:
+Josh Hutcherson
+M
+11
+
+Atriz principal:
+Jennifer Lawrence
+F
+10
+
+Atores Secundarios:
+
+Liam Hemswo
+M
+32
+
+Woody Harrelson
+M
+15
+
+--------------------------------
+Ator principal:
+
+Chris Pratt
+M
+11
+
+Atriz principal:
+
+Jennifer Lawrence
+F
+10
+
+Atores Secundarios:
+
+Liam Hemsworth
+M
+42
+
+--------------------------------
+Ator principal:
+
+Jay Hernandez
+M
+30
+
+Atriz principal:
+
+Mila Kunis
+F
+10
+
+Atores Secundarios:
+
+
+Kristen Bell
+
+
+F
+42
+
+
+Kathryn Hahn
+F
+30
+
+--------------------------------
+Ator principal:
+
+Vin Diesel
+M
+30
+
+
+Atriz principal:
+Michelle Rodriguez
+F
+10
+
+Atores Secundarios:
+Paul Walker
+
+
+M
+42
+
+Jordana Brewster
+F
+39
