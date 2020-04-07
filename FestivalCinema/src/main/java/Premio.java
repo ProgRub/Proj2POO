@@ -131,7 +131,8 @@ public class Premio {
         double pont3 = pont[2]; //média do filme/ator da terceira linha
         pont = ordenaPontuações(mediasPontuações(pontuações));
         System.out.println(nome + ": ");
-        if (pont[0] == pont1) {
+        try{
+            if (pont[0] == pont1) {
             if (filmes == null && atores != null) {
                 System.out.print(atores.get(0).getNome());
             } else {  
@@ -157,5 +158,10 @@ public class Premio {
             }
         }
         System.out.print(pont[0]); //imprime pontuação
+        }catch (Exception e){
+            System.out.println("Ainda sem vencedor.\n");
+        }
     }
+    
+    
 }

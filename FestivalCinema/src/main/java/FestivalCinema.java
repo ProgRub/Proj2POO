@@ -111,7 +111,7 @@ public class FestivalCinema {
                     opcao = scan.nextLine();
                     while (!(opcao.equalsIgnoreCase("a") || opcao.equalsIgnoreCase("f") || opcao.equalsIgnoreCase("p") || opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("i"))) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
-                        System.out.print("(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(c) : Listar Candidatos\t(i): Consultar Edição\nOpção: ");
+                        System.out.print("(a): Listar Atores\t(f): Listar Filmes\t(p): Listar Prémios\t(i): Consultar Edição\nOpção: ");
                         opcao = scan.nextLine();
                     }
                     switch (opcao) {
@@ -122,13 +122,22 @@ public class FestivalCinema {
                             listarFilmes();
                             break;
                         case "p":
-                            listarPremios();
+                            System.out.print("(p): Listar Categorias\t(c): Listar Candidatos\t(v): Listar Vencedores\nOpção: ");
+                            opcao = scan.nextLine();
+                            switch (opcao) {
+                                case "p":
+                                    listarPremios();
+                                    break;
+                                case "c":
+                                    listarCandidatos();
+                                    break;
+                                case "v":
+                                    listarVencedores();
+                                    break;
+                            }
                             break;
                         case "i":
                             consultarEdicoes();
-                            break;
-                        case "c":
-                            listarCandidatos();
                             break;
                     }
                     break;
@@ -346,6 +355,13 @@ public class FestivalCinema {
         int opcao = scan.nextInt();
         scan.nextLine();
         return edicoes.get(indexEdicoes).getPremios().get(opcao - 1);
+    }
+
+    private void listarVencedores() {
+        System.out.println("VENCEDORES:");
+        for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
+            premio.vencedorCategoria(premio.getPontuacoes());
+        }
     }
 
     //método que permite o utilizador escolher os filmes candidatos para um dado prémio:
