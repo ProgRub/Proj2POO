@@ -299,6 +299,33 @@ public class FestivalCinema {
     }
 
     private void escolherCandidatos() {
+        Premio premioEscolhido = escolherPremio();
+        switch (premioEscolhido.getNome()) {
+            case "Melhor Ator Principal": 
+                premioEscolhido.setAtores(escolherAtoresPrincipaisCandidatos(true));  //primeira ediçao apenas (mudar)
+                break;
+            case "Melhor Atriz Principal": 
+                premioEscolhido.setAtores(escolherAtoresPrincipaisCandidatos(false));  //primeira ediçao apenas (mudar)
+                break;
+            case "Melhor Ator Secundário":
+                premioEscolhido.setAtores(escolherAtoresSecundariosCandidatos(true));  //primeira ediçao apenas (mudar)
+                break;
+            case "Melhor Atriz Secundária":
+                premioEscolhido.setAtores(escolherAtoresSecundariosCandidatos(false));
+                break;
+            case "Melhor Realizador":
+                premioEscolhido.setFilmes(escolherRealizadorCandidatos());  //primeira ediçao apenas (mudar)
+                break;
+            case "Prémio Carreira":
+                premioEscolhido.setAtores(escolherPremioCarreira());  //primeira ediçao apenas (mudar)
+                break;
+            default:
+                premioEscolhido.setFilmes(escolherFilmesCandidatos());  //primeira ediçao apenas (mudar)
+                break;
+        }
+    }
+    
+    private Premio escolherPremio(){
         System.out.println("Escolha o prémio:");
         System.out.print("(1) Melhor Ator Principal\n" + "(2) Melhor Atriz Principal\n"
                 + "(3) Melhor Ator Secundário\n" + "(4) Melhor Atriz Secundária\n"
@@ -308,36 +335,9 @@ public class FestivalCinema {
                 + "(8) Melhor Cinematografia\n"
                 + "(9) Prémio Carreira"
                 + "\nOPÇÃO: ");
-        String opcao = scan.nextLine();
-        switch (opcao) {
-            case "1": //MELHOR ATOR PRINCIPAL
-                edicoes.get(indexEdicoes).getPremios().get(0).setAtores(escolherAtoresPrincipaisCandidatos(true));  //primeira ediçao apenas (mudar)
-                break;
-            case "2": //MELHOR ATRIZ PRINCIPAL
-                edicoes.get(indexEdicoes).getPremios().get(1).setAtores(escolherAtoresPrincipaisCandidatos(false));  //primeira ediçao apenas (mudar)
-                break;
-            case "3": //MELHOR ATOR SECUNDÁRIO
-                edicoes.get(indexEdicoes).getPremios().get(2).setAtores(escolherAtoresSecundariosCandidatos(true));  //primeira ediçao apenas (mudar)
-                break;
-            case "4": //MELHOR ATRIZ SECUNDÁRIA
-                edicoes.get(indexEdicoes).getPremios().get(3).setAtores(escolherAtoresSecundariosCandidatos(false));
-                break;
-            case "5": //MELHOR FILME
-                edicoes.get(indexEdicoes).getPremios().get(4).setFilmes(escolherFilmesCandidatos());  //primeira ediçao apenas (mudar)
-                break;
-            case "6": //MELHOR REALIZADOR
-                edicoes.get(indexEdicoes).getPremios().get(5).setFilmes(escolherRealizadorCandidatos());  //primeira ediçao apenas (mudar)
-                break;
-            case "7": //MELHOR ARGUMENTO
-                edicoes.get(indexEdicoes).getPremios().get(6).setFilmes(escolherFilmesCandidatos());  //primeira ediçao apenas (mudar)
-                break;
-            case "8": //MELHOR CINEMATOGRAFIA
-                edicoes.get(indexEdicoes).getPremios().get(7).setFilmes(escolherFilmesCandidatos());  //primeira ediçao apenas (mudar)
-                break;
-            case "9": //PRÉMIO CARREIRA
-                edicoes.get(indexEdicoes).getPremios().get(8).setAtores(escolherPremioCarreira());  //primeira ediçao apenas (mudar)
-                break;
-        }
+        int opcao = scan.nextInt();
+        scan.nextLine();
+        return edicoes.get(indexEdicoes).getPremios().get(opcao-1);
     }
 
     //método que permite o utilizador escolher os filmes candidatos para um dado prémio:
