@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Premio {
@@ -131,36 +132,41 @@ public class Premio {
         double pont3 = pont[2]; //média do filme/ator da terceira linha
         pont = ordenaPontuações(mediasPontuações(pontuações));
         System.out.print(nome + ": ");
-        try{
-            if (pont[0] == pont1) {
-            if (filmes == null && atores != null) {
-                System.out.println(atores.get(0).getNome()+"\n");
-            } else {  
-                System.out.println(filmes.get(0).getNome()+"\n");
+        try {
+            if (pont[0] > 0) {
+                if (pont[0] == pont1) {
+                    if (filmes == null && atores != null) {
+                        System.out.println(atores.get(0).getNome() + "\n");
+                    } else {
+                        System.out.println(filmes.get(0).getNome() + "\n");
+                    }
+                } else if (pont[0] == pont2) {
+                    if (filmes == null && atores != null) {
+                        System.out.println(atores.get(1).getNome() + "\n");
+                    } else {
+                        System.out.println(filmes.get(1).getNome() + "\n");
+                    }
+                } else if (pont[0] == pont3) {
+                    if (filmes == null && atores != null) {
+                        System.out.println(atores.get(2).getNome() + "\n");
+                    } else {
+                        System.out.println(filmes.get(2).getNome() + "\n");
+                    }
+                } else {
+                    if (filmes == null && atores != null) {
+                        System.out.println(atores.get(3).getNome() + "\n");
+                    } else {
+                        System.out.println(filmes.get(3).getNome() + "\n");
+                    }
+                }
             }
-        } else if (pont[0] == pont2) { 
-            if (filmes == null && atores != null) {
-                System.out.println(atores.get(1).getNome()+"\n");
-            } else {
-                System.out.println(filmes.get(1).getNome()+"\n");
+            else
+            {
+                throw new NullPointerException("Pontuações não atribuídas");
             }
-        } else if (pont[0] == pont3) {
-            if (filmes == null && atores != null) {
-                System.out.println(atores.get(2).getNome()+"\n");
-            } else {
-                System.out.println(filmes.get(2).getNome()+"\n");
-            }
-        } else { 
-            if (filmes == null && atores != null) {
-                System.out.println(atores.get(3).getNome()+"\n");
-            } else {
-                System.out.println(filmes.get(3).getNome()+"\n");
-            }
-        }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Ainda sem vencedor.\n");
         }
     }
-    
-    
+
 }
