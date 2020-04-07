@@ -1,5 +1,6 @@
 
 public class Perito extends Pessoa {
+
     public Perito(String nome, boolean genero) {
         super(nome, genero);
     }

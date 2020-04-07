@@ -67,10 +67,11 @@ public class Filme {
     public Realizador getRealizador() {
         return realizador;
     }
-    
+
     public int getNumeroPremios() {
         return numeroPremios;
     }
+
     public void incrementaNumeroPremios() {
         numeroPremios++;
     }

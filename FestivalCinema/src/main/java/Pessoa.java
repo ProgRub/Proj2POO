@@ -16,6 +16,7 @@ public class Pessoa {
     public boolean getGenero() {
         return genero;
     }
+
     public String toString() {
         String pessoa;
         pessoa = "Nome: " + getNome() + "\n";

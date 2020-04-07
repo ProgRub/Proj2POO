@@ -17,9 +17,8 @@ public class Premio {
         }
         this.pontuacoes = new int[4][5]; //4 candidatos, 5 peritos
     }
-    
-    public String getNome()
-    {
+
+    public String getNome() {
         return this.nome;
     }
 
@@ -106,7 +105,7 @@ public class Premio {
                     System.out.println(filmes.get(2).getNome() + ": ");
                 }
             } else { //se a pontuação mais baixa for do quarto filme/ator (no caso de i=0)
-                if (filmes == null && atores != null) { 
+                if (filmes == null && atores != null) {
                     System.out.println(atores.get(3).getNome() + ": ");
                 } else {
                     System.out.println(filmes.get(3).getNome() + ": ");

@@ -25,18 +25,16 @@ public class Edicao {
 
         return Edicao;
     }
-    
-    public void inserePerito(Perito perito)
-    {
+
+    public void inserePerito(Perito perito) {
         this.peritos.add(perito);
     }
-    
-    public ArrayList<Perito> getPeritos()
-    {
+
+    public ArrayList<Perito> getPeritos() {
         return this.peritos;
     }
 
-    public final void inserePremios(){
+    public final void inserePremios() {
         this.premios.add(new Premio("Melhor Ator Principal"));
         this.premios.add(new Premio("Melhor Atriz Principal"));
         this.premios.add(new Premio("Melhor Ator Secundário"));
@@ -80,7 +78,7 @@ public class Edicao {
     public ArrayList<Filme> getFilmes() {
         return this.filmes;
     }
-    
+
     public ArrayList<Premio> getPremios() {
         return this.premios;
     }
