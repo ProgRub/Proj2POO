@@ -22,7 +22,7 @@ public class FestivalCinema {
         this.atores = new ArrayList<>();
         this.novo = true;
         this.indexEdicoes = 0;
-        this.ano = 0;
+        this.ano = 2010;
         this.numEdicao = 0;
         this.scan = new Scanner(System.in, "cp1252");
         this.quebra = false;
@@ -67,7 +67,7 @@ public class FestivalCinema {
             switch (opcaoGeral.toLowerCase()) {
 
                 case "c":
-                    System.out.print("Opções\n(f): Criar Filme\n(a): Criar Ator/Atriz\n(e): Criar Perito\n(p): Atribui Papel\n(c): Escolher candidatos\n(s): Atribuir Pontuação\nOpção: ");
+                    System.out.print("Opções:\n(f): Criar Filme\n(a): Criar Ator/Atriz\n(e): Criar Perito\n(p): Atribui Papel\n(c): Escolher candidatos\n(s): Atribuir Pontuação\nOpção: ");
                     opcao = scan.nextLine();
                     while (!(opcao.equalsIgnoreCase("f") || opcao.equalsIgnoreCase("a") || opcao.equalsIgnoreCase("e") || opcao.equalsIgnoreCase("p") || opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("s"))) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
@@ -108,7 +108,7 @@ public class FestivalCinema {
                     }
                     break;
                 case "l":
-                    System.out.print("Opções\n(a): Listar Atores\n(f): Listar Filmes\n(p): Listar Prémios\n(c) : Listar Candidatos\n(i): Consultar Edição\nOpção: ");
+                    System.out.print("Opções:\n(a): Listar Atores\n(f): Listar Filmes\n(p): Listar Prémios\n(i): Consultar Edição\nOpção: ");
                     opcao = scan.nextLine();
                     while (!(opcao.equalsIgnoreCase("a") || opcao.equalsIgnoreCase("f") || opcao.equalsIgnoreCase("p") || opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("i"))) {
                         System.out.println("Por favor selecione uma das opções disponíveis.");
@@ -464,7 +464,7 @@ public class FestivalCinema {
                 System.out.printf("%d. %s\nAtores Secundários:\n", i, filme.getNome());
                 for (Pessoa a : filme.getAtoresSecundarios()) {
                     if (a.getGenero() == homem) {
-                        System.out.printf("\t%s\n", a.getNome());
+                        System.out.printf("\n%s\n", a.getNome());
                     }
                 }
                 i++;
