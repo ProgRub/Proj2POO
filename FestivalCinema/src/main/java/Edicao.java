@@ -70,6 +70,18 @@ public class Edicao {
     public void insereFilmes(Filme filme) {
         this.filmes.add(filme);
     }
+    
+    public Filme indexOfByFilmName(String nome)
+    {
+        for (Filme f : this.filmes)
+        {
+            if (nome.equals(f.getNome()))
+            {
+                return f;
+            }
+        }
+        return null;
+    }
 
     public int getNumEdicao() {
         return numEdicao;

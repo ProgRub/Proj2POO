@@ -601,6 +601,17 @@ public class FestivalCinema {
             premio.imprimePontuações(premio.getPontuacoes());
         }
     }
+    private Ator indexOfByActorName(String nome)
+    {
+        for (Ator a : this.atores)
+        {
+            if (nome.equals(a.getNome()))
+            {
+                return a;
+            }
+        }
+        return null;
+    }
 
     //-------------------------------------------------------------------------------------------
     private void insereAtoresCarregados() {
