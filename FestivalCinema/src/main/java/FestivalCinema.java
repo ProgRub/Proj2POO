@@ -16,6 +16,7 @@ public class FestivalCinema {
     private boolean quebra;
     private File ficheiroFilmes;
     private File ficheiroAtores;
+    private File ficheiroPeritos;
 
     public FestivalCinema() {
         this.edicoes = new ArrayList<>();
@@ -28,6 +29,7 @@ public class FestivalCinema {
         this.quebra = false;
         this.ficheiroFilmes = new File("filmes.txt");
         this.ficheiroAtores = new File("atores.txt");
+        this.ficheiroPeritos = new File("peritos.txt");
     }
 
     public void menu() {
@@ -47,6 +49,8 @@ public class FestivalCinema {
             insereFilmesCarregados();
             insereAtoresCarregados();
             insereAtoresLista();
+            inserePeritos();
+            //imprimirPeritos();
 
         } else {
             numEdicao++;
@@ -635,14 +639,14 @@ public class FestivalCinema {
             String line;
             while ((line = lerDados.readLine()) != null) {
                 StringBuilder aux = new StringBuilder();
-                aux.append(line).append(" ");
+                aux.append(line).append("");
                 String auxString = aux.toString();
 
-                if (auxString.equals("-------------------------------- ")) {
+                if (auxString.equals("--------------------------------")) {
                     criarAtoresS = false;
                     indexFilmes++;
                 }
-                if (auxString.equals(" ")) {
+                if (auxString.equals("")) {
 
                     auxVazio = true;
                 } else {
@@ -656,7 +660,7 @@ public class FestivalCinema {
                             nomeAtor = auxString;
                             break;
                         case 1:
-                            if (auxString.equals("F ")) {
+                            if (auxString.equals("F")) {
                                 generoAtor = false;
                             } else {
                                 generoAtor = true;
@@ -685,7 +689,7 @@ public class FestivalCinema {
                             nomeAtor = auxString;
                             break;
                         case 1:
-                            if (auxString.equals("F ")) {
+                            if (auxString.equals("F")) {
                                 generoAtor = false;
                             } else {
                                 generoAtor = true;
@@ -712,7 +716,7 @@ public class FestivalCinema {
                             nomeAtor = auxString;
                             break;
                         case 1:
-                            if (auxString.equals("F ")) {
+                            if (auxString.equals("F")) {
                                 generoAtor = false;
                             } else {
                                 generoAtor = true;
@@ -731,14 +735,14 @@ public class FestivalCinema {
                         i++;
                     }
                 }
-                if (auxString.equals("Ator principal: ")) {
+                if (auxString.equals("Ator principal:")) {
                     criarAtorP = true;
                 }
-                if (auxString.equals("Atriz principal: ")) {
+                if (auxString.equals("Atriz principal:")) {
                     criarAtrizP = true;
 
                 }
-                if (auxString.equals("Atores Secundarios: ")) {
+                if (auxString.equals("Atores Secundarios:")) {
                     criarAtoresS = true;
                 }
             }
@@ -852,4 +856,70 @@ public class FestivalCinema {
     public boolean equals(Ator a, Ator b) {
         return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero());
     }
+
+    
+    private void inserePeritos(){
+        
+        String nomePerito = " ";
+        Boolean generoPerito = false;
+        int i = 0;      
+
+        try {
+            FileReader lerFicheiro = new FileReader(ficheiroPeritos);
+            BufferedReader lerDados = new BufferedReader(lerFicheiro);
+            String line;
+            Boolean auxVazio = false;
+            
+            while ((line = lerDados.readLine()) != null) {
+                StringBuilder aux = new StringBuilder();
+                aux.append(line).append("");
+                String auxString = aux.toString();
+
+                if (auxString.equals("")) {
+
+                    auxVazio = true;
+                } else {
+                    auxVazio = false;
+                }
+
+                if (!auxVazio) {
+                    switch (i) {
+                        case 0:
+                            nomePerito = auxString;
+                            break;                     
+                        case 1:
+                            if (auxString.equals("F")) {
+                                generoPerito = false;
+                            } else {
+                                generoPerito = true;
+                            }
+                            Perito perito = new Perito(nomePerito, generoPerito);                                                        
+                            edicoes.get(indexEdicoes).inserePerito(perito);   
+                            break;
+                    }
+                    if (i == 1) {
+                        i = 0;
+                    } else {
+                        i++;
+                    }
+                }
+            }
+        } catch (IOException ioe) {
+            System.out.println("Ocorreu um Erro");
+        }
+        
+        
+    }
+    
+    
+        public void imprimirPeritos(){
+            for (int i =0; i < edicoes.get(indexEdicoes).getPeritos().size(); i++){
+                System.out.println(edicoes.get(indexEdicoes).getPeritos().get(i));
+        }
+     
+        }
+    
+    
+
+
 }
