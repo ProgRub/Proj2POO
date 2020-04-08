@@ -740,6 +740,8 @@ public class FestivalCinema {
         int i = 0;
         String tracinhos = "-------------------------------- ";
         Boolean criarNovoFilme = false;
+        
+        
 
         try {
             FileReader lerFicheiro = new FileReader(ficheiroFilmes);
@@ -780,6 +782,7 @@ public class FestivalCinema {
                             Realizador realizador = new Realizador(nomeRealizador, generoRealizador);
                             Filme filme = new Filme(nomeFilme, generoFilme, numEdicao, realizador);
                             edicoes.get(indexEdicoes).insereFilmes(filme);
+                            
                             break;
                     }
                     if (i == 3) {
@@ -796,6 +799,8 @@ public class FestivalCinema {
         } catch (IOException ioe) {
             System.out.println("Ocorreu um Erro");
         }
+        
+        
     }
 
     private ArrayList<Ator> insereAtoresListaProvisoria() {
@@ -810,20 +815,32 @@ public class FestivalCinema {
     
     private void insereAtoresLista(){
         ArrayList<Ator> listaProvisoria = new ArrayList<Ator>(insereAtoresListaProvisoria());
+    
+        Realizador r2 = new Realizador(" ", true);
+        Filme f = new Filme (" ", " ", indexEdicoes, r2);
+        
+        Filme auxFilme = f;
+        
         for (int i = 0; i < listaProvisoria.size(); i++){
             for (int j = i+1; j < listaProvisoria.size(); j++){
-                if (equals(listaProvisoria.get(i), listaProvisoria.get(j))){
-                    listaProvisoria.get(i).inserirFilme(listaProvisoria.get(j).getFilmes().get(0));
+                if (equals(listaProvisoria.get(i), listaProvisoria.get(j))){                   
+                    listaProvisoria.get(i).inserirFilme(listaProvisoria.get(j).getFilmes().get(0));                    
+                    auxFilme = listaProvisoria.get(j).getFilmes().get(0);
                     listaProvisoria.remove(j);   
                 }   
             }
-            atores.add(listaProvisoria.get(i));           
+            
+            atores.add(listaProvisoria.get(i)); 
+            atores.get(i).inserirFilme(auxFilme);
         }      
     }
     
     public boolean equals(Ator a, Ator b) {
         return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero());
     }
+    
+    
+ 
     
     
 
