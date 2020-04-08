@@ -106,6 +106,7 @@ public class Filme {
         filme += "Atores Secundários:\n";
         for (int indice = 0; indice < atoresSecundarios.size(); indice++) {
             filme += atoresSecundarios.get(indice).getNome() + "\n";
+            System.out.println(atoresSecundarios.get(indice));
         }
         return filme;
     }

@@ -64,6 +64,6 @@ public class Ator extends Pessoa {
     }
 
     public boolean equals(Ator a, Ator b) {
-        return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero()) && (a.numFilmesEdiçãoAtual == b.numFilmesEdiçãoAtual) && (a.numFilmesTotal == b.numFilmesTotal) && (a.anosCarreira == b.anosCarreira);
+        return a.getNome().equalsIgnoreCase(b.getNome()) && (a.getGenero() == b.getGenero());
     }
 }

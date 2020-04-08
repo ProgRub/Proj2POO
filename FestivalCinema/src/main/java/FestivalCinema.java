@@ -849,7 +849,7 @@ public class FestivalCinema {
 
         for (int i = 0; i < listaProvisoria.size(); i++) {
             for (int j = i + 1; j < listaProvisoria.size(); j++) {
-                if (listaProvisoria.get(i) == listaProvisoria.get(j)) {
+                if (equals(listaProvisoria.get(i),listaProvisoria.get(j))) {
                     listaProvisoria.get(i).inserirFilme(listaProvisoria.get(j).getFilmes().get(0));
                     auxFilme = listaProvisoria.get(j).getFilmes().get(0);
                     listaProvisoria.remove(j);
@@ -860,6 +860,10 @@ public class FestivalCinema {
         }
     }
 
+    
+    public boolean equals(Ator a, Ator b) {
+        return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero());
+    }
     
     private void inserePeritos(){
         
