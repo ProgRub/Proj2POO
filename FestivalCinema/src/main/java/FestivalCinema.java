@@ -376,17 +376,16 @@ public class FestivalCinema {
     //método que permite o utilizador escolher os filmes candidatos para um dado prémio:
     private ArrayList<Filme> escolherFilmesCandidatos() {
         ArrayList<Filme> filmesCandidatos = new ArrayList<Filme>();
+        int i = 1;
+        for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
+            System.out.printf("%d. %s\n", i, filme.getNome());
+            i++;
+        }
         while (filmesCandidatos.size() < 4) { //até escolher os 4 candidatos
-            int i = 1;
-            for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
-                System.out.printf("%d. %s\n", i, filme.getNome());
-                i++;
-            }
-            System.out.println("Escolha um candidato: ");
-            int pos = scan.nextInt();
-            scan.nextLine();
+            System.out.println("Indique o filme candidato: ");
+            String pos = scan.nextLine();
             try {
-                Filme candidato = edicoes.get(0).getFilmes().get(pos - 1);
+                Filme candidato = edicoes.get(0).indexOfByFilmName(pos);
                 filmesCandidatos.add(candidato);
             } catch (Exception e) {
                 System.out.println("Por favor, escolha um filme válido.");
@@ -402,14 +401,13 @@ public class FestivalCinema {
         while (filmesCandidatos.size() < 4) { //até escolher os 4 candidatos
             int i = 1;
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
-                System.out.printf("%d. %s\n", i, filme.getRealizador().getNome()); //mostra nome do realizador do filme
+                System.out.printf("%d. %s por %s\n", i, filme.getRealizador().getNome(), filme.getNome()); //mostra nome do realizador do filme
                 i++;
             }
-            System.out.println("Escolha um candidato: ");
-            int pos = scan.nextInt();
-            scan.nextLine();
+            System.out.println("Indique o filme do realizador candidato: ");
+            String pos = scan.nextLine();
             try {
-                Filme candidato = edicoes.get(indexEdicoes).getFilmes().get(pos - 1);
+                Filme candidato = edicoes.get(indexEdicoes).indexOfByFilmName(pos);
                 filmesCandidatos.add(candidato); //adiciona filme do realizador
             } catch (Exception e) {
                 System.out.println("Por favor, escolha um realizador válido.");
@@ -428,34 +426,32 @@ public class FestivalCinema {
             if (homem) { //para ator principal
                 for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                     if (filme.getAtorPrincipal() != null) {
-                        System.out.printf("%d. %s\n", i, filme.getAtorPrincipal().getNome());
+                        System.out.printf("%d. %s por %s\n", i, filme.getAtorPrincipal().getNome(), filme.getNome());
                         i++;
                     }
                 }
-                System.out.println("Escolha um candidato: ");
-                int pos = scan.nextInt();
-                scan.nextLine();
+                System.out.println("Indique o filme do ator candidato: ");
+                String pos = scan.nextLine();
                 try {
-                    Filme candidato = edicoes.get(indexEdicoes).getFilmes().get(pos - 1);
+                    Filme candidato = edicoes.get(indexEdicoes).indexOfByFilmName(pos);
                     atoresCandidatos.add(candidato.getAtorPrincipal());
                 } catch (Exception e) {
-                    System.out.println("Por favor, escolha um ator válido.");
+                    System.out.println("Por favor, escolha um nome.");
                 }
             } else { //para atriz principal
                 for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                     if (filme.getAtrizPrincipal() != null) {
-                        System.out.printf("%d. %s\n", i, filme.getAtrizPrincipal().getNome());
+                        System.out.printf("%d. %s por %s\n", i, filme.getAtrizPrincipal().getNome(),filme.getNome());
                         i++;
                     }
                 }
-                System.out.println("Escolha um candidato: ");
-                int pos = scan.nextInt();
-                scan.nextLine();
+                System.out.println("Indique o filme da atriz candidata: ");
+                String pos = scan.nextLine();
                 try {
-                    Filme candidato = edicoes.get(indexEdicoes).getFilmes().get(pos - 1);
+                    Filme candidato = edicoes.get(indexEdicoes).indexOfByFilmName(pos);
                     atoresCandidatos.add(candidato.getAtrizPrincipal());
                 } catch (Exception e) {
-                    System.out.println("Por favor, escolha um ator válido.");
+                    System.out.println("Por favor, escolha um nome.");
                 }
             }
         }
@@ -860,7 +856,6 @@ public class FestivalCinema {
         }
     }
 
-    
     public boolean equals(Ator a, Ator b) {
         return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero());
     }
@@ -869,14 +864,14 @@ public class FestivalCinema {
         
         String nomePerito = " ";
         Boolean generoPerito = false;
-        int i = 0;      
+        int i = 0;
 
         try {
             FileReader lerFicheiro = new FileReader(ficheiroPeritos);
             BufferedReader lerDados = new BufferedReader(lerFicheiro);
             String line;
             Boolean auxVazio = false;
-            
+
             while ((line = lerDados.readLine()) != null) {
                 StringBuilder aux = new StringBuilder();
                 aux.append(line).append("");
@@ -893,15 +888,15 @@ public class FestivalCinema {
                     switch (i) {
                         case 0:
                             nomePerito = auxString;
-                            break;                     
+                            break;
                         case 1:
                             if (auxString.equals("F")) {
                                 generoPerito = false;
                             } else {
                                 generoPerito = true;
                             }
-                            Perito perito = new Perito(nomePerito, generoPerito);                                                        
-                            edicoes.get(indexEdicoes).inserePerito(perito);   
+                            Perito perito = new Perito(nomePerito, generoPerito);
+                            edicoes.get(indexEdicoes).inserePerito(perito);
                             break;
                     }
                     if (i == 1) {
@@ -914,19 +909,14 @@ public class FestivalCinema {
         } catch (IOException ioe) {
             System.out.println("Ocorreu um Erro");
         }
-        
-        
-    }
-    
-    
-        public void imprimirPeritos(){
-            for (int i =0; i < edicoes.get(indexEdicoes).getPeritos().size(); i++){
-                System.out.println(edicoes.get(indexEdicoes).getPeritos().get(i));
-        }
-     
-        }
-    
-    
 
+    }
+
+    public void imprimirPeritos() {
+        for (int i = 0; i < edicoes.get(indexEdicoes).getPeritos().size(); i++) {
+            System.out.println(edicoes.get(indexEdicoes).getPeritos().get(i));
+        }
+
+    }
 
 }
