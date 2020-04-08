@@ -48,6 +48,16 @@ public class Filme {
                 System.out.println("Já existe!");
             }
         } else {
+            if (ator == this.AtorPrincipal || ator == this.AtrizPrincipal) {
+                System.out.println("O ator já está no filme");
+                return;
+            }
+            for (Ator a : this.atoresSecundarios) {
+                if (ator == a) {
+                    System.out.println("O ator já está no filme");
+                    return;
+                }
+            }
             this.atoresSecundarios.add(ator);
             ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator/atriz participa
         }
@@ -81,13 +91,11 @@ public class Filme {
     public void incrementaNumeroPremios() {
         numeroPremios++;
     }
-    
-    public ArrayList<Ator> getAtores(){
-        
+
+    public ArrayList<Ator> getAtores() {
         return todosAtores;
-   
     }
-    
+
     public String toString() {
         String filme;
         filme = "Filme: " + nome + "\n";
