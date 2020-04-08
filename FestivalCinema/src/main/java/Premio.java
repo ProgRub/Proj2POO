@@ -83,45 +83,48 @@ public class Premio {
         return pontuações;
     }
 
-    public void imprimePontuações(int pontuações[][]) {
+    public void imprimePontuações(int pontuações[][]) { //UM ERRO 
         double[] pont = mediasPontuações(pontuações);
         double pont1 = pont[0]; //média do filme/ator da primeira linha
         double pont2 = pont[1]; //média do filme/ator da segunda linha
         double pont3 = pont[2]; //média do filme/ator da terceira linha
         pont = ordenaPontuações(mediasPontuações(pontuações));
         int n = pont.length;
-        System.out.println(nome + ": ");
-        System.out.println("- PONTUAÇÕES: ");
-        for (int i = 0; i < n; ++i) {
-            if (pont[i] == pont1) { //se a pontuação mais alta for do primeiro filme/ator (no caso de i=0)
-                if (filmes == null && atores != null) {                     //se o prémio for para um ator/atriz
-                    System.out.print(atores.get(0).getNome() + ": ");
-                } else {                                                    //se o prémio for para um filme
-                    System.out.print(filmes.get(0).getNome() + ": ");
+        System.out.println("\n- " + nome + ": ");
+        try {
+            for (int i = 0; i < n; ++i) {
+                if (pont[i] == pont1) { //se a pontuação mais alta for do primeiro filme/ator (no caso de i=0)
+                    if (filmes == null && atores != null) {                     //se o prémio for para um ator/atriz
+                        System.out.print(atores.get(0).getNome() + ": ");
+                    } else {                                                    //se o prémio for para um filme
+                        System.out.print(filmes.get(0).getNome() + ": ");
+                    }
+                    pont1 = 0;
+                } else if (pont[i] == pont2) { //se a pontuação mais alta for do segundo filme/ator (no caso de i=0)
+                    if (filmes == null && atores != null) {
+                        System.out.print(atores.get(1).getNome() + ": ");
+                    } else {
+                        System.out.print(filmes.get(1).getNome() + ": ");
+                    }
+                    pont2 = 0;
+                } else if (pont[i] == pont3) { //se a pontuação mais alta for do terceiro filme/ator (no caso de i=0)
+                    if (filmes == null && atores != null) {
+                        System.out.print(atores.get(2).getNome() + ": ");
+                    } else {
+                        System.out.print(filmes.get(2).getNome() + ": ");
+                    }
+                    pont3 = 0;
+                } else { //se a pontuação mais alta for do quarto filme/ator (no caso de i=0)
+                    if (filmes == null && atores != null) {
+                        System.out.print(atores.get(3).getNome() + ": ");
+                    } else {
+                        System.out.print(filmes.get(3).getNome() + ": ");
+                    }
                 }
-                pont1 = 0;
-            } else if (pont[i] == pont2) { //se a pontuação mais alta for do segundo filme/ator (no caso de i=0)
-                if (filmes == null && atores != null) {
-                    System.out.print(atores.get(1).getNome() + ": ");
-                } else {
-                    System.out.print(filmes.get(1).getNome() + ": ");
-                }
-                pont2 = 0;
-            } else if (pont[i] == pont3) { //se a pontuação mais alta for do terceiro filme/ator (no caso de i=0)
-                if (filmes == null && atores != null) {
-                    System.out.print(atores.get(2).getNome() + ": ");
-                } else {
-                    System.out.print(filmes.get(2).getNome() + ": ");
-                }
-                pont3 = 0;
-            } else { //se a pontuação mais alta for do quarto filme/ator (no caso de i=0)
-                if (filmes == null && atores != null) {
-                    System.out.print(atores.get(3).getNome() + ": ");
-                } else {
-                    System.out.print(filmes.get(3).getNome() + ": ");
-                }
+                System.out.printf("%.2f%", pont[i]); //imprime pontuação
             }
-            System.out.println(pont[i]); //imprime pontuação
+        } catch (Exception e) {
+            System.out.println("Os candidatos não foram avaliados.\n");
         }
     }
 
@@ -159,9 +162,7 @@ public class Premio {
                         System.out.println(filmes.get(3).getNome() + "\n");
                     }
                 }
-            }
-            else
-            {
+            } else {
                 throw new NullPointerException("Pontuações não atribuídas");
             }
         } catch (Exception e) {

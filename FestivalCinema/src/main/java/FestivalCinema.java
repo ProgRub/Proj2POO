@@ -123,7 +123,7 @@ public class FestivalCinema {
                             listarFilmes();
                             break;
                         case "p":
-                            System.out.print("\n(p): Listar Categorias\n(c): Listar Candidatos\n(v): Listar Vencedores\nOpção: ");
+                            System.out.print("\n(p): Listar Categorias\n(c): Listar Candidatos\n(o): Listar Candidatos (Ordenados por Avaliação)\n(v): Listar Vencedores\nOpção: ");
                             opcao = scan.nextLine();
                             switch (opcao) {
                                 case "p":
@@ -131,6 +131,9 @@ public class FestivalCinema {
                                     break;
                                 case "c":
                                     listarCandidatos();
+                                    break;
+                                case "o":
+                                    listarPontuaçõesOrdenadas();
                                     break;
                                 case "v":
                                     listarVencedores();
@@ -590,7 +593,13 @@ public class FestivalCinema {
                 }
             }
         }
-        premio.imprimePontuações(premio.getPontuacoes());
+    }
+    
+    private void listarPontuaçõesOrdenadas(){
+        System.out.println("\nPONTUAÇÕES: ");
+        for (Premio premio : edicoes.get(indexEdicoes).getPremios()){
+            premio.imprimePontuações(premio.getPontuacoes());
+        }
     }
 
     //-------------------------------------------------------------------------------------------
