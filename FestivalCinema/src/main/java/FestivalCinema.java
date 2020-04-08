@@ -266,6 +266,10 @@ public class FestivalCinema {
                         break;
                 }
             }
+            else
+            {
+                System.out.println("O/A ator/atriz já participa em 2 filmes na edição atual");
+            }
         } catch (Exception e) { //no caso de o utilizador quiser selecionar um ator ou filme que não exista (apanha a exceção NullPointerException)
             System.out.println("Posição não existe.");
         }
@@ -835,12 +839,11 @@ public class FestivalCinema {
         for (int i = 0; i < listaProvisoria.size(); i++){
             for (int j = i+1; j < listaProvisoria.size(); j++){
                 if (equals(listaProvisoria.get(i), listaProvisoria.get(j))){                   
-                    listaProvisoria.get(i).inserirFilme(listaProvisoria.get(j).getFilmes().get(0));                    
+                    listaProvisoria.get(i).inserirFilme(listaProvisoria.get(j).getFilmes().get(0));
                     auxFilme = listaProvisoria.get(j).getFilmes().get(0);
-                    listaProvisoria.remove(j);   
+                    listaProvisoria.remove(j);
                 }   
             }
-            
             atores.add(listaProvisoria.get(i)); 
             atores.get(i).inserirFilme(auxFilme);
         }      
@@ -849,10 +852,4 @@ public class FestivalCinema {
     public boolean equals(Ator a, Ator b) {
         return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero());
     }
-    
-    
- 
-    
-    
-
 }
