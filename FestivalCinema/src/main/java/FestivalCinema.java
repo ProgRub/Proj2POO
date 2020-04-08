@@ -304,18 +304,23 @@ public class FestivalCinema {
 
     private void listarFilmes() {
         int posiçãoFilme = 0;
-        for (int posiçãoEdição = 0; posiçãoEdição < edicoes.size(); posiçãoEdição++) {
-            System.out.println("\nEDIÇÃO: " + edicoes.get(posiçãoEdição).getNumEdicao());
-            if (edicoes.get(posiçãoEdição).getFilmes().isEmpty()) {
+        System.out.print("Insira o número da edição: ");
+        int posiçãoEdição = scan.nextInt();
+        scan.nextLine();
+        try {
+            System.out.println("\nEDIÇÃO: " + edicoes.get(posiçãoEdição - 1).getNumEdicao());
+            if (edicoes.get(posiçãoEdição - 1).getFilmes().isEmpty()) {
                 System.out.println("Não existem filmes nesta edição.\n");
             } else {
                 System.out.println("FILMES: \n");
-                while (posiçãoFilme < edicoes.get(posiçãoEdição).getFilmes().size()) {
-                    System.out.print(edicoes.get(posiçãoEdição).getFilmes().get(posiçãoFilme) + "\n");
+                while (posiçãoFilme < edicoes.get(posiçãoEdição - 1).getFilmes().size()) {
+                    System.out.print(edicoes.get(posiçãoEdição - 1).getFilmes().get(posiçãoFilme) + "\n");
                     posiçãoFilme++;
                 }
                 posiçãoFilme = 0;
             }
+        } catch (Exception e) {
+            System.out.println("Essa edição não existe.");
         }
     }
 
@@ -441,7 +446,7 @@ public class FestivalCinema {
             } else { //para atriz principal
                 for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                     if (filme.getAtrizPrincipal() != null) {
-                        System.out.printf("%d. %s por %s\n", i, filme.getAtrizPrincipal().getNome(),filme.getNome());
+                        System.out.printf("%d. %s por %s\n", i, filme.getAtrizPrincipal().getNome(), filme.getNome());
                         i++;
                     }
                 }
@@ -845,7 +850,7 @@ public class FestivalCinema {
 
         for (int i = 0; i < listaProvisoria.size(); i++) {
             for (int j = i + 1; j < listaProvisoria.size(); j++) {
-                if (equals(listaProvisoria.get(i),listaProvisoria.get(j))) {
+                if (equals(listaProvisoria.get(i), listaProvisoria.get(j))) {
                     listaProvisoria.get(i).inserirFilme(listaProvisoria.get(j).getFilmes().get(0));
                     auxFilme = listaProvisoria.get(j).getFilmes().get(0);
                     listaProvisoria.remove(j);
@@ -859,9 +864,9 @@ public class FestivalCinema {
     public boolean equals(Ator a, Ator b) {
         return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero());
     }
-    
-    private void inserePeritos(){
-        
+
+    private void inserePeritos() {
+
         String nomePerito = " ";
         Boolean generoPerito = false;
         int i = 0;
@@ -912,7 +917,7 @@ public class FestivalCinema {
 
     }
 
-    public void imprimirPeritos() {
+    private void imprimirPeritos() {
         for (int i = 0; i < edicoes.get(indexEdicoes).getPeritos().size(); i++) {
             System.out.println(edicoes.get(indexEdicoes).getPeritos().get(i));
         }
