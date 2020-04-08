@@ -44,9 +44,9 @@ public class FestivalCinema {
             numEdicao++;
             ano++;
             edicoes.add(new Edicao(numEdicao, ano));
-            insereFilmesCarregados(edicoes, ficheiroFilmes, numEdicao, indexEdicoes);
-            insereAtoresCarregados(indexEdicoes, edicoes, ficheiroAtores);
-            insereAtoresLista(atores, ficheiroAtores, edicoes, indexEdicoes);
+            insereFilmesCarregados();
+            insereAtoresCarregados();
+            insereAtoresLista();
 
         } else {
             numEdicao++;
@@ -603,10 +603,10 @@ public class FestivalCinema {
     }
 
     //-------------------------------------------------------------------------------------------
-    private void insereAtoresCarregados(int indexEdicoes, ArrayList<Edicao> edicoes, File ficheiro) {
+    private void insereAtoresCarregados() {
         String nomeAtor = " ";
         Boolean generoAtor = false;
-        //int anosCarreiraAtor = 0;
+        String anosCarreiraAtor = " ";
         Boolean criarAtorP = false;
         Boolean criarAtrizP = false;
         Boolean criarAtoresS = false;
@@ -615,7 +615,7 @@ public class FestivalCinema {
         int indexFilmes = -1;
 
         try {
-            FileReader lerFicheiro = new FileReader(ficheiro);
+            FileReader lerFicheiro = new FileReader(ficheiroAtores);
             BufferedReader lerDados = new BufferedReader(lerFicheiro);
             String line;
             while ((line = lerDados.readLine()) != null) {
@@ -649,8 +649,8 @@ public class FestivalCinema {
                             break;
 
                         case 2:
-
-                            Ator ator = new Ator(nomeAtor, generoAtor, 9);
+                            anosCarreiraAtor = auxString;
+                            Ator ator = new Ator(nomeAtor, generoAtor, anosCarreiraAtor);
                             edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, 0);
 
                             criarAtorP = false;
@@ -677,8 +677,8 @@ public class FestivalCinema {
                             }
                             break;
                         case 2:
-
-                            Ator ator = new Ator(nomeAtor, generoAtor, 9);
+                            anosCarreiraAtor = auxString;
+                            Ator ator = new Ator(nomeAtor, generoAtor, anosCarreiraAtor);
                             edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, 1);
                             criarAtrizP = false;
                             break;
@@ -704,8 +704,8 @@ public class FestivalCinema {
                             }
                             break;
                         case 2:
-
-                            Ator ator = new Ator(nomeAtor, generoAtor, 9);
+                            anosCarreiraAtor = auxString;
+                            Ator ator = new Ator(nomeAtor, generoAtor, anosCarreiraAtor);
                             edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, 3);
 
                             break;
@@ -732,7 +732,7 @@ public class FestivalCinema {
         }
     }
 
-    private void insereFilmesCarregados(ArrayList<Edicao> edições, File ficheiro, int numEdicao, int indexEdicoes) {
+    private void insereFilmesCarregados() {
         String nomeFilme = " ";
         String generoFilme = " ";
         String nomeRealizador = " ";
@@ -742,7 +742,7 @@ public class FestivalCinema {
         Boolean criarNovoFilme = false;
 
         try {
-            FileReader lerFicheiro = new FileReader(ficheiro);
+            FileReader lerFicheiro = new FileReader(ficheiroFilmes);
             BufferedReader lerDados = new BufferedReader(lerFicheiro);
             String line;
             Boolean auxVazio = false;
@@ -779,7 +779,7 @@ public class FestivalCinema {
                             criarNovoFilme = false;
                             Realizador realizador = new Realizador(nomeRealizador, generoRealizador);
                             Filme filme = new Filme(nomeFilme, generoFilme, numEdicao, realizador);
-                            edições.get(indexEdicoes).insereFilmes(filme);
+                            edicoes.get(indexEdicoes).insereFilmes(filme);
                             break;
                     }
                     if (i == 3) {
@@ -798,70 +798,33 @@ public class FestivalCinema {
         }
     }
 
-    private void insereAtoresLista(ArrayList<Ator> atores, File ficheiro, ArrayList<Edicao> edições, int indexEdicoes) {
-        String nomeAtor = " ";
-        Boolean generoAtor = false;
-        //int anosCarreiraAtor = 0;
-        Boolean criarAtor;
-        int i = 0;
-        int posiçãoFilme = -1;
-
-        try {
-            FileReader lerFicheiro = new FileReader(ficheiro);
-            BufferedReader lerDados = new BufferedReader(lerFicheiro);
-            String line;
-            ArrayList<Ator> listaProvisoria = new ArrayList<Ator>();
-
-            while ((line = lerDados.readLine()) != null) {
-                StringBuilder aux = new StringBuilder();
-                aux.append(line).append(" ");
-                String auxString = aux.toString();
-
-                if (auxString.equals("Ator principal: ") || auxString.equals("Atriz principal: ") || auxString.equals("Atores Secundarios: ") || auxString.equals("-------------------------------- ") || auxString.equals(" ") || auxString.equals("ATORES: ")) {
-                    criarAtor = false;
-                } else {
-                    criarAtor = true;
-                }
-
-                if (auxString.equals("-------------------------------- ")) {
-                    posiçãoFilme++;
-                }
-
-                if (criarAtor) {
-
-                    switch (i) {
-                        case 0:
-                            nomeAtor = auxString;
-                            break;
-                        case 1:
-                            if (auxString.equals("F ")) {
-                                generoAtor = false;
-                            } else {
-                                generoAtor = true;
-                            }
-                            break;
-                        case 2:
-
-                            Ator ator = new Ator(nomeAtor, generoAtor, 9);
-                            Filme filmeAtual = edições.get(indexEdicoes).getFilmes().get(posiçãoFilme);
-                            ator.inserirFilme(filmeAtual);
-                            atores.add(ator);
-
-                            break;
-                    }
-                    if (i == 2) {
-                        i = 0;
-
-                    } else {
-                        i++;
-                    }
-                }
-
-            }
-        } catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro");
+    private ArrayList<Ator> insereAtoresListaProvisoria() {
+        ArrayList<Ator> listaProvisoria = new ArrayList<Ator>();
+        for (int i = 0; i < edicoes.get(indexEdicoes).getFilmes().size(); i++){
+            for (int j = 0; j < edicoes.get(indexEdicoes).getFilmes().get(i).getAtores().size(); j++){
+                listaProvisoria.add(edicoes.get(indexEdicoes).getFilmes().get(i).getAtores().get(j));               
+            }    
         }
-
+        return listaProvisoria;      
     }
+    
+    private void insereAtoresLista(){
+        ArrayList<Ator> listaProvisoria = new ArrayList<Ator>(insereAtoresListaProvisoria());
+        for (int i = 0; i < listaProvisoria.size(); i++){
+            for (int j = i+1; j < listaProvisoria.size(); j++){
+                if (equals(listaProvisoria.get(i), listaProvisoria.get(j))){
+                    listaProvisoria.get(i).inserirFilme(listaProvisoria.get(j).getFilmes().get(0));
+                    listaProvisoria.remove(j);   
+                }   
+            }
+            atores.add(listaProvisoria.get(i));           
+        }      
+    }
+    
+    public boolean equals(Ator a, Ator b) {
+        return (a.getNome().equals(b.getNome())) && (a.getGenero() == b.getGenero());
+    }
+    
+    
 
 }

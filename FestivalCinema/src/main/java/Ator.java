@@ -7,10 +7,19 @@ public class Ator extends Pessoa {
     private int numFilmesEdiçãoAtual;
     private int numFilmesTotal;
     private ArrayList<Filme> filmesParticipa;
+    String anosCarreiraS;
 
     public Ator(String nome, boolean genero, int anosCarreira) {
         super(nome, genero);
         this.anosCarreira = anosCarreira;
+        this.numFilmesTotal = 0;
+        this.numFilmesEdiçãoAtual = 0;
+        filmesParticipa = new ArrayList<Filme>(0);
+    }
+    
+    public Ator(String nome, boolean genero, String anosCarreiraS) {
+        super(nome, genero);
+        this.anosCarreiraS = anosCarreiraS;
         this.numFilmesTotal = 0;
         this.numFilmesEdiçãoAtual = 0;
         filmesParticipa = new ArrayList<Filme>(0);
@@ -47,10 +56,14 @@ public class Ator extends Pessoa {
     public int getAnosCarreira() {
         return anosCarreira;
     }
+    
+    public ArrayList<Filme> getFilmes() {
+        return filmesParticipa;
+    }
 
     public String toString() {
         String ator = super.toString();
-        ator += "Anos de Carreira: " + anosCarreira + "\n";
+        ator += "Anos de Carreira: " + (anosCarreira==0 ? anosCarreiraS : anosCarreira) + "\n";
         ator += "Filmes em que participa: \n";
         for (int indice = 0; indice < filmesParticipa.size(); indice++) {
             ator += filmesParticipa.get(indice).getNome() + "\n";

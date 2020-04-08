@@ -51,6 +51,7 @@ public class Filme {
             this.atoresSecundarios.add(ator);
             ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator/atriz participa
         }
+        this.todosAtores.add(ator);
     }
 
     public String getNome() {
@@ -81,13 +82,7 @@ public class Filme {
         numeroPremios++;
     }
     
-    public ArrayList<Ator> juntaAtores(){
-        this.todosAtores.add(AtorPrincipal);
-        this.todosAtores.add(AtrizPrincipal);
-        
-        for(int i =0; i < atoresSecundarios.size(); i++){
-            this.todosAtores.add(atoresSecundarios.get(i));
-        }
+    public ArrayList<Ator> getAtores(){
         
         return todosAtores;
    
