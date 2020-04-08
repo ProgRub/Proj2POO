@@ -7,7 +7,7 @@ public class Premio {
     private String nome;
     private int[][] pontuacoes;
     private ArrayList<Filme> filmes;
-    private ArrayList<Pessoa> atores;
+    private ArrayList<Ator> atores;
 
     public Premio(String nome) {
         this.nome = nome;
@@ -35,11 +35,11 @@ public class Premio {
         this.filmes = filmes;
     }
 
-    public void setAtores(ArrayList<Pessoa> atores) {
+    public void setAtores(ArrayList<Ator> atores) {
         this.atores = atores;
     }
 
-    public ArrayList<Pessoa> getAtoresCandidatos() {
+    public ArrayList<Ator> getAtoresCandidatos() {
         return atores;
     }
 
