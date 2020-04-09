@@ -472,8 +472,8 @@ public class FestivalCinema {
      * @return lista dos atores/atrizes nomeados ao Prémio
      */
     private ArrayList<Ator> escolherAtoresPrincipaisCandidatos(boolean homem) {
-        ArrayList<Ator> atoresCandidatos = new ArrayList<Ator>();
-        ArrayList<Ator> possiveisCandidatos = new ArrayList<Ator>();
+        ArrayList<Ator> atoresCandidatos = new ArrayList<>();
+        ArrayList<Ator> possiveisCandidatos = new ArrayList<>();
         int i = 1;
         if (homem) {
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
@@ -570,7 +570,6 @@ public class FestivalCinema {
                 if (conta == 1) {
                     atoresCandidatos.add(candidato);
                 } else if (conta > 1) {
-                    System.out.println(conta);
                     System.out.println((homem ? "Esse ator" : "Essa atriz") + " participa em 2 filmes, a qual se refere?");
                     String nomeFilme = scan.nextLine();
                     Filme f = edicoes.get(indexEdicoes).indexOfByFilmName(nomeFilme);
@@ -666,12 +665,13 @@ public class FestivalCinema {
      */
     private void pontuarCandidatos(Premio premio) {
         System.out.println("\nAVALIAÇÃO DO PRÉMIO " + premio.toString().toUpperCase());
-        if (premio.getNome().contains("Ator") || premio.getNome().contains("Ator")) {
+        if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz")) {
             for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
                 System.out.printf("CANDIDATO %d: %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
                 for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
                     while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan));
                 }
+                System.out.println("CHEGOU");
             }
         } else if (!premio.getNome().contains("Carreira")) {
             for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
@@ -908,7 +908,7 @@ public class FestivalCinema {
         int i = 0;
 
         try {
-            Scanner lerDados = new Scanner(ficheiroFilmes, "UTF-8");
+            Scanner lerDados = new Scanner(ficheiroPeritos, "UTF-8");
             String line;
             while (lerDados.hasNextLine()) {
                 line = lerDados.nextLine();
