@@ -51,8 +51,8 @@ public class Premio {
 
     public String toString() {
         return nome;
-    }
-
+    }    
+       
     public double[] mediasPontuações(int pontuações[][]) {
         double[] medias = new double[4]; //guarda medias dos filmes/atores pela ordem
         for (int linha = 0; linha < 4; linha++) {
