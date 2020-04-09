@@ -1,42 +1,25 @@
-FILMES:
-
-nome do filme
-género do filme
-realizador
-género do realizador
-
 --------------------------------
 Saw
-terror
+Terror
 James Wan
-
-
-
 M
 --------------------------------
 The Hunger Games
-acao
+Ação
 Gary Ross 
 M
-
 --------------------------------
 Passengers
-fantasia
-
+Fantasia
 Morten Tyldum
 M
 --------------------------------
-Bad moms
-comedia
-
-
-
-
+Bad Moms
+Comédia
 Jon Lucas
 M
 --------------------------------
 Fast & Furious
-acao
+Ação
 Justin Lin
-
 M

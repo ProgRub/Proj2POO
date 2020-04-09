@@ -11,7 +11,6 @@ public class Filme {
     private Ator AtorPrincipal;
     private Ator AtrizPrincipal;
     private ArrayList<Ator> atoresSecundarios;
-    private ArrayList<Ator> todosAtores;
 
     public Filme(String nome, String genero, int edição, Realizador realizador) {
         this.nome = nome;
@@ -21,7 +20,6 @@ public class Filme {
         this.AtorPrincipal = null;
         this.AtrizPrincipal = null;
         this.atoresSecundarios = new ArrayList<Ator>(0);
-        this.todosAtores = new ArrayList<Ator>();
         this.numeroPremios = 0;
     }
 
@@ -61,7 +59,6 @@ public class Filme {
             this.atoresSecundarios.add(ator);
             ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator/atriz participa
         }
-        this.todosAtores.add(ator);
     }
 
     public String getNome() {
@@ -92,10 +89,6 @@ public class Filme {
         numeroPremios++;
     }
 
-    public ArrayList<Ator> getAtores() {
-        return todosAtores;
-    }
-
     public String toString() {
         String filme;
         filme = "Filme: " + nome + "\n";
@@ -104,9 +97,8 @@ public class Filme {
         filme += "Ator Principal: " + (AtorPrincipal != null ? AtorPrincipal.getNome() : "") + "\n";
         filme += "Atriz Principal: " + (AtrizPrincipal != null ? AtrizPrincipal.getNome() : "") + "\n";
         filme += "Atores Secundários:\n";
-        for (int indice = 0; indice < atoresSecundarios.size(); indice++) {
-            filme += atoresSecundarios.get(indice).getNome() + "\n";
-            //System.out.println(atoresSecundarios.get(indice));
+        for (Ator secundario : this.atoresSecundarios) {
+            filme += secundario.getNome() + "\n";
         }
         return filme;
     }

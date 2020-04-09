@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Ator extends Pessoa {
 
@@ -47,7 +48,7 @@ public class Ator extends Pessoa {
     public int getAnosCarreira() {
         return anosCarreira;
     }
-    
+
     public ArrayList<Filme> getFilmes() {
         return filmesParticipa;
     }
@@ -56,14 +57,36 @@ public class Ator extends Pessoa {
         String ator = super.toString();
         ator += "Anos de Carreira: " + anosCarreira + "\n";
         ator += "Filmes em que participa: \n";
-        for (int indice = 0; indice < filmesParticipa.size(); indice++) {
-            ator += filmesParticipa.get(indice).getNome() + "\n";
-            indice++;
+        for (Filme f : this.filmesParticipa) {
+            ator += f.getNome() + "\n";
         }
         return ator;
     }
 
-    public boolean equals(Ator a, Ator b) {
-        return a.getNome().equalsIgnoreCase(b.getNome()) && (a.getGenero() == b.getGenero());
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        System.out.println("CHAMADO");
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (obj == this) {
+//            return true;
+//        }
+//        if (!(obj instanceof Ator)) {
+//            return false;
+//        }
+//        Ator comparar = (Ator)obj;
+//        System.out.println(this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome()));
+//        return this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int hash = 3;
+//        hash = 13 * hash + this.anosCarreira;
+//        hash = 13 * hash + this.numFilmesEdiçãoAtual;
+//        hash = 13 * hash + this.numFilmesTotal;
+//        hash = 13 * hash + Objects.hashCode(this.filmesParticipa);
+//        return hash;
+//    }
 }

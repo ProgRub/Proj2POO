@@ -51,10 +51,8 @@ public class Edicao {
         if (filmes.isEmpty()) {
             System.out.println("! NÃO HÁ FILMES REGISTADOS !");
         } else {
-            int indice = 0;
-            while (indice < filmes.size()) {
-                System.out.println(filmes.get(indice));
-                indice++;
+            for (Filme filme : this.filmes) {
+                System.out.println(filme);
             }
         }
     }
@@ -70,13 +68,10 @@ public class Edicao {
     public void insereFilmes(Filme filme) {
         this.filmes.add(filme);
     }
-    
-    public Filme indexOfByFilmName(String nome)
-    {
-        for (Filme f : this.filmes)
-        {
-            if (nome.equals(f.getNome()))
-            {
+
+    public Filme indexOfByFilmName(String nome) {
+        for (Filme f : this.filmes) {
+            if (nome.equals(f.getNome())) {
                 return f;
             }
         }

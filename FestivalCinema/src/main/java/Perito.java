@@ -16,11 +16,9 @@ public class Perito extends Pessoa {
         System.out.printf((this.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação: ", this.getNome());
         double pontuacao = scan.nextDouble();
         scan.nextLine();
-        if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int)pontuacao) {
-            premio.setPontuacao(indiceCandidato, indicePerito, (int)pontuacao);
-        }
-        else
-        {
+        if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int) pontuacao) {
+            premio.setPontuacao(indiceCandidato, indicePerito, (int) pontuacao);
+        } else {
             System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
             return false;
         }
