@@ -581,19 +581,19 @@ public class FestivalCinema {
             try {
                 if (contaPremios <= 4 || contaPremios == 9) {
                     for (int i = 0; i < 4; i++) {
-                        System.out.println(premio.getAtoresCandidatos().get(i).getNome());
+                        System.out.println("- "+premio.getAtoresCandidatos().get(i).getNome());
                     }
                 } else if (contaPremios > 4 && contaPremios != 6 && contaPremios != 9) {
                     for (int i = 0; i < 4; i++) {
-                        System.out.println(premio.getFilmesCandidatos().get(i).getNome());
+                        System.out.println("- "+premio.getFilmesCandidatos().get(i).getNome());
                     }
                 } else {
                     for (int i = 0; i < 4; i++) {
-                        System.out.println(premio.getFilmesCandidatos().get(i).getRealizador().getNome());
+                        System.out.println("- "+premio.getFilmesCandidatos().get(i).getRealizador().getNome());
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Não tem candidatos.\n");
+                System.out.println("- Não tem candidatos.\n");
             }
             contaPremios++;
         }
