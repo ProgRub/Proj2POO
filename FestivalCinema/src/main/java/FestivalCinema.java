@@ -8,21 +8,19 @@ public class FestivalCinema {
 
     private ArrayList<Edicao> edicoes;
     private ArrayList<Ator> atores;
-    private boolean novo;
     private int indexEdicoes;
     private int ano;
     private int numEdicao;
-    private Scanner scan;
+    private final Scanner scan;
     private boolean quebra;
-    private File ficheiroFilmes;
-    private File ficheiroAtores;
-    private File ficheiroPeritos;
+    private final File ficheiroFilmes;
+    private final File ficheiroAtores;
+    private final File ficheiroPeritos;
     private String opcao;
 
     public FestivalCinema() {
         this.edicoes = new ArrayList<>();
         this.atores = new ArrayList<>();
-        this.novo = true;
         this.opcao = "";
         this.indexEdicoes = 0;
         this.ano = 2010;
@@ -44,7 +42,6 @@ public class FestivalCinema {
             opcao = scan.nextLine();
         }
         if (opcao.equalsIgnoreCase("c")) {
-            novo = false;
             numEdicao++;
             ano++;
             edicoes.add(new Edicao(numEdicao, ano));
@@ -305,7 +302,6 @@ public class FestivalCinema {
      * utilizador(quer carregados de um ficheiro quer criados pelo teclado)
      */
     private void listarFilmes() {
-        int posiçãoFilme = 0;
         System.out.print("Insira o número da edição: ");
         int posiçãoEdição = scan.nextInt();
         scan.nextLine();
@@ -314,8 +310,7 @@ public class FestivalCinema {
             if (edicoes.get(posiçãoEdição - 1).getFilmes().isEmpty()) {
                 System.out.println("Não existem filmes nesta edição.\n");
             } else {
-                edicoes.get(posiçãoEdição).imprimeFilmes();
-                posiçãoFilme = 0;
+                edicoes.get(posiçãoEdição - 1).imprimeFilmes();
             }
         } catch (Exception e) {
             System.out.println("Essa edição não existe.");
@@ -688,7 +683,7 @@ public class FestivalCinema {
                     criarAtoresS = false;
                     indexFilmes++;
                 }
-                if (criarAtorP && !line.equals("")) {
+                if (criarAtorP) {
 
                     switch (i) {
                         case 0:
@@ -724,7 +719,7 @@ public class FestivalCinema {
                     }
                 }
 
-                if (criarAtrizP && !line.equals("")) {
+                if (criarAtrizP) {
 
                     switch (i) {
                         case 0:
@@ -759,7 +754,7 @@ public class FestivalCinema {
                     }
                 }
 
-                if (criarAtoresS && !line.equals("")) {
+                if (criarAtoresS) {
 
                     switch (i) {
                         case 0:
@@ -819,7 +814,7 @@ public class FestivalCinema {
             String line;
             while (lerDados.hasNextLine()) {
                 line = lerDados.nextLine();
-                if (criarNovoFilme && !line.equals("")) {
+                if (criarNovoFilme) {
                     switch (i) {
                         case 0:
                             nomeFilme = line;
@@ -869,23 +864,20 @@ public class FestivalCinema {
             String line;
             while (lerDados.hasNextLine()) {
                 line = lerDados.nextLine();
-
-                if (!line.equals("")) {
-                    switch (i) {
-                        case 0:
-                            nomePerito = line;
-                            break;
-                        case 1:
-                            generoPerito = line.equals("M");
-                            Perito perito = new Perito(nomePerito, generoPerito);
-                            edicoes.get(indexEdicoes).inserePerito(perito);
-                            break;
-                    }
-                    if (i == 1) {
-                        i = 0;
-                    } else {
-                        i++;
-                    }
+                switch (i) {
+                    case 0:
+                        nomePerito = line;
+                        break;
+                    case 1:
+                        generoPerito = line.equals("M");
+                        Perito perito = new Perito(nomePerito, generoPerito);
+                        edicoes.get(indexEdicoes).inserePerito(perito);
+                        break;
+                }
+                if (i == 1) {
+                    i = 0;
+                } else {
+                    i++;
                 }
             }
         } catch (IOException ioe) {
