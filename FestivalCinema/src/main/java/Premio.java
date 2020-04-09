@@ -132,6 +132,7 @@ public class Premio {
         double pont1 = pont[0]; //média do filme/ator da primeira linha
         double pont2 = pont[1]; //média do filme/ator da segunda linha
         double pont3 = pont[2]; //média do filme/ator da terceira linha
+        double pont4 = pont[3]; //média do filme/ator da quarta linha
         pont = ordenaPontuações(mediasPontuações(pontuações));
         System.out.print(nome + ": ");
         try {
@@ -164,7 +165,7 @@ public class Premio {
             } else {
                 throw new NullPointerException("Pontuações não atribuídas");
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println("Ainda sem vencedor.\n");
         }
     }

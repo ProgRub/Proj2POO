@@ -230,40 +230,42 @@ public class FestivalCinema {
             System.out.printf("%d. %s\n", i, a.getNome());
             i++;
         }
-        System.out.print("Escolha a posição do ator que quer inserir num filme\nPosição: ");
-        int pos = scan.nextInt();
-        scan.nextLine(); //discarda o enter
+        System.out.println("Qual o nome do ator/atriz que pretende inserir no filme?");
+        String nomeAtor = scan.nextLine();
         try {
-            Ator mudar = atores.get(pos - 1); //guarda o ator ao qual atribuir um papel, se possível, caso contrário apanha a excepção e imprime uma mensagem
+            Ator mudar = indexOfByActorName(nomeAtor); //guarda o ator ao qual atribuir um papel, se possível, caso contrário apanha a excepção e imprime uma mensagem
             if (mudar.podeInserirFilme()) { //verifica que o ator não participa em 2 filmes na edição atual
                 i = 1;
                 for (Filme f : edicoes.get(indexEdicoes).getFilmes()) { //imprime a lista de filmes da edição atual
                     System.out.printf("%d. %s\n", i, f.getNome());
                     i++;
                 }
-                System.out.println("Qual o filme?");
-                int posFilme = scan.nextInt();
-                scan.nextLine(); //discarda o enter
-                Filme casting = edicoes.get(indexEdicoes).getFilmes().get(posFilme - 1); //guarda o filme no qual se pretende inserir o ator
-                System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
-                String papel = scan.nextLine();
-                while (papel.length() > 1 || !(papel.equalsIgnoreCase("P") || papel.equalsIgnoreCase("S"))) {//verifica que inseriu uma opção válida
-                    System.out.print("Opção inválida. Opção (P-Principal ou S-Secundário): ");
-                    papel = scan.nextLine();
-                }
-                switch (papel.toLowerCase()) {
-                    case "p": //se pretende-se que o ator/atriz seja principal
-                        casting.insereAtor(mudar, mudar.getGenero() ? 0 : 1); //ver o método insereAtor em Filmes
-                        break;
-                    case "s": //se pretende-se que o ator/atriz seja secundário/a
-                        casting.insereAtor(mudar, 2); //ver o método insereAtor em Filmes
-                        break;
+                System.out.println("Em que filme este " + (mudar.getGenero() ? "ator" : "atriz") + " participará?");
+                String nomeFilme = scan.nextLine();
+                try {
+                    Filme casting = edicoes.get(indexEdicoes).indexOfByFilmName(nomeFilme); //guarda o filme no qual se pretende inserir o ator
+                    System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
+                    String papel = scan.nextLine();
+                    while (!(papel.equalsIgnoreCase("P") || papel.equalsIgnoreCase("S"))) {//verifica que inseriu uma opção válida
+                        System.out.print("Opção inválida (P-Principal ou S-Secundário).\nOpção: ");
+                        papel = scan.nextLine();
+                    }
+                    switch (papel.toLowerCase()) {
+                        case "p": //se pretende-se que o ator/atriz seja principal
+                            casting.insereAtor(mudar, mudar.getGenero() ? 0 : 1); //ver o método insereAtor em Filmes
+                            break;
+                        case "s": //se pretende-se que o ator/atriz seja secundário/a
+                            casting.insereAtor(mudar, 2); //ver o método insereAtor em Filmes
+                            break;
+                    }
+                } catch (NullPointerException e) {
+                    System.out.println("Esse filme não existe (possivelmente escreveu mal o nome).");
                 }
             } else {
-                System.out.println("O/A ator/atriz já participa em 2 filmes na edição atual");
+                System.out.println((mudar.getGenero() ? "O ator" : "A atriz") + " já participa em 2 filmes na edição atual");
             }
-        } catch (Exception e) { //no caso de o utilizador quiser selecionar um ator ou filme que não exista (apanha a exceção NullPointerException)
-            System.out.println("Posição não existe.");
+        } catch (NullPointerException e) { //no caso de o utilizador quiser selecionar um ator que não exista
+            System.out.println("Esse ator não existe (possivelmente escreveu mal o nome).");
         }
     }
 
