@@ -53,6 +53,10 @@ public class Ator extends Pessoa {
     protected ArrayList<Filme> getFilmes() {
         return filmesParticipa;
     }
+    
+    protected int getnumFilmesEdiçãoAtual(){
+        return numFilmesEdiçãoAtual;
+    }
 
     @Override
     public String toString() {

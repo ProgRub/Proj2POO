@@ -50,9 +50,8 @@ public class FestivalCinema {
         if (opcao.equalsIgnoreCase("c")) {
             numEdicao++;
             edicoes.add(new Edicao(numEdicao, ano));
-
             ano++;
-            System.out.print("\nOpções:\n(a): Carregar Atores e Filmes\n(p): Carregar Peritos\n(c): Carregar Candidatos\n(t): Carregar Tudo\nOpção: ");
+            System.out.print("\nOpções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Peritos\n(t): Carregar Tudo\nOpção: ");
             opcao = scan.nextLine();
             switch (opcao.toLowerCase()) {
                 case "a":
@@ -73,7 +72,6 @@ public class FestivalCinema {
                     inserePeritos();
                     carregaCandidatos();
                     break;
-
             }
         } else {
             numEdicao++;
@@ -151,6 +149,7 @@ public class FestivalCinema {
                             opcao = scan.nextLine();
                             switch (opcao) {
                                 case "f":
+                                    consultarEdicoes();
                                     listarFilmes();
                                     break;
                                 case "p":
@@ -182,6 +181,13 @@ public class FestivalCinema {
                     }
                     break;
                 case "h":
+                    for (Premio premio : edicoes.get(indexEdicoes).getPremios()){
+                        if(premio.getVencedor() == null){
+                            System.out.println("\nAinda não avaliou este prémio.");
+                            pontuarCandidatos(premio);
+                        }
+                    }
+                    
                     System.out.println("\nNOVA EDIÇÃO CRIADA.\n");
                     for (Ator a : atores) {
                         a.resetNumFilmesEdicaoAtual();
@@ -335,12 +341,16 @@ public class FestivalCinema {
      * quer criados pelo teclado)
      */
     private void listarAtores() {
-        if (!atores.isEmpty()) {
-            for (Ator ator : this.atores) {
+        boolean existe = false;
+        for (Ator ator : this.atores) {
+            if (ator.getnumFilmesEdiçãoAtual() != 0) {
                 System.out.println(ator);
+                existe = true;
             }
-        } else {
-            System.out.println("Não existem atores nesta edição.");
+        }
+
+        if (!existe) {
+            System.out.println("\nNenhum ator participa num filme desta edição.");
         }
     }
 
@@ -446,15 +456,19 @@ public class FestivalCinema {
             System.out.printf("%d. %s\n", i, filme.getNome()); //mostra nome do realizador do filme
             i++;
         }
-        while (filmesCandidatos.size() < 4) { //Obriga o utilizador a escolher os 4 candidatos de uma só vez            
-            System.out.print("Indique o filme candidato: ");
-            String pos = scan.nextLine();
-            try {
-                Filme candidato = edicoes.get(0).indexOfByFilmName(pos);
-                filmesCandidatos.add(candidato);
-            } catch (Exception e) {
-                System.out.println("Por favor, indique um nome válido.");
+        if (i >= 5) {
+            while (filmesCandidatos.size() < 4) { //Obriga o utilizador a escolher os 4 candidatos de uma só vez            
+                System.out.print("Indique o nome do filme candidato: ");
+                String pos = scan.nextLine();
+                try {
+                    Filme candidato = edicoes.get(0).indexOfByFilmName(pos);
+                    filmesCandidatos.add(candidato);
+                } catch (Exception e) {
+                    System.out.println("Por favor, indique um nome válido.");
+                }
             }
+        } else {
+            System.out.println("\nNão há filmes suficientes.");
         }
         // System.out.print(filmesCandidatos); //PARA TESTAR
         return filmesCandidatos;
@@ -633,14 +647,18 @@ public class FestivalCinema {
             System.out.println(" ");
             System.out.println(premio + ":");
             try {
-                if (contaPremios <= 4 || contaPremios == 9) {
+                if (contaPremios <= 4) {
                     for (int i = 0; i < 4; i++) {
-                        System.out.printf("- %s em %s\n",premio.getAtoresCandidatos().get(i).getNome(),premio.getFilmesCandidatos().get(i).getNome());
+                        System.out.printf("- %s em %s\n", premio.getAtoresCandidatos().get(i).getNome(), premio.getFilmesCandidatos().get(i).getNome());
                     }
                 } else if (contaPremios > 4 && contaPremios != 6 && contaPremios != 9) {
                     for (int i = 0; i < 4; i++) {
                         System.out.println("- " + premio.getFilmesCandidatos().get(i).getNome());
 
+                    }
+                } else if (contaPremios == 9) {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println("- " + premio.getAtoresCandidatos().get(i).getNome());
                     }
                 } else {
                     for (int i = 0; i < 4; i++) {
@@ -733,7 +751,7 @@ public class FestivalCinema {
             } catch (Exception e) {
                 System.out.println("Não há candidatos para esta categoria.\n");
             }
-        }else{
+        } else {
             System.out.println("Os candidatos já foram pontuados para esta categoria.\n");
         }
     }
@@ -777,8 +795,6 @@ public class FestivalCinema {
         }
         return null;
     }
-    
-    
 
     protected Filme indexOfByFilmName(String nome, ArrayList<Filme> filmes) {
         for (Filme f : filmes) {
@@ -1050,20 +1066,22 @@ public class FestivalCinema {
                 }
 
                 if (cria) {
-                    if (indexPremios < 4 || indexPremios == 8) {
+                    if (indexPremios < 4) {
                         for (Ator a : this.atores) {
                             if (a.getNome().equals(line)) {
-                                atoresA.add(a);
+                                //atoresA.add(a);
+                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).nomeiaAtor(a, a.getFilmes().get(0));
+
                             }
                         }
                         if (y == 3) {
-
+                            /*
                             ArrayList<Ator> auxA = new ArrayList<Ator>();
                             for (Ator e : atoresA) {
                                 auxA.add(e);
                             }
-                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
-                            atoresA.clear();
+                            //edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
+                            atoresA.clear();*/
                             y = 0;
                         } else {
                             y++;
@@ -1083,6 +1101,26 @@ public class FestivalCinema {
                             }
                             edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
                             filmesA.clear();
+                            y = 0;
+                        } else {
+                            y++;
+                        }
+                    }
+
+                    if (indexPremios == 8) {
+                        for (Ator a : this.atores) {
+                            if (a.getNome().equals(line)) {
+                                atoresA.add(a);
+                            }
+                        }
+                        if (y == 3) {
+
+                            ArrayList<Ator> auxA = new ArrayList<Ator>();
+                            for (Ator e : atoresA) {
+                                auxA.add(e);
+                            }
+                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
+                            atoresA.clear();
                             y = 0;
                         } else {
                             y++;
