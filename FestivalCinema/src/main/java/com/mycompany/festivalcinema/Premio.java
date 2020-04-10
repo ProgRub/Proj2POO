@@ -14,11 +14,12 @@ public class Premio {
 
     protected Premio(String nome) {
         this.nome = nome;
-        if (nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira")) {
-            this.filmes = null;
-        } else {
+        this.filmes = new ArrayList<>(0);
+        this.atores = new ArrayList<>(0);
+        if (!(nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira"))) {
             this.atores = null;
         }
+        
         this.pontuacoes = new int[4][NUMEROPERITOS]; //4 candidatos, 5 peritos
         this.vencedor = null;
     }
@@ -41,6 +42,15 @@ public class Premio {
 
     protected void setAtores(ArrayList<Ator> atores) {
         this.atores = atores;
+    }
+
+    protected void nomeiaFilme(Filme filme) {
+        this.filmes.add(filme);
+    }
+
+    protected void nomeiaAtor(Ator ator, Filme filme) {
+        this.atores.add(ator);
+        nomeiaFilme(filme);
     }
 
     protected ArrayList<Ator> getAtoresCandidatos() {
@@ -164,15 +174,15 @@ public class Premio {
     private double[] empateVencedores(int[][] pontuacoes, double[] mediasPontuacoes) {
         if (mediasPontuacoes[0] == mediasPontuacoes[1]) {
             double[] desviosPadrao = new double[4];
-            desviosPadrao[0] = desvioPadrao(NUMEROPERITOS, pontuacoes, mediasPontuacoes, 0);
-            desviosPadrao[1] = desvioPadrao(NUMEROPERITOS, pontuacoes, mediasPontuacoes, 1);
+            desviosPadrao[0] = desvioPadrao(pontuacoes, mediasPontuacoes, 0);
+            desviosPadrao[1] = desvioPadrao(pontuacoes, mediasPontuacoes, 1);
             desviosPadrao[2] = 0;
             desviosPadrao[3] = 0;
             if (mediasPontuacoes[2] == mediasPontuacoes[0]) {
-                desviosPadrao[2] = desvioPadrao(NUMEROPERITOS, pontuacoes, mediasPontuacoes, 2);
+                desviosPadrao[2] = desvioPadrao(pontuacoes, mediasPontuacoes, 2);
             }
             if (mediasPontuacoes[3] == mediasPontuacoes[0]) {
-                desviosPadrao[3] = desvioPadrao(NUMEROPERITOS, pontuacoes, mediasPontuacoes, 3);
+                desviosPadrao[3] = desvioPadrao(pontuacoes, mediasPontuacoes, 3);
             }
             for (int i = 0; i < desviosPadrao.length; i++) {
                 for (int j = 0; j < desviosPadrao.length - i - 1; j++) {
@@ -185,7 +195,7 @@ public class Premio {
         return mediasPontuacoes;
     }
 
-    private double desvioPadrao(int maxSoma, int[][] pontuacoes, double[] mediasPontuacoes, int posCandidato) {
+    private double desvioPadrao(int[][] pontuacoes, double[] mediasPontuacoes, int posCandidato) {
         double soma = 0;
         for (int i = 0; i < NUMEROPERITOS; i++) {
             soma += Math.pow((double) pontuacoes[posCandidato][i] - mediasPontuacoes[posCandidato], 2);

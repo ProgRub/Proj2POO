@@ -35,7 +35,8 @@ public class Ator extends Pessoa {
     }
 
     /**
-     * Método que guarda um filme no catalogo de filmes do ator e atualiza as variáveis que contam os filmes
+     * Método que guarda um filme no catalogo de filmes do ator e atualiza as
+     * variáveis que contam os filmes
      *
      * @param filme - filme a inserir no catalogo de filmes do ator
      */

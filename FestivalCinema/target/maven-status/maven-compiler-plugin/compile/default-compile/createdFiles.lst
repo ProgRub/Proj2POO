@@ -1,4 +1,9 @@
+com\mycompany\festivalcinema\Premio.class
+com\mycompany\festivalcinema\Realizador.class
 Main.class
-Perito.class
-Filme.class
-FestivalCinema.class
+com\mycompany\festivalcinema\Ator.class
+com\mycompany\festivalcinema\Pessoa.class
+com\mycompany\festivalcinema\FestivalCinema.class
+com\mycompany\festivalcinema\Edicao.class
+com\mycompany\festivalcinema\Perito.class
+com\mycompany\festivalcinema\Filme.class
