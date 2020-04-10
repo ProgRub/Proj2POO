@@ -1,3 +1,4 @@
+package FestCin;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,7 +101,7 @@ public class Premio {
         double[] pont = ordenaPontuações(mediasPontuações(pontuações));
         pont = empateVencedores(pontuacoes, pont);
         System.out.println("\n- " + nome + ": ");
-        try {            
+        try {
             if (!Double.isNaN(pont[0])) {
                 for (int i = 0; i < pont.length; ++i) {
                     if (filmes == null && atores != null) {                     //se o prémio for para um ator/atriz

@@ -1,3 +1,4 @@
+package FestCin;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ public class FestivalCinema {
     private final File ficheiroCandidatos;
     private String opcao;
 
-    protected FestivalCinema() {
+    public FestivalCinema() {
         this.edicoes = new ArrayList<>();
         this.atores = new ArrayList<>();
         this.opcao = "";
@@ -34,7 +35,7 @@ public class FestivalCinema {
         this.ficheiroCandidatos = new File("candidatos.txt");
     }
 
-    protected void menu() {
+    public void menu() {
         System.out.println("\t\t\tFESTIVAL CINEMA");
         System.out.print("(n): Começar um novo programa\n(c): Carregar\nOpção: ");
         opcao = scan.nextLine();

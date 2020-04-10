@@ -1,3 +1,4 @@
+package FestCin;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class Filme {
             }
             for (Ator a : this.atoresSecundarios) {
                 if (ator == a) {
-                System.out.println((ator.getGenero() ? "O ator" : "A atriz") + " já está no filme!");
+                    System.out.println((ator.getGenero() ? "O ator" : "A atriz") + " já está no filme!");
                     return;
                 }
             }
