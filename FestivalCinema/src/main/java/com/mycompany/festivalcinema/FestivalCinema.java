@@ -672,26 +672,36 @@ public class FestivalCinema {
      * @param premio - Prémio no qual se pretende pontuar os candidatos
      */
     private void pontuarCandidatos(Premio premio) {
-        System.out.println("\nAVALIAÇÃO DO PRÉMIO " + premio.toString().toUpperCase());
-        if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz")) {
-            for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
-                System.out.printf("CANDIDATO %d: %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
-                for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
-                    while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
-                        System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+        System.out.println("\nAVALIAÇÃO DO PRÉMIO: " + premio.toString().toUpperCase());
+        boolean pontuou = false;
+        try {
+            if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz") || premio.getNome().contains("Carreira")) {
+                for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
+                    System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
+                    for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
+                        pontuou = true;
+                        while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
+                            System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+                        }
                     }
                 }
-                System.out.println("CHEGOU");
-            }
-        } else if (!premio.getNome().contains("Carreira")) {
-            for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
-                System.out.printf("CANDIDATO %d: %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getNome());
-                for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
-                    while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
-                        System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+            } else {
+                for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
+                    System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getNome());
+                    for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
+                        pontuou = true;
+                        while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
+                            System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+                        }
                     }
+
                 }
             }
+            if (!pontuou) {
+                System.out.println("Não há candidatos para esta categoria.\n");
+            }
+        } catch (Exception e) {
+            System.out.println("Não há candidatos para esta categoria.\n");
         }
     }
 
