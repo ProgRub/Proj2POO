@@ -17,6 +17,7 @@ public class Pessoa {
         return genero;
     }
 
+    @Override
     public String toString() {
         String pessoa;
         pessoa = "Nome: " + getNome() + "\n";

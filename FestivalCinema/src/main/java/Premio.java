@@ -1,12 +1,11 @@
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class Premio {
 
-    private String nome;
-    private int[][] pontuacoes;
+    private final String nome;
+    private final int[][] pontuacoes;
     private ArrayList<Filme> filmes;
     private ArrayList<Ator> atores;
     private static final int NUMEROPERITOS = 5;
@@ -49,15 +48,15 @@ public class Premio {
         return filmes;
     }
 
+    @Override
     public String toString() {
         return nome;
-    }    
-       
+    }
+
     public double[] mediasPontuações(int pontuações[][]) {
         double[] medias = new double[4]; //guarda medias dos filmes/atores pela ordem
         for (int linha = 0; linha < 4; linha++) {
             double somaPontuaçõesCandidato = 0;
-            double médiaCandidato = 0;
             int numPontuacoes = 0;
             for (int coluna = 0; coluna < NUMEROPERITOS; coluna++) {
                 somaPontuaçõesCandidato += pontuações[linha][coluna];
@@ -65,7 +64,7 @@ public class Premio {
                     numPontuacoes++;
                 }
             }
-            médiaCandidato = somaPontuaçõesCandidato / numPontuacoes;
+            double médiaCandidato = somaPontuaçõesCandidato / numPontuacoes;
             medias[linha] = médiaCandidato;
         }
         return medias;
@@ -97,22 +96,22 @@ public class Premio {
         }
     }
 
-    public void imprimePontuações(int pontuações[][]) { //UM ERRO 
-        double[] pont = mediasPontuações(pontuações);
-        double pont1 = pont[0]; //média do filme/ator da primeira linha
-        double pont2 = pont[1]; //média do filme/ator da segunda linha
-        double pont3 = pont[2]; //média do filme/ator da terceira linha
-        pont = ordenaPontuações(mediasPontuações(pontuações));
+    public void imprimePontuações(int pontuações[][]) {
+        double[] pont = ordenaPontuações(mediasPontuações(pontuações));
         pont = empateVencedores(pontuacoes, pont);
         System.out.println("\n- " + nome + ": ");
-        try {
-            for (int i = 0; i < pont.length; ++i) {
-                if (filmes == null && atores != null) {                     //se o prémio for para um ator/atriz
-                    System.out.print(atores.get(i).getNome() + ": ");
-                } else {                                                    //se o prémio for para um filme
-                    System.out.print(filmes.get(i).getNome() + ": ");
+        try {            
+            if (!Double.isNaN(pont[0])) {
+                for (int i = 0; i < pont.length; ++i) {
+                    if (filmes == null && atores != null) {                     //se o prémio for para um ator/atriz
+                        System.out.print(atores.get(i).getNome() + ": ");
+                    } else {                                                    //se o prémio for para um filme
+                        System.out.print(filmes.get(i).getNome() + ": ");
+                    }
+                    System.out.printf("%.2f\n", pont[i]); //imprime pontuação
                 }
-                System.out.printf("%.2f\n", pont[i]); //imprime pontuação
+            } else {
+                throw new Exception("Pontuações não atribuídas");
             }
         } catch (Exception e) {
             System.out.println("Os candidatos não foram avaliados.\n");
@@ -120,29 +119,25 @@ public class Premio {
     }
 
     public void vencedorCategoria(int pontuações[][]) {
-        double[] aux = mediasPontuações(pontuações);
-        double pont1 = aux[0]; //média do filme/ator da primeira linha
-        double pont2 = aux[1]; //média do filme/ator da segunda linha
-        double pont3 = aux[2]; //média do filme/ator da terceira linha
         double[] pont = ordenaPontuações(mediasPontuações(pontuações));
         pont = empateVencedores(pontuacoes, pont);
         System.out.print(nome + ": ");
         try {
-            if (pont[0] > 0) {
+            if (!Double.isNaN(pont[0])) {
                 if (filmes == null && atores != null) {
                     System.out.println(atores.get(0).getNome() + "\n");
                 } else {
                     System.out.println(filmes.get(0).getNome() + "\n");
                 }
             } else {
-                throw new NullPointerException("Pontuações não atribuídas");
+                throw new Exception("Pontuações não atribuídas");
             }
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             System.out.println("Ainda sem vencedor.\n");
         }
     }
 
-    public double[] empateVencedores(int[][] pontuacoes, double[] mediasPontuacoes) {
+    private double[] empateVencedores(int[][] pontuacoes, double[] mediasPontuacoes) {
         if (mediasPontuacoes[0] == mediasPontuacoes[1]) {
             double[] desviosPadrao = new double[4];
             desviosPadrao[0] = desvioPadrao(NUMEROPERITOS, pontuacoes, mediasPontuacoes, 0);
@@ -158,7 +153,6 @@ public class Premio {
             for (int i = 0; i < desviosPadrao.length; i++) {
                 for (int j = 0; j < desviosPadrao.length - i - 1; j++) {
                     if (desviosPadrao[j] > desviosPadrao[j + 1]) {
-                        System.out.println("CHEGOU");
                         swap(mediasPontuacoes, j, j + 1);
                     }
                 }
@@ -168,12 +162,10 @@ public class Premio {
     }
 
     private double desvioPadrao(int maxSoma, int[][] pontuacoes, double[] mediasPontuacoes, int posCandidato) {
-        int soma = 0;
+        double soma = 0;
         for (int i = 0; i < NUMEROPERITOS; i++) {
-            System.out.println(pontuacoes[posCandidato][i] + " " + mediasPontuacoes[posCandidato]);
             soma += Math.pow((double) pontuacoes[posCandidato][i] - mediasPontuacoes[posCandidato], 2);
         }
-        System.out.println(Math.sqrt(soma / mediasPontuacoes.length));
         return Math.sqrt(soma / mediasPontuacoes.length);
     }
 

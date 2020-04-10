@@ -7,18 +7,19 @@ public class Edicao {
     private final int ano;
     private final ArrayList<Filme> filmes;
     private final ArrayList<Premio> premios;
-    private ArrayList<Perito> peritos;
+    private final ArrayList<Perito> peritos;
 
     public Edicao(int numEdicao, int ano) {
 
         this.numEdicao = numEdicao;
         this.ano = ano;
-        this.premios = new ArrayList<Premio>(9);
-        this.filmes = new ArrayList<Filme>();
-        this.peritos = new ArrayList<Perito>();
+        this.premios = new ArrayList<>(9);
+        this.filmes = new ArrayList<>();
+        this.peritos = new ArrayList<>();
         inserePremios();
     }
 
+    @Override
     public String toString() {
         String Edicao;
         Edicao = "Edição: " + numEdicao + " | Ano: " + ano;

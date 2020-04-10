@@ -10,7 +10,7 @@ public class Filme {
     private final Realizador realizador;
     private Ator AtorPrincipal;
     private Ator AtrizPrincipal;
-    private ArrayList<Ator> atoresSecundarios;
+    private final ArrayList<Ator> atoresSecundarios;
 
     public Filme(String nome, String genero, int edição, Realizador realizador) {
         this.nome = nome;

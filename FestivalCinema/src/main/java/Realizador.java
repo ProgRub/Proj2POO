@@ -5,6 +5,7 @@ public class Realizador extends Pessoa {
         super(nome, genero);
     }
 
+    @Override
     public String toString() {
         return super.toString();
     }

@@ -7,6 +7,7 @@ public class Perito extends Pessoa {
         super(nome, genero);
     }
 
+    @Override
     public String toString() {
         String perito = super.toString();
         return perito;
@@ -19,7 +20,6 @@ public class Perito extends Pessoa {
         if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int) pontuacao) {
             premio.setPontuacao(indiceCandidato, indicePerito, (int) pontuacao);
         } else {
-            System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
             return false;
         }
         return true;

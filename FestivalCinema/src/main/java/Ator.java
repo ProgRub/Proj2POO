@@ -7,14 +7,14 @@ public class Ator extends Pessoa {
     private int anosCarreira;
     private int numFilmesEdiçãoAtual;
     private int numFilmesTotal;
-    private ArrayList<Filme> filmesParticipa;
+    private final ArrayList<Filme> filmesParticipa;
 
     public Ator(String nome, boolean genero, int anosCarreira) {
         super(nome, genero);
         this.anosCarreira = anosCarreira;
         this.numFilmesTotal = 0;
         this.numFilmesEdiçãoAtual = 0;
-        filmesParticipa = new ArrayList<Filme>(0);
+        filmesParticipa = new ArrayList<>(0);
     }
 
     public void resetNumFilmesEdicaoAtual() {
@@ -53,6 +53,7 @@ public class Ator extends Pessoa {
         return filmesParticipa;
     }
 
+    @Override
     public String toString() {
         String ator = super.toString();
         ator += "Anos de Carreira: " + anosCarreira + "\n";
