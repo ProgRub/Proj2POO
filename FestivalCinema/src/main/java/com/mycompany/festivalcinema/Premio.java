@@ -19,7 +19,10 @@ public class Premio {
         if (!(nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira"))) {
             this.atores = null;
         }
-        
+        if(nome.contains("Carreira")){
+            this.filmes = null;
+        }
+
         this.pontuacoes = new int[4][NUMEROPERITOS]; //4 candidatos, 5 peritos
         this.vencedor = null;
     }
@@ -60,8 +63,8 @@ public class Premio {
     protected ArrayList<Filme> getFilmesCandidatos() {
         return filmes;
     }
-    
-    protected Filme getVencedor(){
+
+    protected Filme getVencedor() {
         return vencedor;
     }
 
@@ -108,7 +111,8 @@ public class Premio {
         this.pontuacoes[j] = aux2;
         if (this.atores != null) {
             Collections.swap(this.atores, i, j);
-        } else {
+        }
+        if (this.filmes != null) {
             Collections.swap(this.filmes, i, j);
         }
     }
@@ -120,7 +124,7 @@ public class Premio {
         try {
             if (!Double.isNaN(pont[0])) {
                 for (int i = 0; i < pont.length; ++i) {
-                    if (filmes == null && atores != null) {                     //se o prémio for para um ator/atriz
+                    if (atores != null) {                     //se o prémio for para um ator/atriz
                         System.out.print(atores.get(i).getNome() + ": ");
                     } else {                                                    //se o prémio for para um filme
                         System.out.print(filmes.get(i).getNome() + ": ");
@@ -141,7 +145,7 @@ public class Premio {
         System.out.print(nome + ": ");
         try {
             if (!Double.isNaN(pont[0])) {
-                if (filmes == null && atores != null) {
+                if ( atores != null) {
                     System.out.println(atores.get(0).getNome() + "\n");
                 } else {
                     System.out.println(filmes.get(0).getNome() + "\n");
@@ -153,7 +157,7 @@ public class Premio {
             System.out.println("Ainda sem vencedor.\n");
         }
     }
-    
+
     protected void determinaVencedor() {
         double[] pont = ordenaPontuações(mediasPontuações(pontuacoes));
         pont = empateVencedores(pontuacoes, pont);
