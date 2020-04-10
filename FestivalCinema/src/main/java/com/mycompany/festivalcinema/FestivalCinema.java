@@ -147,7 +147,16 @@ public class FestivalCinema {
                             listarAtores();
                             break;
                         case "f":
-                            listarFilmes();
+                            System.out.print("\nOpções:\n(f): Listar Filmes\n(p): Listar Filmes Mais Premiados\nOpção: ");
+                            opcao = scan.nextLine();
+                            switch (opcao) {
+                                case "f":
+                                    listarFilmes();
+                                    break;
+                                case "p":
+                                    listarFilmesMaisPremiados();
+                                    break;
+                            }
                             break;
                         case "p":
                             System.out.print("\n(p): Listar Categorias\n(c): Listar Candidatos\n(o): Listar Candidatos (Ordenados por Avaliação)\n(v): Listar Vencedores\nOpção: ");
@@ -410,7 +419,7 @@ public class FestivalCinema {
     private void listarVencedores() {
         System.out.println("\nVENCEDORES:");
         for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
-            premio.vencedorCategoria(premio.getPontuacoes());
+            premio.vencedorCategoria();
         }
     }
 
@@ -673,35 +682,41 @@ public class FestivalCinema {
      */
     private void pontuarCandidatos(Premio premio) {
         System.out.println("\nAVALIAÇÃO DO PRÉMIO: " + premio.toString().toUpperCase());
-        boolean pontuou = false;
-        try {
-            if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz") || premio.getNome().contains("Carreira")) {
-                for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
-                    System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
-                    for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
-                        pontuou = true;
-                        while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
-                            System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+        if (premio.getVencedor() == null) {
+            boolean pontuou = false;
+            try {
+                if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz") || premio.getNome().contains("Carreira")) {
+                    for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
+                        System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
+                        for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
+                            pontuou = true;
+                            while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
+                                System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+                            }
                         }
                     }
-                }
-            } else {
-                for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
-                    System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getNome());
-                    for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
-                        pontuou = true;
-                        while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
-                            System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+                } else {
+                    for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
+                        System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getNome());
+                        for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
+                            pontuou = true;
+                            while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(indexEdicoes).getPeritos().indexOf(p), scan)) {
+                                System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+                            }
                         }
-                    }
 
+                    }
                 }
-            }
-            if (!pontuou) {
+                if (!pontuou) {
+                    System.out.println("Não há candidatos para esta categoria.\n");
+                    return;
+                }
+                premio.determinaVencedor();
+            } catch (Exception e) {
                 System.out.println("Não há candidatos para esta categoria.\n");
             }
-        } catch (Exception e) {
-            System.out.println("Não há candidatos para esta categoria.\n");
+        }else{
+            System.out.println("Os candidatos já foram pontuados para esta categoria.\n");
         }
     }
 
@@ -713,6 +728,20 @@ public class FestivalCinema {
         System.out.println("\nPONTUAÇÕES: ");
         for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
             premio.imprimePontuações(premio.getPontuacoes());
+        }
+    }
+
+    private void listarFilmesMaisPremiados() {
+        boolean semPremiados = true;
+        System.out.println("\nFILMES MAIS PREMIADOS: ");
+        for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
+            if (filme.getNumeroPremios() > 0) {
+                System.out.println(filme.getNome() + ": " + filme.getNumeroPremios());
+                semPremiados = false;
+            }
+        }
+        if (semPremiados) {
+            System.out.println("Nenhum filme foi premiado.");
         }
     }
 
@@ -961,89 +990,81 @@ public class FestivalCinema {
 
     }
 
-    
-    
     private void imprimirPeritos() {
         for (int i = 0; i < edicoes.get(indexEdicoes).getPeritos().size(); i++) {
             System.out.println(edicoes.get(indexEdicoes).getPeritos().get(i));
         }
     }
-    
+
     private void carregaCandidatos() {
 
         String tracinhos = "--------------------------------";
         int indexPremios = -1;
         Boolean cria;
         ArrayList<Ator> atoresA = new ArrayList<Ator>();
-        ArrayList<Filme> filmesA = new ArrayList<Filme>();  
-        int y =0;
-        int w =0;
+        ArrayList<Filme> filmesA = new ArrayList<Filme>();
+        int y = 0;
+        int w = 0;
         //int i =0;
-        
-        
+
         try {
             Scanner lerDados = new Scanner(ficheiroCandidatos, "UTF-8");
             String line;
             while (lerDados.hasNextLine()) {
                 line = lerDados.nextLine();
-                
-                if (line.equals(tracinhos)) {                   
+
+                if (line.equals(tracinhos)) {
                     cria = false;
                     indexPremios++;
-                }                
-                else{
+                } else {
                     cria = true;
                 }
-                
-                if (cria){
-                    if (indexPremios <4 || indexPremios == 8){                                               
-                        for (Ator a : this.atores) {                           
-                            if(a.getNome().equals(line)){  
-                                atoresA.add(a);    
-                            }                           
-                        } 
-                        if(y==3){
-                            
-                            ArrayList<Ator> auxA = new ArrayList<Ator>();                          
-                            for(Ator e : atoresA){
+
+                if (cria) {
+                    if (indexPremios < 4 || indexPremios == 8) {
+                        for (Ator a : this.atores) {
+                            if (a.getNome().equals(line)) {
+                                atoresA.add(a);
+                            }
+                        }
+                        if (y == 3) {
+
+                            ArrayList<Ator> auxA = new ArrayList<Ator>();
+                            for (Ator e : atoresA) {
                                 auxA.add(e);
                             }
                             edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
                             atoresA.clear();
-                            y=0;
-                        }
-                        
-                        else{
+                            y = 0;
+                        } else {
                             y++;
-                        }                        
+                        }
                     }
 
-                    if (indexPremios >3 && indexPremios<8){
-                        for (Filme f : edicoes.get(indexEdicoes).getFilmes()){
-                            if(line.equals(f.getNome()) || line.equals(f.getRealizador().getNome())){
-                                filmesA.add(f);                                
-                            }                      
-                        }  
-                        if(y==3){
-                            ArrayList<Filme> auxF = new ArrayList<Filme>();                          
-                            for(Filme e : filmesA){
+                    if (indexPremios > 3 && indexPremios < 8) {
+                        for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
+                            if (line.equals(f.getNome()) || line.equals(f.getRealizador().getNome())) {
+                                filmesA.add(f);
+                            }
+                        }
+                        if (y == 3) {
+                            ArrayList<Filme> auxF = new ArrayList<Filme>();
+                            for (Filme e : filmesA) {
                                 auxF.add(e);
                             }
                             edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
                             filmesA.clear();
-                            y=0;
-                        }
-                        
-                        else{
+                            y = 0;
+                        } else {
                             y++;
-                        }      
-                    }                   
-                }            
+                        }
+                    }
+                }
             }
         } catch (IOException ioe) {
             System.out.println("Ocorreu um Erro");
-            
-        }           
+
+        }
     }
 
 }

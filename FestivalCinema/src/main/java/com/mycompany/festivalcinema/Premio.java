@@ -9,6 +9,7 @@ public class Premio {
     private final int[][] pontuacoes;
     private ArrayList<Filme> filmes;
     private ArrayList<Ator> atores;
+    private Filme vencedor;
     private static final int NUMEROPERITOS = 5;
 
     protected Premio(String nome) {
@@ -19,6 +20,7 @@ public class Premio {
             this.atores = null;
         }
         this.pontuacoes = new int[4][NUMEROPERITOS]; //4 candidatos, 5 peritos
+        this.vencedor = null;
     }
 
     protected String getNome() {
@@ -47,6 +49,10 @@ public class Premio {
 
     protected ArrayList<Filme> getFilmesCandidatos() {
         return filmes;
+    }
+    
+    protected Filme getVencedor(){
+        return vencedor;
     }
 
     @Override
@@ -119,8 +125,8 @@ public class Premio {
         }
     }
 
-    protected void vencedorCategoria(int pontuações[][]) {
-        double[] pont = ordenaPontuações(mediasPontuações(pontuações));
+    protected void vencedorCategoria() {
+        double[] pont = ordenaPontuações(mediasPontuações(pontuacoes));
         pont = empateVencedores(pontuacoes, pont);
         System.out.print(nome + ": ");
         try {
@@ -129,6 +135,23 @@ public class Premio {
                     System.out.println(atores.get(0).getNome() + "\n");
                 } else {
                     System.out.println(filmes.get(0).getNome() + "\n");
+                }
+            } else {
+                throw new Exception("Pontuações não atribuídas");
+            }
+        } catch (Exception e) {
+            System.out.println("Ainda sem vencedor.\n");
+        }
+    }
+    
+    protected void determinaVencedor() {
+        double[] pont = ordenaPontuações(mediasPontuações(pontuacoes));
+        pont = empateVencedores(pontuacoes, pont);
+        try {
+            if (!Double.isNaN(pont[0])) {
+                if (filmes != null) {
+                    this.vencedor = filmes.get(0);
+                    this.vencedor.incrementaNumeroPremios();
                 }
             } else {
                 throw new Exception("Pontuações não atribuídas");

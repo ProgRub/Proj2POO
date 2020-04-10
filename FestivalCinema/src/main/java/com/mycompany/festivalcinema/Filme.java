@@ -23,7 +23,6 @@ public class Filme {
         this.atoresSecundarios = new ArrayList<>(0);
         this.numeroPremios = 0;
     }
-
     /**
      * Método que insere um ator no filme, se é principal ou secundário depende
      * da posição
