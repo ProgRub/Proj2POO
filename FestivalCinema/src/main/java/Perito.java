@@ -19,9 +19,8 @@ public class Perito extends Pessoa {
         scan.nextLine();
         if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int) pontuacao) {
             premio.setPontuacao(indiceCandidato, indicePerito, (int) pontuacao);
-        } else {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
