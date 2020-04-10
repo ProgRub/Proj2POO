@@ -372,13 +372,13 @@ public class FestivalCinema {
                 escolherAtoresPrincipaisCandidatos(true);
                 break;
             case "Melhor Atriz Principal":
-                premioEscolhido.setAtores(escolherAtoresPrincipaisCandidatos(false));
+                escolherAtoresPrincipaisCandidatos(false);
                 break;
             case "Melhor Ator Secundário":
-                premioEscolhido.setAtores(escolherAtoresSecundariosCandidatos(true));
+                escolherAtoresSecundariosCandidatos(true);
                 break;
             case "Melhor Atriz Secundária":
-                premioEscolhido.setAtores(escolherAtoresSecundariosCandidatos(false));
+                escolherAtoresSecundariosCandidatos(false);
                 break;
             case "Melhor Realizador":
                 premioEscolhido.setFilmes(escolherRealizadorCandidatos());  //primeira ediçao apenas (mudar)
@@ -541,7 +541,6 @@ public class FestivalCinema {
                         if (filme.getAtrizPrincipal() == candidato) {
                             atoresCandidatos.add(candidato);
                             edicoes.get(indexEdicoes).getPremios().get(1).nomeiaAtor(candidato, filme);
-                            System.out.println(edicoes.get(indexEdicoes).getPremios().get(1).getAtoresCandidatos().get(atoresCandidatos.size()-1));
                         }
                     }
                 } else {
@@ -566,13 +565,14 @@ public class FestivalCinema {
      */
     private ArrayList<Ator> escolherAtoresSecundariosCandidatos(boolean homem) {
         ArrayList<Ator> possiveisCandidatos = new ArrayList<>();
+        ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>();
         int i = 1;
         for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
             for (Ator a : filme.getAtoresSecundarios()) {
                 if (a.getGenero() == homem) {
                     System.out.printf("%d. %s em %s\n", i, a.getNome(), filme.getNome());
                     possiveisCandidatos.add(a);
-                    System.out.print(a);
+                    filmesPossiveisCandidatos.add(filme);
                     i++;
                 }
             }
@@ -591,13 +591,15 @@ public class FestivalCinema {
                 }
                 if (conta == 1) {
                     atoresCandidatos.add(candidato);
+                    edicoes.get(indexEdicoes).getPremios().get(homem ? 2 : 3).nomeiaAtor(candidato, filmesPossiveisCandidatos.get(possiveisCandidatos.indexOf(candidato)));
                 } else if (conta > 1) {
                     System.out.println((homem ? "Esse ator" : "Essa atriz") + " participa em 2 filmes, a qual se refere?");
                     String nomeFilme = scan.nextLine();
-                    Filme f = edicoes.get(indexEdicoes).indexOfByFilmName(nomeFilme);
+                    Filme f = indexOfByFilmName(nomeFilme, filmesPossiveisCandidatos);
                     for (Pessoa a : f.getAtoresSecundarios()) {
                         if (a == candidato) {
                             atoresCandidatos.add(candidato);
+                            edicoes.get(indexEdicoes).getPremios().get(homem ? 2 : 3).nomeiaAtor(candidato, f);
                         }
                     }
                 } else {
