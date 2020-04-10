@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Ator extends Pessoa {
 
@@ -9,7 +8,7 @@ public class Ator extends Pessoa {
     private int numFilmesTotal;
     private final ArrayList<Filme> filmesParticipa;
 
-    public Ator(String nome, boolean genero, int anosCarreira) {
+    protected Ator(String nome, boolean genero, int anosCarreira) {
         super(nome, genero);
         this.anosCarreira = anosCarreira;
         this.numFilmesTotal = 0;
@@ -17,11 +16,11 @@ public class Ator extends Pessoa {
         filmesParticipa = new ArrayList<>(0);
     }
 
-    public void resetNumFilmesEdicaoAtual() {
+    protected void resetNumFilmesEdicaoAtual() {
         this.numFilmesEdiçãoAtual = 0;
     }
 
-    public void incrementaAnosCarreira() {
+    protected void incrementaAnosCarreira() {
         this.anosCarreira++;
     }
 
@@ -30,7 +29,7 @@ public class Ator extends Pessoa {
      * @return true se o ator participa em menos de 2 filmes na edição atual,
      * false caso contrario
      */
-    public boolean podeInserirFilme() {
+    protected boolean podeInserirFilme() {
         return numFilmesEdiçãoAtual < 2;
     }
 
@@ -39,17 +38,17 @@ public class Ator extends Pessoa {
      *
      * @param filme - filme a inserir no catalogo de filmes do ator
      */
-    public void inserirFilme(Filme filme) {
+    protected void inserirFilme(Filme filme) {
         this.filmesParticipa.add(filme);
         this.numFilmesEdiçãoAtual++;
         this.numFilmesTotal++;
     }
 
-    public int getAnosCarreira() {
+    protected int getAnosCarreira() {
         return anosCarreira;
     }
 
-    public ArrayList<Filme> getFilmes() {
+    protected ArrayList<Filme> getFilmes() {
         return filmesParticipa;
     }
 
@@ -65,7 +64,7 @@ public class Ator extends Pessoa {
     }
 
 //    @Override
-//    public boolean equals(Object obj) {
+//    protected boolean equals(Object obj) {
 //        System.out.println("CHAMADO");
 //        if (obj == null) {
 //            return false;
@@ -82,7 +81,7 @@ public class Ator extends Pessoa {
 //    }
 //
 //    @Override
-//    public int hashCode() {
+//    protected int hashCode() {
 //        int hash = 3;
 //        hash = 13 * hash + this.anosCarreira;
 //        hash = 13 * hash + this.numFilmesEdiçãoAtual;

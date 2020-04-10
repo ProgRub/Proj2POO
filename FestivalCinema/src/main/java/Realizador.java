@@ -1,7 +1,7 @@
 
 public class Realizador extends Pessoa {
 
-    public Realizador(String nome, boolean genero) {
+    protected Realizador(String nome, boolean genero) {
         super(nome, genero);
     }
 

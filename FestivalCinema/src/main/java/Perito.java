@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Perito extends Pessoa {
 
-    public Perito(String nome, boolean genero) {
+    protected Perito(String nome, boolean genero) {
         super(nome, genero);
     }
 
@@ -13,7 +13,7 @@ public class Perito extends Pessoa {
         return perito;
     }
 
-    public boolean inserePontuacao(Premio premio, int indiceCandidato, int indicePerito, Scanner scan) {
+    protected boolean inserePontuacao(Premio premio, int indiceCandidato, int indicePerito, Scanner scan) {
         System.out.printf((this.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação: ", this.getNome());
         double pontuacao = scan.nextDouble();
         scan.nextLine();

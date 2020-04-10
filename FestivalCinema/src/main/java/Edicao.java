@@ -9,7 +9,7 @@ public class Edicao {
     private final ArrayList<Premio> premios;
     private final ArrayList<Perito> peritos;
 
-    public Edicao(int numEdicao, int ano) {
+    protected Edicao(int numEdicao, int ano) {
 
         this.numEdicao = numEdicao;
         this.ano = ano;
@@ -27,15 +27,15 @@ public class Edicao {
         return Edicao;
     }
 
-    public void inserePerito(Perito perito) {
+    protected void inserePerito(Perito perito) {
         this.peritos.add(perito);
     }
 
-    public ArrayList<Perito> getPeritos() {
+    protected ArrayList<Perito> getPeritos() {
         return this.peritos;
     }
 
-    public final void inserePremios() {
+    protected final void inserePremios() {
         this.premios.add(new Premio("Melhor Ator Principal"));
         this.premios.add(new Premio("Melhor Atriz Principal"));
         this.premios.add(new Premio("Melhor Ator Secundário"));
@@ -47,7 +47,7 @@ public class Edicao {
         this.premios.add(new Premio("Premio Carreira"));
     }
 
-    public void imprimeFilmes() {
+    protected void imprimeFilmes() {
         System.out.println("FILMES:");
         if (filmes.isEmpty()) {
             System.out.println("! NÃO HÁ FILMES REGISTADOS !");
@@ -58,7 +58,7 @@ public class Edicao {
         }
     }
 
-    public void imprimePremios() {
+    protected void imprimePremios() {
         int indice = 0;
         while (indice < premios.size()) {
             System.out.println(premios.get(indice));
@@ -66,11 +66,11 @@ public class Edicao {
         }
     }
 
-    public void insereFilmes(Filme filme) {
+    protected void insereFilmes(Filme filme) {
         this.filmes.add(filme);
     }
 
-    public Filme indexOfByFilmName(String nome) {
+    protected Filme indexOfByFilmName(String nome) {
         for (Filme f : this.filmes) {
             if (nome.equals(f.getNome())) {
                 return f;
@@ -79,15 +79,15 @@ public class Edicao {
         return null;
     }
 
-    public int getNumEdicao() {
+    protected int getNumEdicao() {
         return numEdicao;
     }
 
-    public ArrayList<Filme> getFilmes() {
+    protected ArrayList<Filme> getFilmes() {
         return this.filmes;
     }
 
-    public ArrayList<Premio> getPremios() {
+    protected ArrayList<Premio> getPremios() {
         return this.premios;
     }
 }

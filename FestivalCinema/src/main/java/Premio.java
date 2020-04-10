@@ -10,7 +10,7 @@ public class Premio {
     private ArrayList<Ator> atores;
     private static final int NUMEROPERITOS = 5;
 
-    public Premio(String nome) {
+    protected Premio(String nome) {
         this.nome = nome;
         if (nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira")) {
             this.filmes = null;
@@ -20,31 +20,31 @@ public class Premio {
         this.pontuacoes = new int[4][NUMEROPERITOS]; //4 candidatos, 5 peritos
     }
 
-    public String getNome() {
+    protected String getNome() {
         return this.nome;
     }
 
-    public int[][] getPontuacoes() {
+    protected int[][] getPontuacoes() {
         return this.pontuacoes;
     }
 
-    public void setPontuacao(int candidato, int perito, int pontuacao) {
+    protected void setPontuacao(int candidato, int perito, int pontuacao) {
         this.pontuacoes[candidato][perito] = pontuacao;
     }
 
-    public void setFilmes(ArrayList<Filme> filmes) {
+    protected void setFilmes(ArrayList<Filme> filmes) {
         this.filmes = filmes;
     }
 
-    public void setAtores(ArrayList<Ator> atores) {
+    protected void setAtores(ArrayList<Ator> atores) {
         this.atores = atores;
     }
 
-    public ArrayList<Ator> getAtoresCandidatos() {
+    protected ArrayList<Ator> getAtoresCandidatos() {
         return atores;
     }
 
-    public ArrayList<Filme> getFilmesCandidatos() {
+    protected ArrayList<Filme> getFilmesCandidatos() {
         return filmes;
     }
 
@@ -53,7 +53,7 @@ public class Premio {
         return nome;
     }
 
-    public double[] mediasPontuações(int pontuações[][]) {
+    protected double[] mediasPontuações(int pontuações[][]) {
         double[] medias = new double[4]; //guarda medias dos filmes/atores pela ordem
         for (int linha = 0; linha < 4; linha++) {
             double somaPontuaçõesCandidato = 0;
@@ -70,7 +70,7 @@ public class Premio {
         return medias;
     }
 
-    public double[] ordenaPontuações(double[] pontuações) {
+    protected double[] ordenaPontuações(double[] pontuações) {
         int n = pontuações.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -96,7 +96,7 @@ public class Premio {
         }
     }
 
-    public void imprimePontuações(int pontuações[][]) {
+    protected void imprimePontuações(int pontuações[][]) {
         double[] pont = ordenaPontuações(mediasPontuações(pontuações));
         pont = empateVencedores(pontuacoes, pont);
         System.out.println("\n- " + nome + ": ");
@@ -118,7 +118,7 @@ public class Premio {
         }
     }
 
-    public void vencedorCategoria(int pontuações[][]) {
+    protected void vencedorCategoria(int pontuações[][]) {
         double[] pont = ordenaPontuações(mediasPontuações(pontuações));
         pont = empateVencedores(pontuacoes, pont);
         System.out.print(nome + ": ");

@@ -12,7 +12,7 @@ public class Filme {
     private Ator AtrizPrincipal;
     private final ArrayList<Ator> atoresSecundarios;
 
-    public Filme(String nome, String genero, int edição, Realizador realizador) {
+    protected Filme(String nome, String genero, int edição, Realizador realizador) {
         this.nome = nome;
         this.genero = genero;
         this.edição = edição;
@@ -34,7 +34,7 @@ public class Filme {
      * principal, 1 - atriz principal) e só insere se não houver ator/atriz
      * principal
      */
-    public void insereAtor(Ator ator, int posição) {
+    protected void insereAtor(Ator ator, int posição) {
         if (posição < 2) {
             if (posição == 0 && this.AtorPrincipal == null) {
                 this.AtorPrincipal = ator;
@@ -61,31 +61,31 @@ public class Filme {
         }
     }
 
-    public String getNome() {
+    protected String getNome() {
         return nome;
     }
 
-    public Ator getAtorPrincipal() {
+    protected Ator getAtorPrincipal() {
         return AtorPrincipal;
     }
 
-    public Ator getAtrizPrincipal() {
+    protected Ator getAtrizPrincipal() {
         return AtrizPrincipal;
     }
 
-    public ArrayList<Ator> getAtoresSecundarios() {
+    protected ArrayList<Ator> getAtoresSecundarios() {
         return atoresSecundarios;
     }
 
-    public Realizador getRealizador() {
+    protected Realizador getRealizador() {
         return realizador;
     }
 
-    public int getNumeroPremios() {
+    protected int getNumeroPremios() {
         return numeroPremios;
     }
 
-    public void incrementaNumeroPremios() {
+    protected void incrementaNumeroPremios() {
         numeroPremios++;
     }
 
