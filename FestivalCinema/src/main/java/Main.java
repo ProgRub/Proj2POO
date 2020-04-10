@@ -1,5 +1,5 @@
 
-import FestCin.FestivalCinema;
+import com.mycompany.festivalcinema.*;
 
 public class Main {
 

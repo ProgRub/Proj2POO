@@ -1,4 +1,4 @@
-package FestCin;
+package com.mycompany.festivalcinema;
 
 import java.util.Scanner;
 
@@ -14,6 +14,17 @@ public class Perito extends Pessoa {
         return perito;
     }
 
+    /**
+     *
+     * @param premio - prémio no qual inserir a pontuação
+     * @param indiceCandidato - linha na matriz das pontuações que indica a qual
+     * candidato estamos a atribuir a pontuação
+     * @param indicePerito - coluna na matriz das pontuações que indica o perito
+     * que atribui a pontuação
+     * @param scan - o scanner
+     * @return true se a pontuação inserida é valida (entre 1 e 10 e inteira),
+     * false caso contrário
+     */
     protected boolean inserePontuacao(Premio premio, int indiceCandidato, int indicePerito, Scanner scan) {
         System.out.printf((this.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação: ", this.getNome());
         double pontuacao = scan.nextDouble();

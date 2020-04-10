@@ -1,4 +1,4 @@
-package FestCin;
+package com.mycompany.festivalcinema;
 
 import java.util.ArrayList;
 import java.util.Scanner;

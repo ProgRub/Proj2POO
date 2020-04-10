@@ -1,4 +1,4 @@
-package FestCin;
+package com.mycompany.festivalcinema;
 
 public class Realizador extends Pessoa {
 
