@@ -265,6 +265,11 @@ public class FestivalCinema {
             System.out.printf("%d. %s\n", i, a.getNome());
             i++;
         }
+        if (i==1)
+        {
+            System.out.println("Ainda não foram criados atores!");
+            return;
+        }
         System.out.println("Qual o nome do ator/atriz que pretende inserir no filme?");
         String nomeAtor = scan.nextLine();
         try {
@@ -274,6 +279,11 @@ public class FestivalCinema {
                 for (Filme f : edicoes.get(indexEdicoes).getFilmes()) { //imprime a lista de filmes da edição atual
                     System.out.printf("%d. %s\n", i, f.getNome());
                     i++;
+                }
+                if(i==1)
+                {
+                    System.out.println("Ainda não foram criados filmes na edição atual!");
+                    return;
                 }
                 System.out.println("Em que filme este " + (mudar.getGenero() ? "ator" : "atriz") + " participará?");
                 String nomeFilme = scan.nextLine();
