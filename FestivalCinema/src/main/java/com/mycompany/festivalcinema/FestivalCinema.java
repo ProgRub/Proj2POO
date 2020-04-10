@@ -1049,8 +1049,6 @@ public class FestivalCinema {
         ArrayList<Ator> atoresA = new ArrayList<Ator>();
         ArrayList<Filme> filmesA = new ArrayList<Filme>();
         int y = 0;
-        int w = 0;
-        //int i =0;
 
         try {
             Scanner lerDados = new Scanner(ficheiroCandidatos, "UTF-8");
@@ -1058,10 +1056,22 @@ public class FestivalCinema {
             while (lerDados.hasNextLine()) {
                 line = lerDados.nextLine();
 
-                if (line.equals(tracinhos)) {
+                if (line.equals(tracinhos)) { 
+                    
+                    if(indexPremios!=-1){
+                        if(!atoresA.isEmpty() || !filmesA.isEmpty()){
+                            filmesA.clear();
+                            atoresA.clear();
+                            y=0;
+                            System.out.println("Por favor insira 4 candidatos VÁLIDOS no prémio: "+ edicoes.get(indexEdicoes).getPremios().get(indexPremios).getNome());
+                        }
+                        
+                    }                   
                     cria = false;
                     indexPremios++;
-                } else {
+                } 
+            
+                else {
                     cria = true;
                 }
 
@@ -1069,20 +1079,16 @@ public class FestivalCinema {
                     if (indexPremios < 4) {
                         for (Ator a : this.atores) {
                             if (a.getNome().equals(line)) {
-                                //atoresA.add(a);
+                                atoresA.add(a);
                                 edicoes.get(indexEdicoes).getPremios().get(indexPremios).nomeiaAtor(a, a.getFilmes().get(0));
 
                             }
                         }
-                        if (y == 3) {
-                            /*
-                            ArrayList<Ator> auxA = new ArrayList<Ator>();
-                            for (Ator e : atoresA) {
-                                auxA.add(e);
-                            }
-                            //edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
-                            atoresA.clear();*/
-                            y = 0;
+                        if (y == 3) { 
+                            if(atoresA.size()==4){
+                                atoresA.clear();
+                                y = 0;
+                            }                         
                         } else {
                             y++;
                         }
@@ -1099,9 +1105,12 @@ public class FestivalCinema {
                             for (Filme e : filmesA) {
                                 auxF.add(e);
                             }
-                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
-                            filmesA.clear();
-                            y = 0;
+                            if (auxF.size()==4){
+                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
+                                filmesA.clear();
+                                y=0;
+                            }
+
                         } else {
                             y++;
                         }
@@ -1119,9 +1128,13 @@ public class FestivalCinema {
                             for (Ator e : atoresA) {
                                 auxA.add(e);
                             }
-                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
-                            atoresA.clear();
-                            y = 0;
+                            
+                            if(auxA.size()==4){
+                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
+                                atoresA.clear();
+                                y = 0;                             
+                            }
+                            
                         } else {
                             y++;
                         }
