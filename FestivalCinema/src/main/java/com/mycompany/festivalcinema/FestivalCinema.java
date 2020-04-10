@@ -951,75 +951,89 @@ public class FestivalCinema {
 
     }
 
-    private void carregaCandidatos() {
-
-        String tracinhos = "--------------------------------";
-        int indexPremios = -1;
-        Boolean cria;
-        ArrayList<Ator> atoresA = new ArrayList<>();
-        ArrayList<Filme> filmesA = new ArrayList<>();
-        int y = 0;
-        int w = 0;
-
-        try {
-            Scanner lerDados = new Scanner(ficheiroCandidatos, "UTF-8");
-            String line;
-            while (lerDados.hasNextLine()) {
-                line = lerDados.nextLine();
-
-                if (line.equals(tracinhos)) {
-                    cria = false;
-                    indexPremios++;
-                } else {
-                    cria = true;
-                }
-
-                if (cria) {
-                    if (indexPremios < 4 || indexPremios == 8) {
-                        for (Ator a : this.atores) {
-                            if (a.getNome().equals(line)) {
-                                atoresA.add(a);
-                            }
-                        }
-                    }
-
-                    if (indexPremios > 3 && indexPremios < 8) {
-                        for (Filme f : edicoes.get(indexEdicoes).getFilmes()) {
-                            if (line.equals(f.getNome()) || line.equals(f.getRealizador().getNome())) {
-                                filmesA.add(f);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro");
-        }
-
-        for (int i = 0; i < 9; i++) {
-            ArrayList<Ator> auxA = new ArrayList<>();
-            ArrayList<Filme> auxF = new ArrayList<>();
-
-            if (i < 4 || i == 8) {
-                for (int j = 0; j < 4; j++) {
-                    auxA.add(atoresA.get(y));
-                    y++;
-                }
-                edicoes.get(indexEdicoes).getPremios().get(i).setAtores(auxA);
-            }
-            if (i > 3 && i < 8) {
-                for (int j = 0; j < 4; j++) {
-                    auxF.add(filmesA.get(w));
-                    w++;
-                }
-                edicoes.get(indexEdicoes).getPremios().get(i).setFilmes(auxF);
-            }
-        }
-    }
-
+    
+    
     private void imprimirPeritos() {
         for (int i = 0; i < edicoes.get(indexEdicoes).getPeritos().size(); i++) {
             System.out.println(edicoes.get(indexEdicoes).getPeritos().get(i));
         }
     }
+    
+    private void carregaCandidatos() {
+
+        String tracinhos = "--------------------------------";
+        int indexPremios = -1;
+        Boolean cria;
+        ArrayList<Ator> atoresA = new ArrayList<Ator>();
+        ArrayList<Filme> filmesA = new ArrayList<Filme>();  
+        int y =0;
+        int w =0;
+        //int i =0;
+        
+        
+        try {
+            Scanner lerDados = new Scanner(ficheiroCandidatos, "UTF-8");
+            String line;
+            while (lerDados.hasNextLine()) {
+                line = lerDados.nextLine();
+                
+                if (line.equals(tracinhos)) {                   
+                    cria = false;
+                    indexPremios++;
+                }                
+                else{
+                    cria = true;
+                }
+                
+                if (cria){
+                    if (indexPremios <4 || indexPremios == 8){                                               
+                        for (Ator a : this.atores) {                           
+                            if(a.getNome().equals(line)){  
+                                atoresA.add(a);    
+                            }                           
+                        } 
+                        if(y==3){
+                            
+                            ArrayList<Ator> auxA = new ArrayList<Ator>();                          
+                            for(Ator e : atoresA){
+                                auxA.add(e);
+                            }
+                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
+                            atoresA.clear();
+                            y=0;
+                        }
+                        
+                        else{
+                            y++;
+                        }                        
+                    }
+
+                    if (indexPremios >3 && indexPremios<8){
+                        for (Filme f : edicoes.get(indexEdicoes).getFilmes()){
+                            if(line.equals(f.getNome()) || line.equals(f.getRealizador().getNome())){
+                                filmesA.add(f);                                
+                            }                      
+                        }  
+                        if(y==3){
+                            ArrayList<Filme> auxF = new ArrayList<Filme>();                          
+                            for(Filme e : filmesA){
+                                auxF.add(e);
+                            }
+                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
+                            filmesA.clear();
+                            y=0;
+                        }
+                        
+                        else{
+                            y++;
+                        }      
+                    }                   
+                }            
+            }
+        } catch (IOException ioe) {
+            System.out.println("Ocorreu um Erro");
+            
+        }           
+    }
+
 }
