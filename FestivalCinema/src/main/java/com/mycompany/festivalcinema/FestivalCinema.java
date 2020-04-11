@@ -1123,14 +1123,9 @@ public class FestivalCinema {
                             for (Filme e : filmesA) {
                                 auxF.add(e);
                             }
-<<<<<<< Updated upstream
                             edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
-                            
-                            if (auxF.size()==4){      
-=======
+
                             if (auxF.size() == 4) {
-                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
->>>>>>> Stashed changes
                                 filmesA.clear();
                                 y = 0;
                             }
@@ -1142,7 +1137,7 @@ public class FestivalCinema {
 
                     if (indexPremios == 8) {
                         for (Ator a : this.atores) {
-                            if (a.getNome().equals(line) && a.getAnosCarreira()>20) {
+                            if (a.getNome().equals(line) && a.getAnosCarreira() > 20) {
                                 atoresA.add(a);
                             }
                         }
@@ -1152,16 +1147,9 @@ public class FestivalCinema {
                             for (Ator e : atoresA) {
                                 auxA.add(e);
                             }
-<<<<<<< Updated upstream
-                            
                             edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
-                            
-                            if(auxA.size()==4){                              
-=======
 
                             if (auxA.size() == 4) {
-                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
->>>>>>> Stashed changes
                                 atoresA.clear();
                                 y = 0;
                             }

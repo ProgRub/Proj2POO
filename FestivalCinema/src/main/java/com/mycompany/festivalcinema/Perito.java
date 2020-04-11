@@ -27,8 +27,17 @@ public class Perito extends Pessoa {
      */
     protected boolean inserePontuacao(Premio premio, int indiceCandidato, int indicePerito, Scanner scan) {
         System.out.printf((this.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação: ", this.getNome());
-        double pontuacao = scan.nextDouble();
-        scan.nextLine();
+        String aux;
+        double pontuacao;
+        while (true) {
+            aux = scan.nextLine();
+            try {
+                pontuacao = Double.parseDouble(aux);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("O ano deve ser um número!");
+            }
+        }
         if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int) pontuacao) {
             premio.setPontuacao(indiceCandidato, indicePerito, (int) pontuacao);
             return true;
