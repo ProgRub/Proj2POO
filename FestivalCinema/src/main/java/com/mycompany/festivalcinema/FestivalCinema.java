@@ -1035,12 +1035,6 @@ public class FestivalCinema {
 
     }
 
-    private void imprimirPeritos() {
-        for (int i = 0; i < edicoes.get(indexEdicoes).getPeritos().size(); i++) {
-            System.out.println(edicoes.get(indexEdicoes).getPeritos().get(i));
-        }
-    }
-
     private void carregaCandidatos() {
 
         String tracinhos = "--------------------------------";
@@ -1105,8 +1099,9 @@ public class FestivalCinema {
                             for (Filme e : filmesA) {
                                 auxF.add(e);
                             }
-                            if (auxF.size()==4){
-                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
+                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
+                            
+                            if (auxF.size()==4){      
                                 filmesA.clear();
                                 y=0;
                             }
@@ -1118,7 +1113,7 @@ public class FestivalCinema {
 
                     if (indexPremios == 8) {
                         for (Ator a : this.atores) {
-                            if (a.getNome().equals(line)) {
+                            if (a.getNome().equals(line) && a.getAnosCarreira()>20) {
                                 atoresA.add(a);
                             }
                         }
@@ -1129,8 +1124,9 @@ public class FestivalCinema {
                                 auxA.add(e);
                             }
                             
-                            if(auxA.size()==4){
-                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
+                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
+                            
+                            if(auxA.size()==4){                              
                                 atoresA.clear();
                                 y = 0;                             
                             }
