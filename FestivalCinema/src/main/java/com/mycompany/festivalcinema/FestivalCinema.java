@@ -36,6 +36,17 @@ public class FestivalCinema {
     }
 
     public void menu() {
+        String teste = "5*3*10*4";
+        String imprimir = "";
+        for (char t : teste.toCharArray()) {
+            if (t != '*') {
+                imprimir += Character.toString(t);
+            } else {
+                System.out.println(imprimir);
+                imprimir = "";
+            }
+        }
+        System.out.println(imprimir);
         System.out.println("\t\t\tFESTIVAL CINEMA");
         System.out.print("(n): Começar um novo programa\n(c): Carregar\nOpção: ");
         opcao = scan.nextLine();
@@ -45,8 +56,16 @@ public class FestivalCinema {
             opcao = scan.nextLine();
         }
         System.out.print("\nIndique o ano da edição do festival: ");
-        ano = scan.nextInt();
-        scan.nextLine();
+        String aux;
+        while (true) {
+            aux = scan.nextLine();
+            try {
+                ano = Integer.parseInt(aux);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("O ano deve ser um número!");
+            }
+        }
         if (opcao.equalsIgnoreCase("c")) {
             numEdicao++;
             edicoes.add(new Edicao(numEdicao, ano));
@@ -181,13 +200,13 @@ public class FestivalCinema {
                     }
                     break;
                 case "h":
-                    for (Premio premio : edicoes.get(indexEdicoes).getPremios()){
-                        if(premio.getVencedor() == null){
+                    for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
+                        if (premio.getVencedor() == null) {
                             System.out.println("\nAinda não avaliou este prémio.");
                             pontuarCandidatos(premio);
                         }
                     }
-                    
+
                     System.out.println("\nNOVA EDIÇÃO CRIADA.\n");
                     for (Ator a : atores) {
                         a.resetNumFilmesEdicaoAtual();
@@ -271,8 +290,7 @@ public class FestivalCinema {
             System.out.printf("%d. %s\n", i, a.getNome());
             i++;
         }
-        if (i==1)
-        {
+        if (i == 1) {
             System.out.println("Ainda não foram criados atores!");
             return;
         }
@@ -286,8 +304,7 @@ public class FestivalCinema {
                     System.out.printf("%d. %s\n", i, f.getNome());
                     i++;
                 }
-                if(i==1)
-                {
+                if (i == 1) {
                     System.out.println("Ainda não foram criados filmes na edição atual!");
                     return;
                 }
@@ -401,13 +418,13 @@ public class FestivalCinema {
                 escolherAtoresSecundariosCandidatos(false);
                 break;
             case "Melhor Realizador":
-                premioEscolhido.setFilmes(escolherRealizadorCandidatos());  //primeira ediçao apenas (mudar)
+                premioEscolhido.setFilmes(escolherRealizadorCandidatos());
                 break;
             case "Prémio Carreira":
-                premioEscolhido.setAtores(escolherPremioCarreira());  //primeira ediçao apenas (mudar)
+                premioEscolhido.setAtores(escolherPremioCarreira());
                 break;
             default:
-                premioEscolhido.setFilmes(escolherFilmesCandidatos());  //primeira ediçao apenas (mudar)
+                premioEscolhido.setFilmes(escolherFilmesCandidatos());
                 break;
         }
     }
@@ -428,8 +445,17 @@ public class FestivalCinema {
                 + "(8) Melhor Cinematografia\n"
                 + "(9) Prémio Carreira"
                 + "\nOPÇÃO: ");
-        int opcaoPremio = scan.nextInt();
-        scan.nextLine();
+        String aux;
+        int opcaoPremio;
+        while (true) {
+            aux = scan.nextLine();
+            try {
+                opcaoPremio = Integer.parseInt(aux);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Escreva o número do prémio que quer escolher!");
+            }
+        }
         return edicoes.get(indexEdicoes).getPremios().get(opcaoPremio - 1);
     }
 
@@ -796,9 +822,9 @@ public class FestivalCinema {
         return null;
     }
 
-    protected Filme indexOfByFilmName(String nome, ArrayList<Filme> filmes) {
+    private Filme indexOfByFilmName(String nome, ArrayList<Filme> filmes) {
         for (Filme f : filmes) {
-            if (nome.equals(f.getNome())) {
+            if (nome.equalsIgnoreCase(f.getNome())) {
                 return f;
             }
         }
@@ -1050,22 +1076,20 @@ public class FestivalCinema {
             while (lerDados.hasNextLine()) {
                 line = lerDados.nextLine();
 
-                if (line.equals(tracinhos)) { 
-                    
-                    if(indexPremios!=-1){
-                        if(!atoresA.isEmpty() || !filmesA.isEmpty()){
+                if (line.equals(tracinhos)) {
+
+                    if (indexPremios != -1) {
+                        if (!atoresA.isEmpty() || !filmesA.isEmpty()) {
                             filmesA.clear();
                             atoresA.clear();
-                            y=0;
-                            System.out.println("Por favor insira 4 candidatos VÁLIDOS no prémio: "+ edicoes.get(indexEdicoes).getPremios().get(indexPremios).getNome());
+                            y = 0;
+                            System.out.println("Por favor insira 4 candidatos VÁLIDOS no prémio: " + edicoes.get(indexEdicoes).getPremios().get(indexPremios).getNome());
                         }
-                        
-                    }                   
+
+                    }
                     cria = false;
                     indexPremios++;
-                } 
-            
-                else {
+                } else {
                     cria = true;
                 }
 
@@ -1078,11 +1102,11 @@ public class FestivalCinema {
 
                             }
                         }
-                        if (y == 3) { 
-                            if(atoresA.size()==4){
+                        if (y == 3) {
+                            if (atoresA.size() == 4) {
                                 atoresA.clear();
                                 y = 0;
-                            }                         
+                            }
                         } else {
                             y++;
                         }
@@ -1099,11 +1123,16 @@ public class FestivalCinema {
                             for (Filme e : filmesA) {
                                 auxF.add(e);
                             }
+<<<<<<< Updated upstream
                             edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
                             
                             if (auxF.size()==4){      
+=======
+                            if (auxF.size() == 4) {
+                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setFilmes(auxF);
+>>>>>>> Stashed changes
                                 filmesA.clear();
-                                y=0;
+                                y = 0;
                             }
 
                         } else {
@@ -1123,14 +1152,20 @@ public class FestivalCinema {
                             for (Ator e : atoresA) {
                                 auxA.add(e);
                             }
+<<<<<<< Updated upstream
                             
                             edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
                             
                             if(auxA.size()==4){                              
+=======
+
+                            if (auxA.size() == 4) {
+                                edicoes.get(indexEdicoes).getPremios().get(indexPremios).setAtores(auxA);
+>>>>>>> Stashed changes
                                 atoresA.clear();
-                                y = 0;                             
+                                y = 0;
                             }
-                            
+
                         } else {
                             y++;
                         }

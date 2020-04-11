@@ -45,7 +45,7 @@ public class Edicao {
         this.premios.add(new Premio("Melhor Realizador"));
         this.premios.add(new Premio("Melhor Argumento"));
         this.premios.add(new Premio("Melhor Cinematografia"));
-        this.premios.add(new Premio("Premio Carreira"));
+        this.premios.add(new Premio("Prémio Carreira"));
     }
 
     protected void imprimeFilmes() {
