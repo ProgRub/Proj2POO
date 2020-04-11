@@ -35,7 +35,7 @@ public class Perito extends Pessoa {
                 pontuacao = Double.parseDouble(aux);
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("O ano deve ser um número!");
+                System.out.println("A pontuação deve ser um número!");
             }
         }
         if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int) pontuacao) {
