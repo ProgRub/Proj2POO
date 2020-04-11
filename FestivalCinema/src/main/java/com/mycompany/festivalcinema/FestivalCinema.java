@@ -1229,8 +1229,7 @@ public class FestivalCinema {
 
     private void escreveAtores() throws IOException {
         String tracinhos = "--------------------------------";
-        String ficheiro = "AtoresEscritos.txt";
-        FileWriter outStream = new FileWriter(ficheiro);
+        FileWriter outStream = new FileWriter(ficheiroAtores);
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
@@ -1259,8 +1258,7 @@ public class FestivalCinema {
 
     private void escreveFilmes() throws IOException {
         String tracinhos = "--------------------------------";
-        String ficheiro = "FilmesEscritos.txt";
-        FileWriter outStream = new FileWriter(ficheiro);
+        FileWriter outStream = new FileWriter(ficheiroFilmes);
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
@@ -1279,8 +1277,7 @@ public class FestivalCinema {
 
     private void escreveCandidatos() throws IOException {
         String tracinhos = "--------------------------------";
-        String ficheiro = "CandidatoEscritos.txt";
-        FileWriter outStream = new FileWriter(ficheiro);
+        FileWriter outStream = new FileWriter(ficheiroCandidatos);
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             int indexPremio = -1;
@@ -1306,8 +1303,7 @@ public class FestivalCinema {
     }
 
     private void escrevePeritos() throws IOException {
-        String ficheiro = "PeritosEscritos.txt";
-        FileWriter outStream = new FileWriter(ficheiro);
+        FileWriter outStream = new FileWriter(ficheiroPeritos);
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Perito perito : edicoes.get(indexEdicoes).getPeritos()) {
@@ -1323,8 +1319,7 @@ public class FestivalCinema {
 
     private void escrevePontuações() throws IOException {
         String tracinhos = "--------------------------------";
-        String ficheiro = "PontuacoesEscritos.txt";
-        FileWriter outStream = new FileWriter(ficheiro);
+        FileWriter outStream = new FileWriter(ficheiroPontuacoes);
         BufferedWriter bW = new BufferedWriter(outStream);
         try (PrintWriter out = new PrintWriter(bW)) {
             for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
