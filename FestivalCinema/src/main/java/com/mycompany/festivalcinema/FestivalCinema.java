@@ -1326,17 +1326,17 @@ public class FestivalCinema {
         String ficheiro = "PontuacoesEscritos.txt";
         FileWriter outStream = new FileWriter(ficheiro);
         BufferedWriter bW = new BufferedWriter(outStream);
-        PrintWriter out = new PrintWriter(bW);
-        for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
-            out.println(tracinhos);
-            for (int linha = 0; linha < 4; linha++) {
-                for (int coluna = 0; coluna < 5; coluna++) {
-                   out.print(premio.getPontuacoes()[linha][coluna]+"*");
+        try (PrintWriter out = new PrintWriter(bW)) {
+            for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
+                out.println(tracinhos);
+                for (int linha = 0; linha < 4; linha++) {
+                    for (int coluna = 0; coluna < 5; coluna++) {
+                        out.print(premio.getPontuacoes()[linha][coluna]+"*");
+                    }
+                    out.println();
                 }
-                out.println();
             }
         }
-        out.close();
     }
 
     private void carregaPontuacoes() {
