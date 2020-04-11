@@ -84,6 +84,7 @@ public class FestivalCinema {
                     insereFilmesCarregados();
                     insereAtoresCarregados();
                     carregaCandidatos();// ESTE MÉTODO PRECISA DA LISTA DE FILMES E ATORES PARA FUNCIONAR!
+                    listarCandidatos();
                     break;
                 case "t":
                     insereFilmesCarregados();
@@ -101,11 +102,11 @@ public class FestivalCinema {
         while (!quebra) {
             System.out.println("*****************************************************************");
             System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano - 1);
-            System.out.print("Opções:\n(c): Criar\n(l): Listar\n(h): Nova Edição\n(s): Sair\nOpção: ");
+            System.out.print("Opções:\n(c): Criar\n(l): Listar\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
             opcao = scan.nextLine();
-            while (!(opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("l") || opcao.equalsIgnoreCase("h") || opcao.equalsIgnoreCase("s"))) {
+            while (!(opcao.equalsIgnoreCase("c") || opcao.equalsIgnoreCase("l") || opcao.equalsIgnoreCase("h") || opcao.equalsIgnoreCase("g") || opcao.equalsIgnoreCase("s"))) {
                 System.out.println("\nPor favor selecione uma das opções disponíveis.");
-                System.out.print("(c): Criar\n(l): Listar\n(h): Nova Edição\n(s): Sair\nOpção: ");
+                System.out.print("(c): Criar\n(l): Listar\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
                 opcao = scan.nextLine();
             }
             switch (opcao.toLowerCase()) {
@@ -216,6 +217,34 @@ public class FestivalCinema {
                     indexEdicoes++;
                     edicoes.add(new Edicao(numEdicao, ano));
                     ano++;
+                    break;
+                case "g":
+                    System.out.print("\nOpções:\n(a): Gravar Atores e Filmes\n(c): Gravar Atores, Filmes e Candidatos\n(p): Gravar Peritos\n(t): Gravar Tudo\nOpção: ");
+                    opcao = scan.nextLine();
+                    try {
+                        switch (opcao) {
+                            case "a":
+                                escreveAtores();
+                                escreveFilmes();
+                                break;
+                            case "c":
+                                escreveAtores();
+                                escreveFilmes();
+                                escreveCandidatos();
+                                break;
+                            case "p":
+                                escrevePeritos();
+                                break;
+                            case "t":
+                                escreveAtores();
+                                escreveFilmes();
+                                escreveCandidatos();
+                                escrevePeritos();
+                                break;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("\nErro ao gravar os dados.\n");
+                    }
                     break;
                 case "s":
                     quebra = true;
@@ -1029,7 +1058,6 @@ public class FestivalCinema {
     }
 
     private void inserePeritos() {
-
         String nomePerito = " ";
         boolean generoPerito;
         int i = 0;
@@ -1166,4 +1194,97 @@ public class FestivalCinema {
         }
     }
 
+    private void escreveAtores() throws IOException {
+        String tracinhos = "--------------------------------";
+        String ficheiro = "AtoresEscritos.txt";
+        FileWriter outStream = new FileWriter(ficheiro);
+        BufferedWriter bW = new BufferedWriter(outStream);
+        PrintWriter out = new PrintWriter(bW);
+        for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
+            out.println(tracinhos);
+            out.println("Ator principal:");
+            out.println(filme.getAtorPrincipal().getNome());
+            out.println("M");
+            out.println(filme.getAtorPrincipal().getAnosCarreira());
+            out.println("Atriz principal:");
+            out.println(filme.getAtrizPrincipal().getNome());
+            out.println("F");
+            out.println(filme.getAtrizPrincipal().getAnosCarreira());
+            out.println("Atores Secundarios:");
+            for (Ator atorSec : filme.getAtoresSecundarios()) {
+                out.println(atorSec.getNome());
+                if (atorSec.getGenero()) {
+                    out.println("M");
+                } else {
+                    out.println("F");
+                }
+                out.println(atorSec.getAnosCarreira());
+            }
+        }
+        out.close();
+    }
+
+    private void escreveFilmes() throws IOException {
+        String tracinhos = "--------------------------------";
+        String ficheiro = "FilmesEscritos.txt";
+        FileWriter outStream = new FileWriter(ficheiro);
+        BufferedWriter bW = new BufferedWriter(outStream);
+        PrintWriter out = new PrintWriter(bW);
+        for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
+            out.println(tracinhos);
+            out.println(filme.getNome());
+            out.println(filme.getGenero());
+            out.println(filme.getRealizador().getNome());
+            if (filme.getRealizador().getGenero()) {
+                out.println("M");
+            } else {
+                out.println("F");
+            }
+        }
+        out.close();
+    }
+
+    private void escreveCandidatos() throws IOException {
+        String tracinhos = "--------------------------------";
+        String ficheiro = "CandidatoEscritos.txt";
+        FileWriter outStream = new FileWriter(ficheiro);
+        BufferedWriter bW = new BufferedWriter(outStream);
+        PrintWriter out = new PrintWriter(bW);
+        int indexPremio = -1;
+        for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
+            out.println(tracinhos);
+            indexPremio++;
+            if (indexPremio < 4 || indexPremio == 8) {
+                for (int candidato = 0; candidato <= 3; candidato++) {
+                    out.println(premio.getAtoresCandidatos().get(candidato).getNome());
+                }
+            } else if (indexPremio == 5) {
+                for (int candidato = 0; candidato <= 3; candidato++) {
+                    out.println(premio.getFilmesCandidatos().get(candidato).getRealizador().getNome());
+                }
+            } else {
+                for (int candidato = 0; candidato <= 3; candidato++) {
+                    out.println(premio.getFilmesCandidatos().get(candidato).getNome());
+                }
+            }
+        }
+        out.print(tracinhos);
+        out.close();
+    }
+
+    private void escrevePeritos() throws IOException {
+        String ficheiro = "PeritosEscritos.txt";
+        FileWriter outStream = new FileWriter(ficheiro);
+        BufferedWriter bW = new BufferedWriter(outStream);
+        PrintWriter out = new PrintWriter(bW);
+        for (Perito perito : edicoes.get(indexEdicoes).getPeritos()) {
+            out.println(perito.getNome());
+            if (perito.getGenero()) {
+                out.println("M");
+            } else {
+                out.println("F");
+            }
+        }
+        out.close();
+    }
 }

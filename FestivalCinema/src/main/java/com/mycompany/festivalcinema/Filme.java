@@ -64,6 +64,10 @@ public class Filme {
     protected String getNome() {
         return nome;
     }
+    
+    protected String getGenero() {
+        return genero;
+    }
 
     protected Ator getAtorPrincipal() {
         return AtorPrincipal;
@@ -88,6 +92,8 @@ public class Filme {
     protected void incrementaNumeroPremios() {
         numeroPremios++;
     }
+    
+    
 
     @Override
     public String toString() {
