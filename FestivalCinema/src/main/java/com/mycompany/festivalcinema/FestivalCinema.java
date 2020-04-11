@@ -18,6 +18,7 @@ public class FestivalCinema {
     private final File ficheiroAtores;
     private final File ficheiroPeritos;
     private final File ficheiroCandidatos;
+    private final File ficheiroPontuacoes;
     private String opcao;
 
     public FestivalCinema() {
@@ -33,20 +34,10 @@ public class FestivalCinema {
         this.ficheiroAtores = new File("atores.txt");
         this.ficheiroPeritos = new File("peritos.txt");
         this.ficheiroCandidatos = new File("candidatos.txt");
+        this.ficheiroPontuacoes = new File("pontuacoes.txt");
     }
 
     public void menu() {
-        String teste = "5*3*10*4";
-        String imprimir = "";
-        for (char t : teste.toCharArray()) {
-            if (t != '*') {
-                imprimir += Character.toString(t);
-            } else {
-                System.out.println(imprimir);
-                imprimir = "";
-            }
-        }
-        System.out.println(imprimir);
         System.out.println("\t\t\tFESTIVAL CINEMA");
         System.out.print("(n): Começar um novo programa\n(c): Carregar\nOpção: ");
         opcao = scan.nextLine();
@@ -98,7 +89,7 @@ public class FestivalCinema {
             edicoes.add(new Edicao(numEdicao, ano));
             ano++;
         }
-
+        carregaPontuacoes();
         while (!quebra) {
             System.out.println("*****************************************************************");
             System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano - 1);
@@ -1287,4 +1278,53 @@ public class FestivalCinema {
         }
         out.close();
     }
+    private void carregaPontuacoes() {
+//        String teste = "5*3*10*4";
+//        String imprimir = "";
+//        for (char t : teste.toCharArray()) {
+//            if (t != '*') {
+//                imprimir += Character.toString(t);
+//            } else {
+//                System.out.println(imprimir);
+//                imprimir = "";
+//            }
+//        }
+//        System.out.println(imprimir);
+        String pontuacao = "";
+        int i = 0;
+        int j = 0;
+        int indexPremios = -1;
+        String tracinhos = "--------------------------------";
+        try {
+            Scanner lerDados = new Scanner(ficheiroPontuacoes, "UTF-8");
+            String line;
+            while (lerDados.hasNextLine()) {
+                line = lerDados.nextLine();
+                String pontos = "";
+                if (!line.equals(tracinhos)) {
+                    for (char aux : line.toCharArray()) {
+                        if (aux != '*') {
+                            pontos += Character.toString(aux);
+                        } else {
+                            if (j % 5 == 0 && j != 0) {
+                                i++;
+                            }
+                            edicoes.get(indexEdicoes).getPremios().get(indexPremios).setPontuacao(i % 4, j % 5, Integer.parseInt(pontos));
+                            System.out.printf("%d   %d  %d\n", i % 4, j % 5, Integer.parseInt(pontos));
+                            pontos = "";
+                            j++;
+                        }
+                    }
+                } else {
+                    indexPremios++;
+                    System.out.println("******" + indexPremios);
+                    i = 0;
+                    j = 0;
+                }
+            }
+        } catch (IOException ioe) {
+            System.out.println("Ocorreu um Erro");
+        }
+    }
+
 }
