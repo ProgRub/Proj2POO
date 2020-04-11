@@ -1278,6 +1278,7 @@ public class FestivalCinema {
         }
         out.close();
     }
+    
     private void carregaPontuacoes() {
 //        String teste = "5*3*10*4";
 //        String imprimir = "";
