@@ -86,6 +86,7 @@ public class FestivalCinema {
                     insereAtoresCarregados();
                     inserePeritos();
                     carregaCandidatos();
+                    //carregaPontuacoes();
                     break;
             }
         } else {
@@ -238,6 +239,7 @@ public class FestivalCinema {
                                 escreveFilmes();
                                 escreveCandidatos();
                                 escrevePeritos();
+                                escrevePontuações();
                                 break;
                         }
                     } catch (Exception e) {
@@ -1285,7 +1287,25 @@ public class FestivalCinema {
         }
         out.close();
     }
-    
+
+    private void escrevePontuações() throws IOException {
+        String tracinhos = "--------------------------------";
+        String ficheiro = "PontuacoesEscritos.txt";
+        FileWriter outStream = new FileWriter(ficheiro);
+        BufferedWriter bW = new BufferedWriter(outStream);
+        PrintWriter out = new PrintWriter(bW);
+        for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
+            out.println(tracinhos);
+            for (int linha = 0; linha < 4; linha++) {
+                for (int coluna = 0; coluna < 5; coluna++) {
+                   out.print(premio.getPontuacoes()[linha][coluna]+"*");
+                }
+                out.println();
+            }
+        }
+        out.close();
+    }
+
     private void carregaPontuacoes() {
         String pontuacao = "";
         int i = 0;
