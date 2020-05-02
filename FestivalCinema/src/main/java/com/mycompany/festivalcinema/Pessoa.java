@@ -1,6 +1,6 @@
 package com.mycompany.festivalcinema;
 
-public class Pessoa {
+public abstract class Pessoa {
 
     private final String nome;
     private final boolean genero; //true->Homem false->Mulher

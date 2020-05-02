@@ -69,30 +69,19 @@ public class Ator extends Pessoa {
         return ator;
     }
 
-//    @Override
-//    protected boolean equals(Object obj) {
-//        System.out.println("CHAMADO");
-//        if (obj == null) {
-//            return false;
-//        }
-//        if (obj == this) {
-//            return true;
-//        }
-//        if (!(obj instanceof Ator)) {
-//            return false;
-//        }
-//        Ator comparar = (Ator)obj;
-//        System.out.println(this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome()));
-//        return this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome());
-//    }
-//
-//    @Override
-//    protected int hashCode() {
-//        int hash = 3;
-//        hash = 13 * hash + this.anosCarreira;
-//        hash = 13 * hash + this.numFilmesEdiçãoAtual;
-//        hash = 13 * hash + this.numFilmesTotal;
-//        hash = 13 * hash + Objects.hashCode(this.filmesParticipa);
-//        return hash;
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Ator)) {
+            return false;
+        }
+        Ator comparar = (Ator)obj;
+        //System.out.println(this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome()));
+        return this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome());
+    }
 }
