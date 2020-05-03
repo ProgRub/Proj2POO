@@ -23,6 +23,7 @@ public class Filme {
         this.atoresSecundarios = new ArrayList<>(0);
         this.numeroPremios = 0;
     }
+
     /**
      * Método que insere um ator no filme, se é principal ou secundário depende
      * da posição
@@ -64,7 +65,7 @@ public class Filme {
     protected String getNome() {
         return nome;
     }
-    
+
     protected String getGenero() {
         return genero;
     }
@@ -92,8 +93,6 @@ public class Filme {
     protected void incrementaNumeroPremios() {
         numeroPremios++;
     }
-    
-    
 
     @Override
     public String toString() {
@@ -108,6 +107,21 @@ public class Filme {
             filme += secundario.getNome() + "\n";
         }
         return filme;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Filme)) {
+            return false;
+        }
+        Filme filme = (Filme) obj;
+        return this.nome.equalsIgnoreCase(filme.nome) && this.genero.equalsIgnoreCase(filme.genero) && this.realizador.equals(filme.realizador) && this.AtorPrincipal.equals(filme.AtorPrincipal) && this.AtrizPrincipal.equals(filme.AtrizPrincipal) && this.atoresSecundarios.equals(filme.atoresSecundarios) && this.numeroPremios == filme.numeroPremios && this.edição == filme.edição;
     }
 
 }

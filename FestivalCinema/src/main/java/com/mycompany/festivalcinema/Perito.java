@@ -44,4 +44,19 @@ public class Perito extends Pessoa {
         }
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Perito)) {
+            return false;
+        }
+        Perito perito = (Perito) obj;
+        return this.getNome().equalsIgnoreCase(perito.getNome()) && this.getGenero() == perito.getGenero();
+    }
 }

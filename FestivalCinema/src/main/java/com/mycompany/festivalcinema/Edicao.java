@@ -91,4 +91,19 @@ public class Edicao {
     protected ArrayList<Premio> getPremios() {
         return this.premios;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Edicao)) {
+            return false;
+        }
+        Edicao edic = (Edicao) obj;
+        return this.ano == edic.ano && this.numEdicao == edic.numEdicao && this.filmes.equals(edic.filmes) && this.peritos.equals(edic.peritos) && this.premios.equals(edic.premios);
+    }
 }

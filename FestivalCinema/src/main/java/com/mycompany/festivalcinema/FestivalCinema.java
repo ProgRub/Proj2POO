@@ -34,10 +34,10 @@ public class FestivalCinema {
         this.scan = new Scanner(System.in, "cp1252");
         this.quebra = false;
         this.ficheiroFilmes = new File("filmesOLD.txt"); //WTF
-        this.ficheiroAtores = new File("atores.txt");
-        this.ficheiroPeritos = new File("peritos.txt");
-        this.ficheiroCandidatos = new File("candidatos.txt");
-        this.ficheiroPontuacoes = new File("pontuacoes.txt");
+        this.ficheiroAtores = new File("Atores.txt");
+        this.ficheiroPeritos = new File("Peritos.txt");
+        this.ficheiroCandidatos = new File("Candidatos.txt");
+        this.ficheiroPontuacoes = new File("Pontuacoes.txt");
     }
 
     public void menu() {
@@ -55,22 +55,22 @@ public class FestivalCinema {
                     opcao = scan.nextLine().trim();
                     switch (opcao.toLowerCase()) {
                         case "a":
-                            insereFilmesCarregados();
-                            insereAtoresCarregados();
+                            carregaFilmes();
+                            carregaAtores();
                             break;
                         case "p":
-                            inserePeritos();
+                            carregaPeritos();
                             break;
                         case "c":
-                            insereFilmesCarregados();
-                            insereAtoresCarregados();
+                            carregaFilmes();
+                            carregaAtores();
                             carregaCandidatos();// ESTE MÉTODO PRECISA DA LISTA DE FILMES E ATORES PARA FUNCIONAR!
-                            listarCandidatos();
+                            //listarCandidatos();
                             break;
                         case "t":
-                            insereFilmesCarregados();
-                            insereAtoresCarregados();
-                            inserePeritos();
+                            carregaFilmes();
+                            carregaAtores();
+                            carregaPeritos();
                             carregaCandidatos();
                             carregaPontuacoes();
                             break;
@@ -101,8 +101,8 @@ public class FestivalCinema {
                 System.out.println("O ano deve ser um número!");
             }
         }
+        limparConsola();
         while (!quebra) {
-            limparConsola();
             System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano - 1);
             System.out.print("Opções:\n(c): Criar\n(l): Listar\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
             opcao = scan.nextLine().trim();
@@ -438,7 +438,7 @@ public class FestivalCinema {
             } else {
                 edicoes.get(posiçãoEdição - 1).imprimeFilmes();
             }
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Essa edição não existe.");
         }
     }
@@ -512,12 +512,12 @@ public class FestivalCinema {
     }
 
     /**
-     * Método que lista os vencedores dos prémios
+     * Método que lista os filmeVencedores dos prémios
      */
     private void listarVencedores() {
         System.out.println("\nVENCEDORES:");
         for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
-            premio.vencedorCategoria();
+            premio.filmeVencedorCategoria();
         }
     }
 
@@ -558,7 +558,7 @@ public class FestivalCinema {
                 if (!encontrou) {
                     System.out.println("Esse filme já foi escolhido.");
                 }
-            } catch (Exception e) {
+            } catch (NullPointerException e) {
                 System.out.println("Por favor, indique um nome válido.");
             }
         }
@@ -604,7 +604,7 @@ public class FestivalCinema {
                 if (!encontrou) {
                     System.out.println("Esse candidato já foi escolhido.");
                 }
-            } catch (Exception e) {
+            } catch (NullPointerException e) {
                 System.out.println("Por favor, indique um nome válido.");
             }
         }
@@ -692,7 +692,7 @@ public class FestivalCinema {
                 } else {
                     System.out.println("Escreveu mal o nome do ator ou esse ator já é candidato.\nTente outra vez.");
                 }
-            } catch (Exception e) {
+            } catch (NullPointerException e) {
                 System.out.println("Por favor, escolha um ator válido.");
             }
         }
@@ -758,7 +758,7 @@ public class FestivalCinema {
                 } else {
                     System.out.println("Escreveu mal o nome do ator ou esse ator já é candidato.\nTente outra vez.\n");
                 }
-            } catch (Exception e) {
+            } catch (NullPointerException e) {
                 System.out.println("Por favor, escolha um ator válido.");
             }
         }
@@ -794,7 +794,7 @@ public class FestivalCinema {
                         System.out.println("- " + premio.getFilmesCandidatos().get(i).getRealizador().getNome());
                     }
                 }
-            } catch (Exception e) {
+            } catch (NullPointerException e) {
                 System.out.println("- Não tem candidatos.\n");
             }
             contaPremios++;
@@ -840,7 +840,7 @@ public class FestivalCinema {
                     System.out.println("Esse candidato já foi escolhido.");
                 }
 
-            } catch (Exception e) {
+            } catch (NullPointerException e) {
                 System.out.println("Por favor, escolha um candidato válido.");
             }
         }
@@ -952,7 +952,7 @@ public class FestivalCinema {
     }
 
     //-------------------------------------------------------------------------------------------
-    private void insereAtoresCarregados() {
+    private void carregaAtores() {
         String nomeAtor = "";
         boolean generoAtor = false;
         int anosCarreiraAtor;
@@ -1092,7 +1092,7 @@ public class FestivalCinema {
         }
     }
 
-    private void insereFilmesCarregados() {
+    private void carregaFilmes() {
         String nomeFilme = "";
         String generoFilme = "";
         String nomeRealizador = "";
@@ -1140,7 +1140,7 @@ public class FestivalCinema {
         }
     }
 
-    private void inserePeritos() {
+    private void carregaPeritos() {
         String nomePerito = " ";
         boolean generoPerito;
         int i = 0;
@@ -1428,7 +1428,7 @@ public class FestivalCinema {
             limpa.keyRelease(KeyEvent.VK_CONTROL);
             limpa.keyRelease(KeyEvent.VK_L);
             try {
-                Thread.sleep(1);
+                Thread.sleep(10);
             } catch (InterruptedException ex) {
                 System.out.println("ERRO");
             }

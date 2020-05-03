@@ -9,7 +9,8 @@ public class Premio {
     private final int[][] pontuacoes;
     private ArrayList<Filme> filmes;
     private ArrayList<Ator> atores;
-    private Filme vencedor;
+    private Filme filmeVencedor;
+    private Ator vencedorCarreira;
     private static final int NUMEROPERITOS = 5;
 
     protected Premio(String nome) {
@@ -19,12 +20,13 @@ public class Premio {
         if (!(nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira"))) {
             this.atores = null;
         }
-        if(nome.contains("Carreira")){
+        if (nome.contains("Carreira")) {
             this.filmes = null;
         }
 
         this.pontuacoes = new int[4][NUMEROPERITOS]; //4 candidatos, 5 peritos
-        this.vencedor = null;
+        this.filmeVencedor = null;
+        this.vencedorCarreira = null;
     }
 
     protected String getNome() {
@@ -65,7 +67,7 @@ public class Premio {
     }
 
     protected Filme getVencedor() {
-        return vencedor;
+        return filmeVencedor;
     }
 
     @Override
@@ -132,28 +134,32 @@ public class Premio {
                     System.out.printf("%.2f\n", pont[i]); //imprime pontuação
                 }
             } else {
-                throw new Exception("Pontuações não atribuídas");
+                System.out.println("Pontuações não atribuídas");
             }
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Os candidatos não foram avaliados.\n");
         }
     }
 
-    protected void vencedorCategoria() {
+    protected void filmeVencedorCategoria() {
         double[] pont = ordenaPontuações(mediasPontuações(pontuacoes));
         pont = empateVencedores(pontuacoes, pont);
         System.out.print(nome + ": ");
         try {
             if (!Double.isNaN(pont[0])) {
-                if ( atores != null) {
-                    System.out.println(atores.get(0).getNome() + "\n");
+                if (atores != null) {
+                    if (!this.nome.contains("Carreira")) {
+                        System.out.println(atores.get(0).getNome() + " em " + filmeVencedor.getNome() + "\n");
+                    } else {
+                        System.out.println(atores.get(0).getNome() + "\n");
+                    }
                 } else {
                     System.out.println(filmes.get(0).getNome() + "\n");
                 }
             } else {
-                throw new Exception("Pontuações não atribuídas");
+                System.out.println("Pontuações não atribuídas");
             }
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Ainda sem vencedor.\n");
         }
     }
@@ -161,17 +167,15 @@ public class Premio {
     protected void determinaVencedor() {
         double[] pont = ordenaPontuações(mediasPontuações(pontuacoes));
         pont = empateVencedores(pontuacoes, pont);
-        try {
-            if (!Double.isNaN(pont[0])) {
-                if (filmes != null) {
-                    this.vencedor = filmes.get(0);
-                    this.vencedor.incrementaNumeroPremios();
-                }
+        if (!Double.isNaN(pont[0])) {
+            if (filmes != null) {
+                this.filmeVencedor = filmes.get(0);
+                this.filmeVencedor.incrementaNumeroPremios();
             } else {
-                throw new Exception("Pontuações não atribuídas");
+                this.vencedorCarreira = atores.get(0);
             }
-        } catch (Exception e) {
-            System.out.println("Ainda sem vencedor.\n");
+        } else {
+            System.out.println("Pontuações não atribuídas");
         }
     }
 
@@ -207,4 +211,18 @@ public class Premio {
         return Math.sqrt(soma / mediasPontuacoes.length);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Premio)) {
+            return false;
+        }
+        Premio pre = (Premio) obj;
+        return this.nome.equalsIgnoreCase(pre.nome) && this.filmeVencedor.equals(pre.filmeVencedor) && this.filmes.equals(pre.filmes) && this.atores.equals(pre.atores) && this.pontuacoes == pre.pontuacoes;
+    }
 }

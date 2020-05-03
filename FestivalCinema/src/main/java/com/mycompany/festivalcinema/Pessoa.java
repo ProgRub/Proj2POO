@@ -25,4 +25,19 @@ public abstract class Pessoa {
         pessoa += "Género: " + (getGenero() ? "Masculino" : "Feminino") + "\n";
         return pessoa;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Pessoa)) {
+            return false;
+        }
+        Pessoa pes = (Pessoa) obj;
+        return this.genero == pes.genero && this.nome.equalsIgnoreCase(pes.nome);
+    }
 }
