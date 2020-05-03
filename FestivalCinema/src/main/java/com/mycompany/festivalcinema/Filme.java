@@ -27,20 +27,16 @@ public class Filme {
     /**
      * Método que insere um ator no filme, se é principal ou secundário depende
      * da posição
-     *
-     * @param ator - ator a inserir no filme
-     * @param posição - se for menor que 2 indica que pretende-se inserir o
-     * ator/atriz como principal, caso contrário será secundário Se for
-     * principal, a posição distingue se é ator ou atriz principal (0 - ator
-     * principal, 1 - atriz principal) e só insere se não houver ator/atriz
-     * principal
+     * @param ator - ator que se vai inserir no filme, se possível
+     * @param principal - indica se o ator é suposto ser principal ou secundário
+     *  (true - principal, false - secundário)
      */
-    protected void insereAtor(Ator ator, int posição) {
-        if (posição < 2) {
-            if (posição == 0 && this.AtorPrincipal == null) {
+    protected void insereAtor(Ator ator, boolean principal) {
+        if (principal) {
+            if (ator.getGenero() && this.AtorPrincipal == null) {
                 this.AtorPrincipal = ator;
                 ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator participa
-            } else if (posição == 1 && this.AtrizPrincipal == null) {
+            } else if (!ator.getGenero() && this.AtrizPrincipal == null) {
                 this.AtrizPrincipal = ator;
                 ator.inserirFilme(this); //insere o filme na lista de filmes em que o atriz participa
             } else {

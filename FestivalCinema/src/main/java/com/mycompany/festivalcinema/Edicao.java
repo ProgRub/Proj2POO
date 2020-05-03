@@ -29,7 +29,14 @@ public class Edicao {
     }
 
     protected void inserePerito(Perito perito) {
+        //System.out.println("CHEGOU");
         this.peritos.add(perito);
+        for (Premio p : this.premios) {
+            //System.out.println("CHEGOU");
+            for (ArrayList<Integer> lista : p.getPontuacoes()) {
+                lista.add(0);
+            }
+        }
     }
 
     protected ArrayList<Perito> getPeritos() {

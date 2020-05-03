@@ -53,8 +53,8 @@ public class Ator extends Pessoa {
     protected ArrayList<Filme> getFilmes() {
         return filmesParticipa;
     }
-    
-    protected int getnumFilmesEdiçãoAtual(){
+
+    protected int getnumFilmesEdiçãoAtual() {
         return numFilmesEdiçãoAtual;
     }
 
@@ -80,7 +80,7 @@ public class Ator extends Pessoa {
         if (!(obj instanceof Ator)) {
             return false;
         }
-        Ator comparar = (Ator)obj;
+        Ator comparar = (Ator) obj;
         return this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome());
     }
 }

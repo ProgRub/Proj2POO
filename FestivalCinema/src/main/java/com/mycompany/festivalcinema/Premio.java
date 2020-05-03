@@ -6,12 +6,11 @@ import java.util.Collections;
 public class Premio {
 
     private final String nome;
-    private final int[][] pontuacoes;
+    private final ArrayList<ArrayList<Integer>> pontuacoes;
     private ArrayList<Filme> filmes;
     private ArrayList<Ator> atores;
     private Filme filmeVencedor;
     private Ator vencedorCarreira;
-    private static final int NUMEROPERITOS = 5;
 
     protected Premio(String nome) {
         this.nome = nome;
@@ -24,7 +23,10 @@ public class Premio {
             this.filmes = null;
         }
 
-        this.pontuacoes = new int[4][NUMEROPERITOS]; //4 candidatos, 5 peritos
+        this.pontuacoes = new ArrayList<>(4);
+        for (int i = 0; i < 4; i++) {
+            this.pontuacoes.add(new ArrayList<>(0));
+        }
         this.filmeVencedor = null;
         this.vencedorCarreira = null;
     }
@@ -33,12 +35,12 @@ public class Premio {
         return this.nome;
     }
 
-    protected int[][] getPontuacoes() {
+    protected ArrayList<ArrayList<Integer>> getPontuacoes() {
         return this.pontuacoes;
     }
 
     protected void setPontuacao(int candidato, int perito, int pontuacao) {
-        this.pontuacoes[candidato][perito] = pontuacao;
+        this.pontuacoes.get(candidato).set(perito, pontuacao);
     }
 
     protected void setFilmes(ArrayList<Filme> filmes) {
@@ -75,14 +77,15 @@ public class Premio {
         return nome;
     }
 
-    protected double[] mediasPontuações(int pontuações[][]) {
+    protected double[] mediasPontuações() {
         double[] medias = new double[4]; //guarda medias dos filmes/atores pela ordem
+        int tam = pontuacoes.get(0).size();
         for (int linha = 0; linha < 4; linha++) {
             double somaPontuaçõesCandidato = 0;
             int numPontuacoes = 0;
-            for (int coluna = 0; coluna < NUMEROPERITOS; coluna++) {
-                somaPontuaçõesCandidato += pontuações[linha][coluna];
-                if (pontuações[linha][coluna] != 0) {
+            for (int coluna = 0; coluna < tam; coluna++) {
+                somaPontuaçõesCandidato += pontuacoes.get(linha).get(coluna);
+                if (pontuacoes.get(linha).get(coluna) != 0) {
                     numPontuacoes++;
                 }
             }
@@ -108,9 +111,7 @@ public class Premio {
         double aux = pontuações[i];
         pontuações[i] = pontuações[j];
         pontuações[j] = aux;
-        int[] aux2 = this.pontuacoes[i];
-        this.pontuacoes[i] = this.pontuacoes[j];
-        this.pontuacoes[j] = aux2;
+        Collections.swap(this.pontuacoes, i, j);
         if (this.atores != null) {
             Collections.swap(this.atores, i, j);
         }
@@ -119,9 +120,9 @@ public class Premio {
         }
     }
 
-    protected void imprimePontuações(int pontuações[][]) {
-        double[] pont = ordenaPontuações(mediasPontuações(pontuações));
-        pont = empateVencedores(pontuacoes, pont);
+    protected void imprimePontuações() {
+        double[] pont = ordenaPontuações(mediasPontuações());
+        pont = empateVencedores(pont);
         System.out.println("\n- " + nome + ": ");
         try {
             if (!Double.isNaN(pont[0])) {
@@ -136,8 +137,8 @@ public class Premio {
             } else {
                 System.out.println("Pontuações não atribuídas");
             }
-        } catch (NullPointerException e) {
-            System.out.println("Os candidatos não foram avaliados.\n");
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            System.out.println("Ainda sem vencedor.\n");
         }
     }
 
@@ -154,14 +155,14 @@ public class Premio {
             } else {
                 System.out.println(filmes.get(0).getNome() + "\n");
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Ainda sem vencedor.\n");
         }
     }
 
     protected void determinaVencedor() {
-        double[] pont = ordenaPontuações(mediasPontuações(pontuacoes));
-        pont = empateVencedores(pontuacoes, pont);
+        double[] pont = ordenaPontuações(mediasPontuações());
+        pont = empateVencedores(pont);
         if (!Double.isNaN(pont[0])) {
             if (filmes != null) {
                 this.filmeVencedor = filmes.get(0);
@@ -169,23 +170,21 @@ public class Premio {
             } else {
                 this.vencedorCarreira = atores.get(0);
             }
-        } else {
-            System.out.println("Pontuações não atribuídas");
         }
     }
 
-    private double[] empateVencedores(int[][] pontuacoes, double[] mediasPontuacoes) {
+    private double[] empateVencedores(double[] mediasPontuacoes) {
         if (mediasPontuacoes[0] == mediasPontuacoes[1]) {
             double[] desviosPadrao = new double[4];
-            desviosPadrao[0] = desvioPadrao(pontuacoes, mediasPontuacoes, 0);
-            desviosPadrao[1] = desvioPadrao(pontuacoes, mediasPontuacoes, 1);
+            desviosPadrao[0] = desvioPadrao(mediasPontuacoes, 0);
+            desviosPadrao[1] = desvioPadrao(mediasPontuacoes, 1);
             desviosPadrao[2] = 0;
             desviosPadrao[3] = 0;
             if (mediasPontuacoes[2] == mediasPontuacoes[0]) {
-                desviosPadrao[2] = desvioPadrao(pontuacoes, mediasPontuacoes, 2);
+                desviosPadrao[2] = desvioPadrao(mediasPontuacoes, 2);
             }
             if (mediasPontuacoes[3] == mediasPontuacoes[0]) {
-                desviosPadrao[3] = desvioPadrao(pontuacoes, mediasPontuacoes, 3);
+                desviosPadrao[3] = desvioPadrao(mediasPontuacoes, 3);
             }
             for (int i = 0; i < desviosPadrao.length; i++) {
                 for (int j = 0; j < desviosPadrao.length - i - 1; j++) {
@@ -198,10 +197,11 @@ public class Premio {
         return mediasPontuacoes;
     }
 
-    private double desvioPadrao(int[][] pontuacoes, double[] mediasPontuacoes, int posCandidato) {
+    private double desvioPadrao(double[] mediasPontuacoes, int posCandidato) {
         double soma = 0;
-        for (int i = 0; i < NUMEROPERITOS; i++) {
-            soma += Math.pow((double) pontuacoes[posCandidato][i] - mediasPontuacoes[posCandidato], 2);
+        int tam = pontuacoes.get(0).size();
+        for (int i = 0; i < tam; i++) {
+            soma += Math.pow((double) pontuacoes.get(posCandidato).get(i) - mediasPontuacoes[posCandidato], 2);
         }
         return Math.sqrt(soma / mediasPontuacoes.length);
     }
