@@ -136,30 +136,25 @@ public class Premio {
             } else {
                 System.out.println("Pontuações não atribuídas");
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (NullPointerException e) {
             System.out.println("Os candidatos não foram avaliados.\n");
         }
     }
 
     protected void filmeVencedorCategoria() {
-        double[] pont = ordenaPontuações(mediasPontuações(pontuacoes));
-        pont = empateVencedores(pontuacoes, pont);
+        this.determinaVencedor();
         System.out.print(nome + ": ");
         try {
-            if (!Double.isNaN(pont[0])) {
-                if (atores != null) {
-                    if (!this.nome.contains("Carreira")) {
-                        System.out.println(atores.get(0).getNome() + " em " + filmeVencedor.getNome() + "\n");
-                    } else {
-                        System.out.println(atores.get(0).getNome() + "\n");
-                    }
+            if (atores != null) {
+                if (!this.nome.contains("Carreira")) {
+                    System.out.println(atores.get(0).getNome() + " em " + filmeVencedor.getNome() + "\n");
                 } else {
-                    System.out.println(filmes.get(0).getNome() + "\n");
+                    System.out.println(atores.get(0).getNome() + "\n");
                 }
             } else {
-                System.out.println("Pontuações não atribuídas");
+                System.out.println(filmes.get(0).getNome() + "\n");
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (NullPointerException e) {
             System.out.println("Ainda sem vencedor.\n");
         }
     }
