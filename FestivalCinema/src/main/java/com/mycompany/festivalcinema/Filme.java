@@ -24,40 +24,6 @@ public class Filme {
         this.numeroPremios = 0;
     }
 
-    /**
-     * Método que insere um ator no filme, se é principal ou secundário depende
-     * da posição
-     * @param ator - ator que se vai inserir no filme, se possível
-     * @param principal - indica se o ator é suposto ser principal ou secundário
-     *  (true - principal, false - secundário)
-     */
-    protected void insereAtor(Ator ator, boolean principal) {
-        if (principal) {
-            if (ator.getGenero() && this.AtorPrincipal == null) {
-                this.AtorPrincipal = ator;
-                ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator participa
-            } else if (!ator.getGenero() && this.AtrizPrincipal == null) {
-                this.AtrizPrincipal = ator;
-                ator.inserirFilme(this); //insere o filme na lista de filmes em que o atriz participa
-            } else {
-                System.out.println(this.nome + " já tem " + (ator.getGenero() ? " um ator principal!" : " uma atriz principal!"));
-            }
-        } else {
-            if (ator == this.AtorPrincipal || ator == this.AtrizPrincipal) {
-                System.out.println((ator.getGenero() ? "O ator" : "A atriz") + " já está no filme!");
-                return;
-            }
-            for (Ator a : this.atoresSecundarios) {
-                if (ator == a) {
-                    System.out.println((ator.getGenero() ? "O ator" : "A atriz") + " já está no filme!");
-                    return;
-                }
-            }
-            this.atoresSecundarios.add(ator);
-            ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator/atriz participa
-        }
-    }
-
     protected String getNome() {
         return nome;
     }
@@ -90,6 +56,41 @@ public class Filme {
         numeroPremios++;
     }
 
+    /**
+     * Método que insere um ator no filme, se é principal ou secundário depende
+     * da posição
+     *
+     * @param ator - ator que se vai inserir no filme, se possível
+     * @param principal - indica se o ator é suposto ser principal ou secundário
+     * (true - principal, false - secundário)
+     */
+    protected void insereAtor(Ator ator, boolean principal) {
+        if (principal) {
+            if (ator.getGenero() && this.AtorPrincipal == null) {
+                this.AtorPrincipal = ator;
+                ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator participa
+            } else if (!ator.getGenero() && this.AtrizPrincipal == null) {
+                this.AtrizPrincipal = ator;
+                ator.inserirFilme(this); //insere o filme na lista de filmes em que o atriz participa
+            } else {
+                System.out.println(this.nome + " já tem " + (ator.getGenero() ? " um ator principal!" : " uma atriz principal!"));
+            }
+        } else {
+            if (ator == this.AtorPrincipal || ator == this.AtrizPrincipal) { //evita que o ator seja inserido como secundário se já é principal
+                System.out.println((ator.getGenero() ? "O ator" : "A atriz") + " já está no filme!");
+                return;
+            }
+            for (Ator a : this.atoresSecundarios) {
+                if (ator == a) { //verifica se o ator já está na lista de atores secundários
+                    System.out.println((ator.getGenero() ? "O ator" : "A atriz") + " já está no filme!");
+                    return;
+                }
+            }
+            this.atoresSecundarios.add(ator);
+            ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator/atriz participa
+        }
+    }
+
     @Override
     public String toString() {
         String filme;
@@ -113,7 +114,7 @@ public class Filme {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Filme)) {
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
         Filme filme = (Filme) obj;

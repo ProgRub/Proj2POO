@@ -28,17 +28,6 @@ public class Edicao {
         return Edicao;
     }
 
-    protected void inserePerito(Perito perito) {
-        //System.out.println("CHEGOU");
-        this.peritos.add(perito);
-        for (Premio p : this.premios) {
-            //System.out.println("CHEGOU");
-            for (ArrayList<Integer> lista : p.getPontuacoes()) {
-                lista.add(0);
-            }
-        }
-    }
-
     protected ArrayList<Perito> getPeritos() {
         return this.peritos;
     }
@@ -55,36 +44,17 @@ public class Edicao {
         this.premios.add(new Premio("Prémio Carreira"));
     }
 
-    protected void imprimeFilmes() {
-        System.out.println("FILMES:");
-        if (filmes.isEmpty()) {
-            System.out.println("! NÃO HÁ FILMES REGISTADOS !");
-        } else {
-            for (Filme filme : this.filmes) {
-                System.out.println(filme);
-            }
-        }
-    }
-
-    protected void imprimePremios() {
-        int indice = 0;
-        while (indice < premios.size()) {
-            System.out.println(premios.get(indice));
-            indice++;
-        }
-    }
-
     protected void insereFilmes(Filme filme) {
         this.filmes.add(filme);
     }
 
-    protected Filme indexOfByFilmName(String nome) {
-        for (Filme f : this.filmes) {
-            if (nome.equals(f.getNome())) {
-                return f;
+    protected void inserePerito(Perito perito) {
+        this.peritos.add(perito);
+        for (Premio p : this.premios) {
+            for (ArrayList<Integer> lista : p.getPontuacoes()) {
+                lista.add(0);
             }
         }
-        return null;
     }
 
     protected int getNumEdicao() {
@@ -99,6 +69,100 @@ public class Edicao {
         return this.premios;
     }
 
+    protected void imprimeFilmes() {
+        System.out.println("\nEDIÇÃO: " + this.numEdicao);
+        if (filmes.isEmpty()) {
+            System.out.println("! NÃO HÁ FILMES REGISTADOS !");
+        } else {
+            System.out.println("\nFILMES:\n");
+            for (Filme filme : this.filmes) {
+                System.out.println(filme);
+            }
+        }
+    }
+
+    /**
+     * Método que lista os Premios a premiar na edição atual
+     */
+    protected void imprimePremios() {
+        System.out.println("\nCATEGORIAS A PREMIAR:");
+        int indice = 0;
+        while (indice < premios.size()) {
+            System.out.println(premios.get(indice));
+            indice++;
+        }
+    }
+
+    protected void listarFilmesMaisPremiados() {
+        boolean semPremiados = true;
+        System.out.println("\nFILMES MAIS PREMIADOS: ");
+        for (Filme filme : this.filmes) {
+            if (filme.getNumeroPremios() > 0) {
+                System.out.println(filme.getNome() + ": " + filme.getNumeroPremios());
+                semPremiados = false;
+            }
+        }
+        if (semPremiados) {
+            System.out.println("Nenhum filme foi premiado.");
+        }
+    }
+
+    /**
+     * Método que mostra os quatro candidatos ao prémio em cada categoria
+     */
+    protected void listarCandidatos() {
+        int contaPremios = 1;
+        System.out.println("\nCANDIDATOS AOS PRÉMIOS:");
+        for (Premio premio : this.premios) {
+            System.out.println();
+            System.out.println(premio + ":");
+            try {
+                if (contaPremios <= 4) {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.printf("- %s em %s\n", premio.getAtoresCandidatos().get(i).getNome(), premio.getFilmesCandidatos().get(i).getNome());
+                    }
+                } else if (contaPremios > 4 && contaPremios != 6 && contaPremios != 9) {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println("- " + premio.getFilmesCandidatos().get(i).getNome());
+
+                    }
+                } else if (contaPremios == 9) {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println("- " + premio.getAtoresCandidatos().get(i).getNome());
+                    }
+                } else {
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println("- " + premio.getFilmesCandidatos().get(i).getRealizador().getNome());
+                    }
+                }
+            } catch (NullPointerException | IndexOutOfBoundsException e) {
+                System.out.println("- Não tem candidatos.\n");
+            }
+            contaPremios++;
+        }
+    }
+
+    /**
+     * Método que lista os vencedores dos prémios
+     */
+    protected void listarVencedores() {
+        System.out.println("\nVENCEDORES:");
+        for (Premio premio : this.premios) {
+            premio.vencedorCategoria();
+        }
+    }
+
+    /**
+     * Método que, como o nome indica, lista os candidatos de cada prémio pela
+     * ordem da sua pntuação
+     */
+    protected void listarPontuaçõesOrdenadas() {
+        System.out.println("\nPONTUAÇÕES: ");
+        for (Premio premio : this.premios) {
+            premio.imprimePontuações();
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -107,7 +171,7 @@ public class Edicao {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Edicao)) {
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
         Edicao edic = (Edicao) obj;

@@ -9,8 +9,7 @@ public class Premio {
     private final ArrayList<ArrayList<Integer>> pontuacoes;
     private ArrayList<Filme> filmes;
     private ArrayList<Ator> atores;
-    private Filme filmeVencedor;
-    private Ator vencedorCarreira;
+    private Filme vencedor;
 
     protected Premio(String nome) {
         this.nome = nome;
@@ -27,8 +26,7 @@ public class Premio {
         for (int i = 0; i < 4; i++) {
             this.pontuacoes.add(new ArrayList<>(0));
         }
-        this.filmeVencedor = null;
-        this.vencedorCarreira = null;
+        this.vencedor = null;
     }
 
     protected String getNome() {
@@ -60,6 +58,10 @@ public class Premio {
         nomeiaFilme(filme);
     }
 
+    protected void nomeiaAtor(Ator ator) {
+        this.atores.add(ator);
+    }
+
     protected ArrayList<Ator> getAtoresCandidatos() {
         return atores;
     }
@@ -69,7 +71,7 @@ public class Premio {
     }
 
     protected Filme getVencedor() {
-        return filmeVencedor;
+        return vencedor;
     }
 
     @Override
@@ -77,6 +79,11 @@ public class Premio {
         return nome;
     }
 
+    /**
+     * Método que calcula as médias das pontuações atribuídas aos candidatos
+     *
+     * @return o vetor que contém as médias
+     */
     protected double[] mediasPontuações() {
         double[] medias = new double[4]; //guarda medias dos filmes/atores pela ordem
         int tam = pontuacoes.get(0).size();
@@ -85,7 +92,7 @@ public class Premio {
             int numPontuacoes = 0;
             for (int coluna = 0; coluna < tam; coluna++) {
                 somaPontuaçõesCandidato += pontuacoes.get(linha).get(coluna);
-                if (pontuacoes.get(linha).get(coluna) != 0) {
+                if (pontuacoes.get(linha).get(coluna) != 0) { //certificar que foi pontuado
                     numPontuacoes++;
                 }
             }
@@ -95,22 +102,39 @@ public class Premio {
         return medias;
     }
 
-    protected double[] ordenaPontuações(double[] pontuações) {
-        int n = pontuações.length;
+    /**
+     * Método que ordena os candidatos de acordo com as suas médias de
+     * pontuações
+     *
+     * @param mediasPontuacoes
+     * @return
+     */
+    protected double[] ordenaPontuações(double[] mediasPontuacoes) {
+        int n = mediasPontuacoes.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (pontuações[j] <= pontuações[j + 1]) {
-                    swap(pontuações, j, j + 1);
+                if (mediasPontuacoes[j] <= mediasPontuacoes[j + 1]) {
+                    swap(mediasPontuacoes, j, j + 1);
                 }
             }
         }
-        return pontuações;
+        return mediasPontuacoes;
     }
 
-    private void swap(double[] pontuações, int i, int j) {
-        double aux = pontuações[i];
-        pontuações[i] = pontuações[j];
-        pontuações[j] = aux;
+    /**
+     * Este método é um auxiliar aos bubble sort's que usamos, troca toda a
+     * informação do candidato na posição i com a informação do candidato na
+     * posição j
+     *
+     * @param mediasPontuacoes - o vetor que contém as médias das pontuações dos
+     * candidatos
+     * @param i
+     * @param j
+     */
+    private void swap(double[] mediasPontuacoes, int i, int j) {
+        double aux = mediasPontuacoes[i];
+        mediasPontuacoes[i] = mediasPontuacoes[j];
+        mediasPontuacoes[j] = aux;
         Collections.swap(this.pontuacoes, i, j);
         if (this.atores != null) {
             Collections.swap(this.atores, i, j);
@@ -120,6 +144,9 @@ public class Premio {
         }
     }
 
+    /**
+     * Este método imprime as pontuações
+     */
     protected void imprimePontuações() {
         double[] pont = ordenaPontuações(mediasPontuações());
         pont = empateVencedores(pont);
@@ -142,48 +169,60 @@ public class Premio {
         }
     }
 
-    protected void filmeVencedorCategoria() {
+    /**
+     * Este método imprime o vencedor da categoria
+     */
+    protected void vencedorCategoria() {
         this.determinaVencedor();
         System.out.print(nome + ": ");
         try {
             if (atores != null) {
                 if (!this.nome.contains("Carreira")) {
-                    System.out.println(atores.get(0).getNome() + " em " + filmeVencedor.getNome() + "\n");
+                    System.out.println(atores.get(0).getNome() + " em " + vencedor.getNome() + "\n");
                 } else {
                     System.out.println(atores.get(0).getNome() + "\n");
                 }
             } else {
-                System.out.println(filmes.get(0).getNome() + "\n");
+                System.out.println(vencedor.getNome() + "\n");
             }
         } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Ainda sem vencedor.\n");
         }
     }
 
+    /**
+     * Este método guarda em vencedor o filme que tem o candidato que ganhou o
+     * prémio
+     */
     protected void determinaVencedor() {
         double[] pont = ordenaPontuações(mediasPontuações());
         pont = empateVencedores(pont);
         if (!Double.isNaN(pont[0])) {
             if (filmes != null) {
-                this.filmeVencedor = filmes.get(0);
-                this.filmeVencedor.incrementaNumeroPremios();
-            } else {
-                this.vencedorCarreira = atores.get(0);
+                this.vencedor = filmes.get(0);
+                this.vencedor.incrementaNumeroPremios();
             }
         }
     }
 
+    /**
+     * Verifica se houve empates entre os candidatos, o desempate será feito
+     * calculando os desvios padrões
+     *
+     * @param mediasPontuacoes
+     * @return o vetor das medias pontuacoes, para guardar as modificações
+     */
     private double[] empateVencedores(double[] mediasPontuacoes) {
-        if (mediasPontuacoes[0] == mediasPontuacoes[1]) {
+        if (mediasPontuacoes[0] == mediasPontuacoes[1]) { //verifica se há empate para primeiro
             double[] desviosPadrao = new double[4];
             desviosPadrao[0] = desvioPadrao(mediasPontuacoes, 0);
             desviosPadrao[1] = desvioPadrao(mediasPontuacoes, 1);
             desviosPadrao[2] = 0;
             desviosPadrao[3] = 0;
-            if (mediasPontuacoes[2] == mediasPontuacoes[0]) {
+            if (mediasPontuacoes[2] == mediasPontuacoes[0]) { //verifica se há empate para primeiro entre 3 candidatos
                 desviosPadrao[2] = desvioPadrao(mediasPontuacoes, 2);
             }
-            if (mediasPontuacoes[3] == mediasPontuacoes[0]) {
+            if (mediasPontuacoes[3] == mediasPontuacoes[0]) { //verifica se todos os candidatos estão empatados
                 desviosPadrao[3] = desvioPadrao(mediasPontuacoes, 3);
             }
             for (int i = 0; i < desviosPadrao.length; i++) {
@@ -197,9 +236,19 @@ public class Premio {
         return mediasPontuacoes;
     }
 
+    /**
+     * Este método vai calcular o desvio padrão das pontuações atribuídas ao
+     * candidato especificado por posCandidato
+     *
+     * @param mediasPontuacoes - o vetor que contém as médias das pontuações dos
+     * candidatos
+     * @param posCandidato - a posição do candidato do qual calcular o desvio
+     * padrão
+     * @return o valor de desvio padrão
+     */
     private double desvioPadrao(double[] mediasPontuacoes, int posCandidato) {
         double soma = 0;
-        int tam = pontuacoes.get(0).size();
+        int tam = pontuacoes.get(posCandidato).size();
         for (int i = 0; i < tam; i++) {
             soma += Math.pow((double) pontuacoes.get(posCandidato).get(i) - mediasPontuacoes[posCandidato], 2);
         }
@@ -214,10 +263,10 @@ public class Premio {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Premio)) {
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
         Premio pre = (Premio) obj;
-        return this.nome.equalsIgnoreCase(pre.nome) && this.filmeVencedor.equals(pre.filmeVencedor) && this.filmes.equals(pre.filmes) && this.atores.equals(pre.atores) && this.pontuacoes == pre.pontuacoes;
+        return this.nome.equalsIgnoreCase(pre.nome) && this.vencedor.equals(pre.vencedor) && this.filmes.equals(pre.filmes) && this.atores.equals(pre.atores) && this.pontuacoes == pre.pontuacoes;
     }
 }

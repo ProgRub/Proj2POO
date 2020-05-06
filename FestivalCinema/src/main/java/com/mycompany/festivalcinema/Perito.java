@@ -53,7 +53,7 @@ public class Perito extends Pessoa {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Perito)) {
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
         Perito perito = (Perito) obj;

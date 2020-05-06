@@ -19,7 +19,7 @@ public class Realizador extends Pessoa {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Realizador)) {
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
         Realizador reali = (Realizador) obj;

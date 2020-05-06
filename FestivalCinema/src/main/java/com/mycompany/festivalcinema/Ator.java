@@ -77,7 +77,7 @@ public class Ator extends Pessoa {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Ator)) {
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
         Ator comparar = (Ator) obj;
