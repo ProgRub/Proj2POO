@@ -83,6 +83,9 @@ public class FestivalCinema {
                             carregaPeritos();
                             carregaCandidatos();
                             carregaPontuacoes();
+                            for (Premio p: edicoes.get(indexEdicoes).getPremios()){
+                                p.determinaVencedor();
+                            }
                             break;
                         default:
                             quebra = false;
@@ -805,7 +808,7 @@ public class FestivalCinema {
                         break;
                     case "Atores Secundarios:":
                         while (true) {
-                            nomeAtor = lerDados.readLine().trim();
+                            nomeAtor = lerDados.readLine();
                             if (nomeAtor != null && !nomeAtor.equals("--------------------------------")) {
                                 generoAtor = lerDados.readLine().trim().equals("M");
                                 anosCarreiraAtor = Integer.parseInt(lerDados.readLine().trim());
@@ -829,7 +832,7 @@ public class FestivalCinema {
                     default:
                         break;
                 }
-                line = lerDados.readLine().trim();
+                line = lerDados.readLine();
             }
             lerDados.close();
         } catch (IOException ioe) {
@@ -849,14 +852,14 @@ public class FestivalCinema {
             BufferedReader lerDados = new BufferedReader(inStream);
             line = lerDados.readLine().trim();
             while (line != null) {
-                nomeFilme = line;
+                nomeFilme = line.trim();
                 generoFilme = lerDados.readLine().trim();
                 nomeRealizador = lerDados.readLine().trim();
                 generoRealizador = lerDados.readLine().trim().equals("M");
                 Realizador realizador = new Realizador(nomeRealizador, generoRealizador);
                 Filme filme = new Filme(nomeFilme, generoFilme, numEdicao, realizador);
                 edicoes.get(indexEdicoes).insereFilmes(filme);
-                line = lerDados.readLine().trim();
+                line = lerDados.readLine();
             }
             lerDados.close();
         } catch (IOException ioe) {
@@ -877,7 +880,7 @@ public class FestivalCinema {
                 generoPerito = lerDados.readLine().trim().equals("M");
                 Perito perito = new Perito(nomePerito, generoPerito);
                 edicoes.get(indexEdicoes).inserePerito(perito);
-                line = lerDados.readLine().trim();
+                line = lerDados.readLine();
             }
             lerDados.close();
         } catch (IOException ioe) {
@@ -928,7 +931,7 @@ public class FestivalCinema {
                     }
                 }
                 indexPremios++;
-                line = lerDados.readLine().trim();
+                line = lerDados.readLine();
             }
             lerDados.close();
         } catch (IOException ioe) {
@@ -967,7 +970,7 @@ public class FestivalCinema {
                     i = 0;
                     j = 0;
                 }
-                line = lerDados.readLine().trim();
+                line = lerDados.readLine();
             }
             lerDados.close();
         } catch (IOException ioe) {
