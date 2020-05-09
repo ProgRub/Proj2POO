@@ -173,7 +173,7 @@ public class Premio {
      * Este método imprime o vencedor da categoria
      */
     protected void vencedorCategoria() {
-        this.determinaVencedor();
+        determinaVencedor();
         System.out.print(nome + ": ");
         try {
             if (atores != null) {
