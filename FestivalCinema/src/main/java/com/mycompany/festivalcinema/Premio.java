@@ -109,7 +109,7 @@ public class Premio {
      * @param mediasPontuacoes
      * @return
      */
-    protected double[] ordenaPontuações(double[] mediasPontuacoes) {
+    protected double[] ordenaPontuações(double[] mediasPontuacoes) throws IndexOutOfBoundsException{
         int n = mediasPontuacoes.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -131,7 +131,7 @@ public class Premio {
      * @param i
      * @param j
      */
-    private void swap(double[] mediasPontuacoes, int i, int j) {
+    private void swap(double[] mediasPontuacoes, int i, int j) throws IndexOutOfBoundsException{
         double aux = mediasPontuacoes[i];
         mediasPontuacoes[i] = mediasPontuacoes[j];
         mediasPontuacoes[j] = aux;
@@ -148,10 +148,10 @@ public class Premio {
      * Este método imprime as pontuações
      */
     protected void imprimePontuações() {
-        double[] pont = ordenaPontuações(mediasPontuações());
-        pont = empateVencedores(pont);
         System.out.println("\n- " + nome + ": ");
         try {
+        double[] pont = ordenaPontuações(mediasPontuações());
+        pont = empateVencedores(pont);
             if (!Double.isNaN(pont[0])) {
                 for (int i = 0; i < pont.length; ++i) {
                     if (atores != null) {                     //se o prémio for para um ator/atriz
@@ -165,7 +165,7 @@ public class Premio {
                 System.out.println("Pontuações não atribuídas");
             }
         } catch (NullPointerException | IndexOutOfBoundsException e) {
-            System.out.println("Ainda sem vencedor.\n");
+            System.out.println("Não tem candidatos.\n");
         }
     }
 
@@ -195,6 +195,7 @@ public class Premio {
      * prémio
      */
     protected void determinaVencedor() {
+        if ((atores != null && atores.size() > 0) || (filmes != null && filmes.size() > 0)){
         double[] pont = ordenaPontuações(mediasPontuações());
         pont = empateVencedores(pont);
         if (!Double.isNaN(pont[0])) {
@@ -203,6 +204,7 @@ public class Premio {
                 this.vencedor.incrementaNumeroPremios();
             }
         }
+    }
     }
 
     /**

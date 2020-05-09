@@ -882,17 +882,20 @@ public class FestivalCinema {
         String nomeAtor;
         String filme;
         Premio premio;
+        boolean vazio;
         int indexPremios = 0;
         FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroCandidatos);
         BufferedReader lerDados = new BufferedReader(inStream);
         String line;
         line = lerDados.readLine().trim();
         while (line != null) {
+            vazio = false;
             premio = edicoes.get(indexEdicoes).getPremios().get(indexPremios);
             if (indexPremios < 4) {
                 while (premio.getAtoresCandidatos().size() < 4) {
                     nomeAtor = lerDados.readLine();
-                    if (nomeAtor == null || nomeAtor.equals("--------------------------------")) {
+                    if (nomeAtor == null || nomeAtor.contains("----------")) {
+                        vazio = true;
                         break;
                     }
                     nomeAtor = nomeAtor.trim();
@@ -907,7 +910,8 @@ public class FestivalCinema {
             } else if (indexPremios > 3 && indexPremios < 8) {
                 while (premio.getFilmesCandidatos().size() < 4) {
                     filme = lerDados.readLine();
-                    if (filme == null || filme.equals("--------------------------------")) {
+                    if (filme == null || filme.contains("--------")) {
+                        vazio = true;
                         break;
                     }
                     filme = filme.trim();
@@ -921,7 +925,8 @@ public class FestivalCinema {
             } else if (indexPremios == 8) {
                 while (premio.getAtoresCandidatos().size() < 4) {
                     nomeAtor = lerDados.readLine().trim();
-                    if (nomeAtor == null || nomeAtor.equals("--------------------------------")) {
+                    if (nomeAtor == null || nomeAtor.contains("--------")) {
+                        vazio = true;
                         break;
                     }
                     nomeAtor = nomeAtor.trim();
@@ -934,7 +939,9 @@ public class FestivalCinema {
                 }
             }
             indexPremios++;
-            line = lerDados.readLine();
+            if(!vazio){
+                line = lerDados.readLine();
+            }
         }
         lerDados.close();
     }
