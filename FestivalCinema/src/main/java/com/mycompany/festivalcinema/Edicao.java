@@ -69,6 +69,9 @@ public class Edicao {
         return this.premios;
     }
 
+    /**
+     * Método que lista todos os filmes da edição
+     */
     protected void imprimeFilmes() {
         System.out.println("\nEDIÇÃO: " + this.numEdicao);
         if (filmes.isEmpty()) {
@@ -92,7 +95,10 @@ public class Edicao {
             indice++;
         }
     }
-
+    
+    /**
+     * Método que lista os filmes com pelo menos um prémio
+     */
     protected void listarFilmesMaisPremiados() {
         boolean semPremiados = true;
         System.out.println("\nFILMES MAIS PREMIADOS: ");

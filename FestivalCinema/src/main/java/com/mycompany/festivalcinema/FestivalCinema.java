@@ -691,6 +691,9 @@ public class FestivalCinema {
         return num;
     }
 
+    /**
+     * Método responsável pelo menu de inicio após a criação de uma edição
+     */
     private void novoOuCarregar() {
         while (!quebra) {
             System.out.print("(n): Começar um novo programa\n(c): Carregar dados\nOpção: ");
@@ -753,6 +756,9 @@ public class FestivalCinema {
     }
 
     //-------------------------------------------------------------------------------------------
+    /**
+     * Método que permite carregar os atores de um ficheiro
+     */
     private void carregaAtores() throws IOException {
         Ator ator;
         String nomeAtor;
@@ -837,6 +843,9 @@ public class FestivalCinema {
         lerDados.close();
     }
 
+    /**
+     * Método que permite carregar os filmes de um ficheiro
+     */
     private void carregaFilmes() throws IOException {
         String nomeFilme;
         String generoFilme;
@@ -860,6 +869,9 @@ public class FestivalCinema {
 
     }
 
+    /**
+     * Método que permite carregar os peritos de um ficheiro
+     */
     private void carregaPeritos() throws IOException {
         String nomePerito;
         boolean generoPerito;
@@ -878,6 +890,9 @@ public class FestivalCinema {
 
     }
 
+    /**
+     * Método que permite carregar os candidatos de um ficheiro
+     */
     private void carregaCandidatos() throws IOException {
         String nomeAtor;
         String filme;
@@ -945,7 +960,10 @@ public class FestivalCinema {
         }
         lerDados.close();
     }
-
+    
+    /**
+     * Método que permite carregar as pontuações de um ficheiro
+     */
     private void carregaPontuacoes() throws IOException {
         int i = 0;
         int j = 0;
@@ -980,6 +998,9 @@ public class FestivalCinema {
         lerDados.close();
     }
 
+    /**
+     * Método que permite gravar os atores num ficheiro
+     */
     private void gravaAtores() throws IOException {
         String tracinhos = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroAtores);
@@ -1006,6 +1027,9 @@ public class FestivalCinema {
         }
     }
 
+    /**
+     * Método que permite gravar os filmes num ficheiro
+     */
     private void gravaFilmes() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroFilmes);
         BufferedWriter bW = new BufferedWriter(outStream);
@@ -1017,6 +1041,9 @@ public class FestivalCinema {
         }
     }
 
+    /**
+     * Método que permite gravar os candidatos num ficheiro
+     */
     private void gravaCandidatos() throws IOException {
         String tracinhos = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroCandidatos);
@@ -1048,6 +1075,9 @@ public class FestivalCinema {
         }
     }
 
+    /**
+     * Método que permite gravar os peritos num ficheiro
+     */
     private void gravaPeritos() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroPeritos);
         BufferedWriter bW = new BufferedWriter(outStream);
@@ -1059,6 +1089,9 @@ public class FestivalCinema {
         }
     }
 
+    /**
+     * Método que permite gravar as pontuações num ficheiro
+     */
     private void gravaPontuações() throws IOException {
         String tracinhos = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroPontuacoes);
@@ -1076,7 +1109,10 @@ public class FestivalCinema {
             out.close();
         }
     }
-
+    
+    /**
+     * Método responsavel pela limpeza da consola
+     */
     private void limparConsola() {
         try {
             Robot limpa = new Robot();
