@@ -54,6 +54,7 @@ public class FestivalCinema {
                     edicoes.add(new Edicao(numEdicao, ano));
                     System.out.print("\nOpções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Peritos\n(t): Carregar Tudo\nOpção: ");
                     opcao = scan.nextLine().trim();
+                    try{
                     switch (opcao.toLowerCase()) {
                         case "a":
                             carregaFilmes();
@@ -82,6 +83,9 @@ public class FestivalCinema {
                             edicoes.remove(edicoes.indexOf(edicoes.size()-1));
                             System.out.println("\nPor favor selecione uma das opções disponíveis.");
                     }
+                    }catch(IOException e){
+                        System.out.println("\nErro ao carregar os dados.");
+                    }
                     break;
                 case "n":
                     numEdicao++;
@@ -99,7 +103,6 @@ public class FestivalCinema {
 
     public void menu() {
         System.out.println("\t\t\tFESTIVAL CINEMA");
-        String aux;
         System.out.print("\nIndique o ano da edição do festival: ");
         ano = recebeInteiro();
         novoOuCarregar();
@@ -757,7 +760,7 @@ public class FestivalCinema {
     }
 
     //-------------------------------------------------------------------------------------------
-    private void carregaAtores() {
+    private void carregaAtores() throws IOException{
         Ator ator;
         String nomeAtor;
         boolean generoAtor;
@@ -765,7 +768,6 @@ public class FestivalCinema {
         boolean cria;
         String line;
         int indexFilmes = 0;
-        try {
             FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroAtores);
             BufferedReader lerDados = new BufferedReader(inStream);
             line = lerDados.readLine().trim();
@@ -836,19 +838,15 @@ public class FestivalCinema {
                 line = lerDados.readLine();
             }
             lerDados.close();
-        } catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro");
-        }
     }
 
-    private void carregaFilmes() {
+    private void carregaFilmes() throws IOException{
         String nomeFilme;
         String generoFilme;
         String nomeRealizador;
         boolean generoRealizador;
         String line;
         int i = 0;
-        try {
             FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroFilmes);
             BufferedReader lerDados = new BufferedReader(inStream);
             line = lerDados.readLine().trim();
@@ -863,15 +861,12 @@ public class FestivalCinema {
                 line = lerDados.readLine();
             }
             lerDados.close();
-        } catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro");
-        }
+        
     }
 
-    private void carregaPeritos() {
+    private void carregaPeritos() throws IOException{
         String nomePerito;
         boolean generoPerito;
-        try {
             FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroPeritos);
             BufferedReader lerDados = new BufferedReader(inStream);
             String line;
@@ -884,18 +879,14 @@ public class FestivalCinema {
                 line = lerDados.readLine();
             }
             lerDados.close();
-        } catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro");
-        }
 
     }
 
-    private void carregaCandidatos() {
+    private void carregaCandidatos() throws IOException{
         String nomeAtor;
         String filme;
         Premio premio;
         int indexPremios = 0;
-        try {
             FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroCandidatos);
             BufferedReader lerDados = new BufferedReader(inStream);
             String line;
@@ -935,19 +926,14 @@ public class FestivalCinema {
                 line = lerDados.readLine();
             }
             lerDados.close();
-        } catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro");
-
-        }
     }
 
-    private void carregaPontuacoes() {
+    private void carregaPontuacoes() throws IOException{
         int i = 0;
         int j = 0;
         String pontos = "";
         int indexPremios = -1;
         String tracinhos = "--------------------------------";
-        try {
             FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroPontuacoes);
             BufferedReader lerDados = new BufferedReader(inStream);
             String line;
@@ -974,9 +960,6 @@ public class FestivalCinema {
                 line = lerDados.readLine();
             }
             lerDados.close();
-        } catch (IOException ioe) {
-            System.out.println("Ocorreu um Erro");
-        }
     }
 
     private void gravaAtores() throws IOException {
