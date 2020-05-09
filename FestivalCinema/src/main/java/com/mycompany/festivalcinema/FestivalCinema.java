@@ -771,35 +771,39 @@ public class FestivalCinema {
                     nomeAtor = lerDados.readLine().trim();
                     generoAtor = lerDados.readLine().trim().equals("M");
                     anosCarreiraAtor = Integer.parseInt(lerDados.readLine().trim());
-                    ator = new Ator(nomeAtor, generoAtor, anosCarreiraAtor);
-                    for (Ator a : this.atores) {
-                        if (ator.equals(a)) {
-                            ator = a;
-                            cria = false;
-                            break;
+                    if (!nomeAtor.equals("VAZIO")) {
+                        ator = new Ator(nomeAtor, generoAtor, anosCarreiraAtor);
+                        for (Ator a : this.atores) {
+                            if (ator.equals(a)) {
+                                ator = a;
+                                cria = false;
+                                break;
+                            }
                         }
+                        if (cria) {
+                            atores.add(ator);
+                        }
+                        edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, true);
                     }
-                    if (cria) {
-                        atores.add(ator);
-                    }
-                    edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, true);
                     break;
                 case "Atriz principal:":
                     nomeAtor = lerDados.readLine().trim();
                     generoAtor = lerDados.readLine().trim().equals("M");
                     anosCarreiraAtor = Integer.parseInt(lerDados.readLine().trim());
-                    ator = new Ator(nomeAtor, generoAtor, anosCarreiraAtor);
-                    for (Ator a : this.atores) {
-                        if (ator.equals(a)) {
-                            ator = a;
-                            cria = false;
-                            break;
+                    if (!nomeAtor.equals("VAZIO")) {
+                        ator = new Ator(nomeAtor, generoAtor, anosCarreiraAtor);
+                        for (Ator a : this.atores) {
+                            if (ator.equals(a)) {
+                                ator = a;
+                                cria = false;
+                                break;
+                            }
                         }
+                        if (cria) {
+                            atores.add(ator);
+                        }
+                        edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, true);
                     }
-                    if (cria) {
-                        atores.add(ator);
-                    }
-                    edicoes.get(indexEdicoes).getFilmes().get(indexFilmes).insereAtor(ator, true);
                     break;
                 case "Atores Secundarios:":
                     while (true) {
@@ -976,8 +980,16 @@ public class FestivalCinema {
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                 out.println(tracinhos);
-                out.printf("Ator principal:\n%s\nM\n%d\n", filme.getAtorPrincipal().getNome(), filme.getAtorPrincipal().getAnosCarreira());
-                out.printf("Atriz principal:\n%s\nF\n%d\n", filme.getAtrizPrincipal().getNome(), filme.getAtrizPrincipal().getAnosCarreira());
+                if (filme.getAtorPrincipal() != null) {
+                    out.printf("Ator principal:\n%s\nM\n%d\n", filme.getAtorPrincipal().getNome(), filme.getAtorPrincipal().getAnosCarreira());
+                } else {
+                    out.println("Ator principal:\nVAZIO\nVAZIO\n0");
+                }
+                if (filme.getAtrizPrincipal() != null) {
+                    out.printf("Atriz principal:\n%s\nF\n%d\n", filme.getAtrizPrincipal().getNome(), filme.getAtrizPrincipal().getAnosCarreira());
+                } else {
+                    out.println("Atriz principal:\nVAZIO\nVAZIO\n0");
+                }
                 out.println("Atores Secundarios:");
                 for (Ator atorSec : filme.getAtoresSecundarios()) {
                     out.printf("%s\n%s\n%d\n", atorSec.getNome(), (atorSec.getGenero() ? "M" : "F"), atorSec.getAnosCarreira());
