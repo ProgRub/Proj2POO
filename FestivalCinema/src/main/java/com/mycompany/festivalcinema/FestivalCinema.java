@@ -954,7 +954,7 @@ public class FestivalCinema {
                 }
             }
             indexPremios++;
-            if(!vazio){
+            if (!vazio) {
                 line = lerDados.readLine();
             }
         }

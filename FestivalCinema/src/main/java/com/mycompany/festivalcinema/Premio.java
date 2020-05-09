@@ -15,9 +15,13 @@ public class Premio {
         this.nome = nome;
         this.filmes = new ArrayList<>(0);
         this.atores = new ArrayList<>(0);
+        //se o prémio for relacionado exclusivamente com filme (Melhor filme, melhor realizador, etc.)
+        //pomos a lista dos atores a nula por questões de memória e tratamento de exceções
         if (!(nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira"))) {
             this.atores = null;
         }
+        //se o prémio tem no nome "Carreira" (indica que é o prémio carreira)
+        //pomos a lista dos filmes  a nula por questões de memória e tratamento de exceções
         if (nome.contains("Carreira")) {
             this.filmes = null;
         }
@@ -86,13 +90,13 @@ public class Premio {
      */
     protected double[] mediasPontuações() {
         double[] medias = new double[4]; //guarda medias dos filmes/atores pela ordem
-        int tam = pontuacoes.get(0).size();
+        int tam = pontuacoes.get(0).size(); //vê quantas possíveis pontuações foram atribuídas ao candidato
         for (int linha = 0; linha < 4; linha++) {
             double somaPontuaçõesCandidato = 0;
             int numPontuacoes = 0;
             for (int coluna = 0; coluna < tam; coluna++) {
                 somaPontuaçõesCandidato += pontuacoes.get(linha).get(coluna);
-                if (pontuacoes.get(linha).get(coluna) != 0) { //certificar que foi pontuado
+                if (pontuacoes.get(linha).get(coluna) != 0) { //certificar que foi pontuado (se é 0 significa que não foi pontuado
                     numPontuacoes++;
                 }
             }
@@ -103,13 +107,13 @@ public class Premio {
     }
 
     /**
-     * Método que ordena os candidatos de acordo com as suas médias de
-     * pontuações
      *
-     * @param mediasPontuacoes
-     * @return
+     * @param mediasPontuacoes - vetor a ordenar
+     * @return vetor ordenado
+     * @throws IndexOutOfBoundsException - se não houver candidatos atira esta
+     * exceção tratado noutro lugar
      */
-    protected double[] ordenaPontuações(double[] mediasPontuacoes) throws IndexOutOfBoundsException{
+    protected double[] ordenaPontuações(double[] mediasPontuacoes) throws IndexOutOfBoundsException {
         int n = mediasPontuacoes.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -131,7 +135,7 @@ public class Premio {
      * @param i
      * @param j
      */
-    private void swap(double[] mediasPontuacoes, int i, int j) throws IndexOutOfBoundsException{
+    private void swap(double[] mediasPontuacoes, int i, int j) throws IndexOutOfBoundsException {
         double aux = mediasPontuacoes[i];
         mediasPontuacoes[i] = mediasPontuacoes[j];
         mediasPontuacoes[j] = aux;
@@ -145,18 +149,19 @@ public class Premio {
     }
 
     /**
-     * Este método imprime as pontuações
+     * Este método imprime as pontuações e indica se ainda não foram atribuídas
+     * as pontuações aos candidatos ou se o prémio não tem candidatos
      */
     protected void imprimePontuações() {
         System.out.println("\n- " + nome + ": ");
         try {
-        double[] pont = ordenaPontuações(mediasPontuações());
-        pont = empateVencedores(pont);
+            double[] pont = ordenaPontuações(mediasPontuações()); //se não houver candidatos, é atirada a IndexOutOfBoundsException e apanhada aqui
+            pont = empateVencedores(pont);
             if (!Double.isNaN(pont[0])) {
                 for (int i = 0; i < pont.length; ++i) {
-                    if (atores != null) {                     //se o prémio for para um ator/atriz
+                    if (atores != null) {   //se o prémio for para um ator/atriz
                         System.out.print(atores.get(i).getNome() + ": ");
-                    } else {                                                    //se o prémio for para um filme
+                    } else {  //se o prémio for para um filme
                         System.out.print(filmes.get(i).getNome() + ": ");
                     }
                     System.out.printf("%.2f\n", pont[i]); //imprime pontuação
@@ -165,12 +170,14 @@ public class Premio {
                 System.out.println("Pontuações não atribuídas");
             }
         } catch (NullPointerException | IndexOutOfBoundsException e) {
-            System.out.println("Não tem candidatos.\n");
+            System.out.println("Não tem candidatos.");
         }
     }
 
     /**
-     * Este método imprime o vencedor da categoria
+     * Este método imprime o vencedor da categoria e indica ao utilizador se
+     * ainda não é possível determinar um vencedor (ou não há candidatos ou as
+     * pontuações ainda não foram atribuídas)
      */
     protected void vencedorCategoria() {
         determinaVencedor();
@@ -195,16 +202,16 @@ public class Premio {
      * prémio
      */
     protected void determinaVencedor() {
-        if ((atores != null && atores.size() > 0) || (filmes != null && filmes.size() > 0)){
-        double[] pont = ordenaPontuações(mediasPontuações());
-        pont = empateVencedores(pont);
-        if (!Double.isNaN(pont[0])) {
-            if (filmes != null) {
-                this.vencedor = filmes.get(0);
-                this.vencedor.incrementaNumeroPremios();
+        if ((atores != null && atores.size() > 0) || (filmes != null && filmes.size() > 0)) {
+            double[] pont = ordenaPontuações(mediasPontuações());
+            pont = empateVencedores(pont);
+            if (!Double.isNaN(pont[0])) {
+                if (filmes != null) {
+                    this.vencedor = filmes.get(0);
+                    this.vencedor.incrementaNumeroPremios();
+                }
             }
         }
-    }
     }
 
     /**
