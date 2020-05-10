@@ -399,17 +399,21 @@ public class FestivalCinema {
         if (p.getFilmesCandidatos().size() != 4) {
             ArrayList<Filme> possiveisCandidatos = new ArrayList<>();
             int i = 1;
+            int contaCandidatosPossiveis = 0;
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                 System.out.printf("%d. %s\n", i, filme.getNome()); //mostra nome do realizador do filme
+                if (!possiveisCandidatos.contains(filme)) {
+                    contaCandidatosPossiveis++;
+                }
                 possiveisCandidatos.add(filme);
+                
                 i++;
             }
-            int indiceCandidato;
-
-            if (i < 5) {
+            if (contaCandidatosPossiveis < 4) {
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
+            int indiceCandidato;
             while (p.getFilmesCandidatos().size() < 4) { //Obriga o utilizador a escolher os 4 candidatos de uma só vez            
                 System.out.print("Indique o filme candidato: ");
                 String nome = scan.nextLine().trim();
@@ -437,18 +441,22 @@ public class FestivalCinema {
             ArrayList<Realizador> possiveisCandidatos = new ArrayList<>();
             ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>();
             int i = 1;
+            int contaCandidatosPossiveis = 0;
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                 System.out.printf("%d. %s por %s\n", i, filme.getRealizador().getNome(), filme.getNome()); //mostra nome do realizador do filme
+                if (!possiveisCandidatos.contains(filme.getRealizador())) {
+                    contaCandidatosPossiveis++;
+                }
                 possiveisCandidatos.add(filme.getRealizador());
                 filmesPossiveisCandidatos.add(filme);
                 i++;
             }
-            int indiceCandidato;
-            int indiceFilmeCandidato;
-            if (i < 5) {
+            if (contaCandidatosPossiveis < 4) {
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
+            int indiceCandidato;
+            int indiceFilmeCandidato;
             while (p.getFilmesCandidatos().size() < 4) { //Obriga o utilizador a escolher os 4 candidatos de uma só vez
                 System.out.print("Indique o nome do realizador nomeado: ");
                 String nome = scan.nextLine().trim();
@@ -496,12 +504,17 @@ public class FestivalCinema {
             ArrayList<Ator> possiveisCandidatos = new ArrayList<>();
             ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>();
             int i = 1;
+            int contaCandidatosPossiveis = 0;
             if (homem) {
                 for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                     if (filme.getAtorPrincipal() != null) {
                         System.out.printf("%d. %s por %s\n", i, filme.getAtorPrincipal().getNome(), filme.getNome());
+                        if (!possiveisCandidatos.contains(filme.getAtorPrincipal())) {
+                            contaCandidatosPossiveis++;
+                        }
                         possiveisCandidatos.add(filme.getAtorPrincipal());
                         filmesPossiveisCandidatos.add(filme);
+                        
                         i++;
                     }
                 }
@@ -509,18 +522,22 @@ public class FestivalCinema {
                 for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                     if (filme.getAtrizPrincipal() != null) {
                         System.out.printf("%d. %s por %s\n", i, filme.getAtrizPrincipal().getNome(), filme.getNome());
+                        if (!possiveisCandidatos.contains(filme.getAtrizPrincipal())) {
+                            contaCandidatosPossiveis++;
+                        }
                         possiveisCandidatos.add(filme.getAtrizPrincipal());
                         filmesPossiveisCandidatos.add(filme);
+                        
                         i++;
                     }
                 }
             }
-            int indiceCandidato;
-            int indiceFilmeCandidato;
-            if (i < 5) {
+            if (contaCandidatosPossiveis < 4) {
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
+            int indiceCandidato;
+            int indiceFilmeCandidato;
             while (p.getAtoresCandidatos().size() < 4) { //Obriga o utilizador a escolher os 4 candidatos de uma só vez
                 System.out.printf("Indique o nome do %s candidato: ", (homem ? "ator" : "atriz"));
                 String nome = scan.nextLine().trim();
@@ -579,22 +596,26 @@ public class FestivalCinema {
             ArrayList<Ator> possiveisCandidatos = new ArrayList<>();
             ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>();
             int i = 1;
+            int contaCandidatosPossiveis = 0;
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                 for (Ator a : filme.getAtoresSecundarios()) {
                     if (a.getGenero() == homem) {
                         System.out.printf("%d. %s em %s\n", i, a.getNome(), filme.getNome());
                         possiveisCandidatos.add(a);
                         filmesPossiveisCandidatos.add(filme);
+                        if (!possiveisCandidatos.contains(a)) {
+                            contaCandidatosPossiveis++;
+                        }
                         i++;
                     }
                 }
             }
-            int indiceCandidato;
-            int indiceFilmeCandidato;
-            if (i < 5) {
+            if (contaCandidatosPossiveis < 4) {
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
+            int indiceCandidato;
+            int indiceFilmeCandidato;
             while (p.getAtoresCandidatos().size() < 4) {  //Obriga o utilizador a escolher os 4 candidatos de uma só vez
                 System.out.println("Indique o nome " + (homem ? " do ator candidato: " : "da atriz candidata: "));
                 String nome = scan.nextLine().trim();
@@ -647,7 +668,6 @@ public class FestivalCinema {
                 }
             }
             int indiceCandidato;
-
             if (i < 5) {
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
@@ -1079,7 +1099,7 @@ public class FestivalCinema {
         String tracinhos = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroAtores);
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                 out.println(tracinhos);
                 if (filme.getAtorPrincipal() != null) {
@@ -1107,7 +1127,7 @@ public class FestivalCinema {
     private void gravaFilmes() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroFilmes);
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(indexEdicoes).getFilmes()) {
                 out.printf("%s\n%s\n%s\n%s\n", filme.getNome(), filme.getGenero(), filme.getRealizador().getNome(), (filme.getRealizador().getGenero() ? "M" : "F"));
             }
@@ -1123,7 +1143,7 @@ public class FestivalCinema {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroCandidatos);
         BufferedWriter bW = new BufferedWriter(outStream);
         int indexPremio = -1;
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
                 out.println(tracinhos);
                 indexPremio++;
@@ -1155,7 +1175,7 @@ public class FestivalCinema {
     private void gravaPeritos() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroPeritos);
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Perito perito : edicoes.get(indexEdicoes).getPeritos()) {
                 out.printf("%s\n%s\n", perito.getNome(), (perito.getGenero() ? "M" : "F"));
             }
@@ -1170,7 +1190,7 @@ public class FestivalCinema {
         String tracinhos = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroPontuacoes);
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Premio premio : edicoes.get(indexEdicoes).getPremios()) {
                 out.println(tracinhos);
                 for (int linha = 0; linha < premio.getPontuacoes().size(); linha++) {
