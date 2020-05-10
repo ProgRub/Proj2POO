@@ -62,9 +62,13 @@ public class Ator extends Pessoa {
     public String toString() {
         String ator = super.toString();
         ator += "Anos de Carreira: " + anosCarreira + "\n";
-        ator += "Filmes em que participa: \n";
-        for (Filme f : this.filmesParticipa) {
-            ator += f.getNome() + "\n";
+        if (this.numFilmesTotal != 0) {
+            ator += "Filmes em que participa: \n";
+            for (Filme f : this.filmesParticipa) {
+                ator += f.getNome() + "\n";
+            }
+        } else {
+            ator += "Não participa em nenhum filme desta edição.";
         }
         return ator;
     }

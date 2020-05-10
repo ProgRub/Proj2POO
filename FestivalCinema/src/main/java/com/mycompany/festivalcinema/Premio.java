@@ -190,7 +190,11 @@ public class Premio {
                     System.out.println(atores.get(0).getNome() + "\n");
                 }
             } else {
-                System.out.println(vencedor.getNome() + "\n");
+                if (this.nome.contains("Realizador")) {
+                    System.out.println(vencedor.getRealizador().getNome() + " por " + vencedor.getNome() + "\n");
+                } else {
+                    System.out.println(vencedor.getNome() + "\n");
+                }
             }
         } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Ainda sem vencedor.\n");
