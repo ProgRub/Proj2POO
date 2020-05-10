@@ -206,7 +206,7 @@ public class Premio {
             double[] pont = ordenaPontuações(mediasPontuações());
             pont = empateVencedores(pont);
             if (!Double.isNaN(pont[0])) {
-                if (filmes != null) {
+                if (filmes != null && vencedor == null) {
                     this.vencedor = filmes.get(0);
                     this.vencedor.incrementaNumeroPremios();
                 }

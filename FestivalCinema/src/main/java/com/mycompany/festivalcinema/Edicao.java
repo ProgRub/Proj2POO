@@ -160,7 +160,7 @@ public class Edicao {
 
     /**
      * Método que, como o nome indica, lista os candidatos de cada prémio pela
-     * ordem da sua pntuação
+     * ordem da sua pontuação
      */
     protected void listarPontuaçõesOrdenadas() {
         System.out.println("\nPONTUAÇÕES: ");
