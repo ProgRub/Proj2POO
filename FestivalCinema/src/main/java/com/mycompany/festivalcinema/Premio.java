@@ -96,7 +96,7 @@ public class Premio {
             int numPontuacoes = 0;
             for (int coluna = 0; coluna < tam; coluna++) {
                 somaPontuaçõesCandidato += pontuacoes.get(linha).get(coluna);
-                if (pontuacoes.get(linha).get(coluna) != 0) { //certificar que foi pontuado (se é 0 significa que não foi pontuado
+                if (pontuacoes.get(linha).get(coluna) != 0) { //certificar que foi pontuado (se é 0 significa que não foi pontuado)
                     numPontuacoes++;
                 }
             }
@@ -107,6 +107,8 @@ public class Premio {
     }
 
     /**
+     * Método que ordena todas as listas relativamente à média de pontuações que
+     * os candidatos obtiveram, através de um bubble sort.
      *
      * @param mediasPontuacoes - vetor a ordenar
      * @return vetor ordenado
