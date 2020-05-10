@@ -480,6 +480,11 @@ public class FestivalCinema {
                             p.nomeiaFilme(filme);
                             possiveisCandidatos.remove(indiceFilmeCandidato);
                             filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
+                            while (possiveisCandidatos.contains(candidato)) {
+                                indiceCandidato = possiveisCandidatos.indexOf(candidato);
+                                possiveisCandidatos.remove(candidato);
+                                filmesPossiveisCandidatos.remove(indiceCandidato);
+                            }
                         }
                     }
                 } catch (IndexOutOfBoundsException e) {
@@ -558,7 +563,10 @@ public class FestivalCinema {
                                 if (filme.getAtorPrincipal() == candidato) {
                                     p.nomeiaAtor(candidato, filme);
                                     possiveisCandidatos.remove(indiceFilmeCandidato);
+                                    indiceCandidato = possiveisCandidatos.indexOf(candidato);
+                                    possiveisCandidatos.remove(candidato);
                                     filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
+                                    filmesPossiveisCandidatos.remove(indiceCandidato);
                                 } else {
                                     System.out.println("Esse ator não participa no filme que inseriu.\n");
                                 }
@@ -566,7 +574,10 @@ public class FestivalCinema {
                                 if (filme.getAtrizPrincipal() == candidato) {
                                     p.nomeiaAtor(candidato, filme);
                                     possiveisCandidatos.remove(indiceFilmeCandidato);
+                                    indiceCandidato = possiveisCandidatos.indexOf(candidato);
+                                    possiveisCandidatos.remove(candidato);
                                     filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
+                                    filmesPossiveisCandidatos.remove(indiceCandidato);
                                 } else {
                                     System.out.println("Essa atriz não participa no filme que inseriu.\n");
                                 }
@@ -635,7 +646,10 @@ public class FestivalCinema {
                             if (filme.getAtoresSecundarios().contains(candidato)) {
                                 p.nomeiaAtor(candidato, filme);
                                 possiveisCandidatos.remove(indiceFilmeCandidato);
+                                indiceCandidato = possiveisCandidatos.indexOf(candidato);
+                                possiveisCandidatos.remove(candidato);
                                 filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
+                                filmesPossiveisCandidatos.remove(indiceCandidato);
                             } else {
                                 System.out.println((homem ? "Esse ator" : "Essa atriz") + " não participa no filme que inseriu.\n");
                             }
