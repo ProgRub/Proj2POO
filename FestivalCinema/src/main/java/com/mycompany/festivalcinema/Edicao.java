@@ -32,6 +32,9 @@ public class Edicao {
         return this.peritos;
     }
 
+    /**
+     * Método responsável por criar a lista dos 9 prémios de cada edição
+     */
     protected final void inserePremios() {
         this.premios.add(new Premio("Melhor Ator Principal"));
         this.premios.add(new Premio("Melhor Atriz Principal"));
@@ -52,7 +55,7 @@ public class Edicao {
         this.peritos.add(perito);
         for (Premio p : this.premios) {
             for (ArrayList<Integer> lista : p.getPontuacoes()) {
-                lista.add(0);
+                lista.add(0); //coloca a pontuação 0 (não avaliado), em cada candidato do prémio
             }
         }
     }
@@ -138,7 +141,7 @@ public class Edicao {
                     }
                 } else {
                     for (int i = 0; i < 4; i++) {
-                        System.out.println("- " + premio.getFilmesCandidatos().get(i).getRealizador().getNome());
+                        System.out.println("- " + premio.getFilmesCandidatos().get(i).getRealizador().getNome() + " por "+premio.getFilmesCandidatos().get(i).getNome());
                     }
                 }
             } catch (NullPointerException | IndexOutOfBoundsException e) {

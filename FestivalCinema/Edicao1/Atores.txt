@@ -1,5 +1,30 @@
 --------------------------------
 Ator principal:
+Tobin Bell
+M
+10
+Atriz principal:
+Shawnee Smith
+F
+5
+Atores Secundarios:
+Cary Elwes
+M
+7
+Danny Glover
+M
+5
+Leigh Whannell
+M
+22
+Michael Emerson
+M
+10
+Dina Meyer
+F
+25
+--------------------------------
+Ator principal:
 Josh Hutcherson
 M
 11

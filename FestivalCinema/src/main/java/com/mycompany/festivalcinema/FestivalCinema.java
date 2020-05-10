@@ -714,7 +714,7 @@ public class FestivalCinema {
             boolean pontuou = false;
             try {
                 if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz") || premio.getNome().contains("Carreira")) {
-                    for (int indiceCandidato = 0; indiceCandidato < premio.getAtoresCandidatos().size(); indiceCandidato++) {
+                    for (int indiceCandidato = 0; indiceCandidato < 4; indiceCandidato++) {
                         System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
                         for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
                             pontuou = true;
@@ -724,7 +724,7 @@ public class FestivalCinema {
                         }
                     }
                 } else {
-                    for (int indiceCandidato = 0; indiceCandidato < premio.getFilmesCandidatos().size(); indiceCandidato++) {
+                    for (int indiceCandidato = 0; indiceCandidato < 4; indiceCandidato++) {
                         System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getNome());
                         for (Perito p : edicoes.get(indexEdicoes).getPeritos()) {
                             pontuou = true;
@@ -735,11 +735,11 @@ public class FestivalCinema {
                     }
                 }
                 if (!pontuou) {
-                    System.out.println("Não há candidatos para esta categoria.\n");
+                    System.out.println("Não há peritos para pontuar esta categoria.\n");
                     return;
                 }
                 premio.determinaVencedor();
-            } catch (NullPointerException | IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println("Não há candidatos para esta categoria.\n");
             }
         } else {
