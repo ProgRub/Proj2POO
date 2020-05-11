@@ -434,7 +434,8 @@ public class FestivalCinema {
                 System.out.println("Por favor, indique um nome válido.");
             }
         }
-    
+    }
+
     /**
      * método que permite o utilizador escolher os melhores realizadores
      * (devolve os filmes dos melhores realizadores)
