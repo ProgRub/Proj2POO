@@ -66,6 +66,12 @@ public class Filme {
      */
     protected void insereAtor(Ator ator, boolean principal) {
         if (principal) {
+            for (Ator a : this.atoresSecundarios) {
+                if (ator == a) { //verifica se o ator já está na lista de atores secundários
+                    System.out.println((ator.getGenero() ? "O ator" : "A atriz") + " já está no filme!");
+                    return;
+                }
+            }
             if (ator.getGenero() && this.AtorPrincipal == null) {
                 this.AtorPrincipal = ator;
                 ator.inserirFilme(this); //insere o filme na lista de filmes em que o ator participa
