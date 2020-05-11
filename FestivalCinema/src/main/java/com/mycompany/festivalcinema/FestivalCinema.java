@@ -207,8 +207,8 @@ public class FestivalCinema {
         Realizador realizador = new Realizador(nomeRealizador, generoRealizador.equalsIgnoreCase("M"));
         for (Edicao e : edicoes) {
             for (Filme f : e.getFilmes()) {
-                if (f.getRealizador().equals(realizador)) {
-                    realizador = f.getRealizador();
+                if (f.getRealizador().equals(realizador)) { //se o realizador criado já existia
+                    realizador = f.getRealizador(); //o realizador do novo filme aponta para mesmo realizador anteriormente criado
                 }
             }
         }
@@ -248,6 +248,13 @@ public class FestivalCinema {
         }
         Perito perito = new Perito(nome, genero.equalsIgnoreCase("M"));
         edicoes.get(numEdicao - 1).inserePerito(perito);
+        for (Perito peritoExistente : edicoes.get(numEdicao - 1).getPeritos()) { //verifica se o perito criado já existe
+            if (perito.equals(peritoExistente)) {
+                System.out.println("Esse perito já existe.");
+                return;
+            }
+        }
+        edicoes.get(numEdicao - 1).inserePerito(perito); //insere o perito na lista de peritos da edição, caso ele não exista
     }
 
     /**
@@ -328,7 +335,7 @@ public class FestivalCinema {
      * quer criados pelo teclado)
      */
     private void listarAtores() {
-        boolean existe = false;
+        boolean existe = false; //false se não existem atores na edição
         for (Ator ator : this.atores) {
             System.out.println(ator);
             existe = true;
@@ -343,7 +350,7 @@ public class FestivalCinema {
      */
     private void escolherCandidatos() {
         Premio premioEscolhido = escolherPremio();
-        switch (premioEscolhido.getNome()) {
+        switch (premioEscolhido.getNome()) { //verifica o nome do premio escolhido pelo utilizador
             case "Melhor Ator Principal":
                 escolherAtoresPrincipaisCandidatos(premioEscolhido, true);
                 break;
@@ -362,7 +369,7 @@ public class FestivalCinema {
             case "Prémio Carreira":
                 escolherPremioCarreira(premioEscolhido);
                 break;
-            default:
+            default: //se o prémio for algum filme
                 escolherFilmesCandidatos(premioEscolhido);
                 break;
         }
@@ -384,8 +391,14 @@ public class FestivalCinema {
                 + "(8) Melhor Cinematografia\n"
                 + "(9) Prémio Carreira"
                 + "\nOPÇÃO: ");
-        int opcaoPremio = recebeInteiro();
-        return edicoes.get(numEdicao - 1).getPremios().get(opcaoPremio - 1);
+        while (true) { //até não escolher uma opção válida
+            try {
+                int opcaoPremio = recebeInteiro();
+                return edicoes.get(numEdicao - 1).getPremios().get(opcaoPremio - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.print("Escolha uma opção válida.\nOPÇÃO: ");
+            }
+        }
     }
 
     /**
@@ -393,34 +406,30 @@ public class FestivalCinema {
      * dado prémio
      */
     private void escolherFilmesCandidatos(Premio p) {
-        if (p.getFilmesCandidatos().size() == 4) {
+        if (p.getFilmesCandidatos().size() == 4) { //se já foram escolhidos os candidatos
             System.out.println("\nOs candidatos para este prémio já foram escolhidos.\n");
             return;
         }
-        ArrayList<Filme> possiveisCandidatos = new ArrayList<>();
+        ArrayList<Filme> possiveisCandidatos = new ArrayList<>(); //lista com os candidatos possiveis
         int i = 1;
-        int contaCandidatosPossiveis = 0;
         for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
             System.out.printf("%d. %s\n", i, filme.getNome()); //mostra nome do realizador do filme
-            if (!possiveisCandidatos.contains(filme)) {
-                contaCandidatosPossiveis++;
-            }
             possiveisCandidatos.add(filme);
             i++;
         }
-        if (contaCandidatosPossiveis < 4) {
+        if (i < 5) { //se não há pelo menos 4 candidatos
             System.out.println("\nNão há candidatos suficientes para esta categoria.");
-            return;
+            return; //não continua
         }
         int indiceCandidato;
         while (p.getFilmesCandidatos().size() < 4) { //Obriga o utilizador a escolher os 4 candidatos de uma só vez            
             System.out.print("Indique o filme candidato: ");
             String nome = scan.nextLine().trim();
             try {
-                indiceCandidato = indexOfByFilmName(nome, possiveisCandidatos);
+                indiceCandidato = indexOfByFilmName(nome, possiveisCandidatos); //indice do filme candidato, na lista dos possiveis candidatos
                 Filme candidato = possiveisCandidatos.get(indiceCandidato);
-                p.nomeiaFilme(candidato);
-                possiveisCandidatos.remove(possiveisCandidatos.get(indiceCandidato));
+                p.nomeiaFilme(candidato); //insere o filme candidato no prémio em questão
+                possiveisCandidatos.remove(possiveisCandidatos.get(indiceCandidato)); //remove o filme escolhido, da lista dos candidatos. assim, não pode ser escolhido novamente
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Por favor, indique um nome válido.");
             }
@@ -433,21 +442,21 @@ public class FestivalCinema {
      *
      */
     private void escolherRealizadorCandidatos(Premio p) {
-        if (p.getFilmesCandidatos().size() != 4) {
-            ArrayList<Realizador> possiveisCandidatos = new ArrayList<>();
-            ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>();
+        if (p.getFilmesCandidatos().size() != 4) { //se ainda não foram escolhidos os candidatos
+            ArrayList<Realizador> possiveisCandidatos = new ArrayList<>(); //lista com os realizadores candidatos
+            ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>(); //lista com os filmes dos realizadores candidatos
             int i = 1;
             int contaCandidatosPossiveis = 0;
             for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
                 System.out.printf("%d. %s por %s\n", i, filme.getRealizador().getNome(), filme.getNome()); //mostra nome do realizador do filme
-                if (!possiveisCandidatos.contains(filme.getRealizador())) {
+                if (!possiveisCandidatos.contains(filme.getRealizador())) { //se o realizador participa em 2 ou mais filmes, só conta como 1 candidato
                     contaCandidatosPossiveis++;
                 }
                 possiveisCandidatos.add(filme.getRealizador());
                 filmesPossiveisCandidatos.add(filme);
                 i++;
             }
-            if (contaCandidatosPossiveis < 4) {
+            if (contaCandidatosPossiveis < 4) { //se não há pelo menos 4 candidatos
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
@@ -457,29 +466,29 @@ public class FestivalCinema {
                 System.out.print("Indique o nome do realizador nomeado: ");
                 String nome = scan.nextLine().trim();
                 try {
-                    for (indiceCandidato = 0; indiceCandidato < possiveisCandidatos.size(); indiceCandidato++) {
+                    for (indiceCandidato = 0; indiceCandidato < possiveisCandidatos.size(); indiceCandidato++) { //procura o indice do realizador escolhido
                         if (nome.equalsIgnoreCase(possiveisCandidatos.get(indiceCandidato).getNome())) {
-                            break;
+                            break; //para no indice do realizador escolhido
                         }
                     }
                     Realizador candidato = possiveisCandidatos.get(indiceCandidato);
-                    if (indiceCandidato == possiveisCandidatos.lastIndexOf(candidato)) {
+                    if (indiceCandidato == possiveisCandidatos.lastIndexOf(candidato)) { //se o realizador apenas aparece 1 vez na lista de possiveis candidatos
                         p.nomeiaFilme(filmesPossiveisCandidatos.get(indiceCandidato)); //adiciona filme do realizador
-                        possiveisCandidatos.remove(indiceCandidato);
-                        filmesPossiveisCandidatos.remove(indiceCandidato);
+                        possiveisCandidatos.remove(indiceCandidato); //remove o realizador escolhido dos possiveis candidatos
+                        filmesPossiveisCandidatos.remove(indiceCandidato); //remove o filme do realizador escolhido dos possiveis candidatos
                     } else {
                         System.out.println("Esse realizador direcionou 2 ou mais filmes, a qual se refere?");
                         String nomeFilme = scan.nextLine();
                         indiceFilmeCandidato = indexOfByFilmName(nomeFilme, filmesPossiveisCandidatos);
                         Filme filme = filmesPossiveisCandidatos.get(indiceFilmeCandidato);
                         if (filme.getRealizador() == candidato) {
-                            p.nomeiaFilme(filme);
-                            possiveisCandidatos.remove(indiceFilmeCandidato);
-                            filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
-                            while (possiveisCandidatos.contains(candidato)) {
+                            p.nomeiaFilme(filme); //insere o filme do realizador escolhido no prémio em questão
+                            possiveisCandidatos.remove(indiceFilmeCandidato); //remove o realizador escolhido dos possiveis candidatos
+                            filmesPossiveisCandidatos.remove(indiceFilmeCandidato); //remove o filme do realizador escolhido dos possiveis candidatos
+                            while (possiveisCandidatos.contains(candidato)) { //até o realizador não estar na lista dos possiveis candidatos
                                 indiceCandidato = possiveisCandidatos.indexOf(candidato);
-                                possiveisCandidatos.remove(candidato);
-                                filmesPossiveisCandidatos.remove(indiceCandidato);
+                                possiveisCandidatos.remove(candidato); //remove todas as ocorrências do realizador escolhido na lista dos possiveis candidatos
+                                filmesPossiveisCandidatos.remove(indiceCandidato);//remove o filme do realizador escolhido dos possiveis candidatos
                             }
                         }
                     }
@@ -501,16 +510,16 @@ public class FestivalCinema {
      * principais (mesma lógica que em Ator, true-Ator, false-Atriz)
      */
     private void escolherAtoresPrincipaisCandidatos(Premio p, boolean homem) {
-        if (p.getAtoresCandidatos().size() != 4) {
-            ArrayList<Ator> possiveisCandidatos = new ArrayList<>();
-            ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>();
+        if (p.getAtoresCandidatos().size() != 4) { //se ainda não foram escolhidos os candidatos
+            ArrayList<Ator> possiveisCandidatos = new ArrayList<>(); //lista com os possiveis atores candidatos
+            ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>(); //lista com os filmes dos possiveis atores candidatos
             int i = 1;
             int contaCandidatosPossiveis = 0;
             if (homem) {
                 for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
                     if (filme.getAtorPrincipal() != null) {
                         System.out.printf("%d. %s por %s\n", i, filme.getAtorPrincipal().getNome(), filme.getNome());
-                        if (!possiveisCandidatos.contains(filme.getAtorPrincipal())) {
+                        if (!possiveisCandidatos.contains(filme.getAtorPrincipal())) { //se o ator aparece em mais do que 1 filme, como ator principal, só conta como 1 candidato
                             contaCandidatosPossiveis++;
                         }
                         possiveisCandidatos.add(filme.getAtorPrincipal());
@@ -523,7 +532,7 @@ public class FestivalCinema {
                 for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
                     if (filme.getAtrizPrincipal() != null) {
                         System.out.printf("%d. %s por %s\n", i, filme.getAtrizPrincipal().getNome(), filme.getNome());
-                        if (!possiveisCandidatos.contains(filme.getAtrizPrincipal())) {
+                        if (!possiveisCandidatos.contains(filme.getAtrizPrincipal())) {//se a atriz aparece em mais do que 1 filme, como atriz principal, só conta como 1 candidat0
                             contaCandidatosPossiveis++;
                         }
                         possiveisCandidatos.add(filme.getAtrizPrincipal());
@@ -533,7 +542,7 @@ public class FestivalCinema {
                     }
                 }
             }
-            if (contaCandidatosPossiveis < 4) {
+            if (contaCandidatosPossiveis < 4) { //se há menos de 4 candidatos diferentes
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
@@ -543,37 +552,37 @@ public class FestivalCinema {
                 System.out.printf("Indique o nome do %s candidato: ", (homem ? "ator" : "atriz"));
                 String nome = scan.nextLine().trim();
                 try {
-                    indiceCandidato = indexOfByActorName(nome, possiveisCandidatos);
-                    Ator candidato = possiveisCandidatos.get(indiceCandidato);
-                    if (indiceCandidato == possiveisCandidatos.lastIndexOf(candidato)) {
-                        p.nomeiaAtor(candidato, filmesPossiveisCandidatos.get(indiceCandidato));
-                        possiveisCandidatos.remove(indiceCandidato);
-                        filmesPossiveisCandidatos.remove(indiceCandidato);
+                    indiceCandidato = indexOfByActorName(nome, possiveisCandidatos); //posição do ator/atriz candidato na lista dos possiveis candidatos
+                    Ator candidato = possiveisCandidatos.get(indiceCandidato); //ator/atriz correspondente ao indice
+                    if (indiceCandidato == possiveisCandidatos.lastIndexOf(candidato)) { //se o ator/atriz só aparece uma vez na lista de candidatos (participa apenas num filme como principal)
+                        p.nomeiaAtor(candidato, filmesPossiveisCandidatos.get(indiceCandidato)); //insere o ator/atriz na lista de candidatos do prémio
+                        possiveisCandidatos.remove(indiceCandidato); //remove o ator/atriz da lista de candidatos possiveis
+                        filmesPossiveisCandidatos.remove(indiceCandidato); //remove o filme do ator/atriz da lista de candidatos possiveis
                     } else {
                         System.out.println((homem ? "Esse ator" : "Essa atriz") + " participa em 2 filmes, a qual se refere?");
                         String nomeFilme = scan.nextLine();
                         try {
-                            indiceFilmeCandidato = indexOfByFilmName(nomeFilme, filmesPossiveisCandidatos);
-                            Filme filme = filmesPossiveisCandidatos.get(indiceFilmeCandidato);
-                            if (homem) {
-                                if (filme.getAtorPrincipal() == candidato) {
-                                    p.nomeiaAtor(candidato, filme);
-                                    possiveisCandidatos.remove(indiceFilmeCandidato);
-                                    indiceCandidato = possiveisCandidatos.indexOf(candidato);
-                                    possiveisCandidatos.remove(candidato);
-                                    filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
-                                    filmesPossiveisCandidatos.remove(indiceCandidato);
+                            indiceFilmeCandidato = indexOfByFilmName(nomeFilme, filmesPossiveisCandidatos); //posicao do filme do ator/atriz candidato na lista de filmes candidatos
+                            Filme filme = filmesPossiveisCandidatos.get(indiceFilmeCandidato); //filme correspondente ao indice
+                            if (homem) { //se for ator principal
+                                if (filme.getAtorPrincipal() == candidato) { //se o ator principal desse filme for o ator principal escolhido
+                                    p.nomeiaAtor(candidato, filme); //coloca o ator nos candidatos do prémio
+                                    possiveisCandidatos.remove(indiceFilmeCandidato); //remove o ator da lista dos possiveis candidatos (do filme escolhido)
+                                    indiceCandidato = possiveisCandidatos.indexOf(candidato); //indice do ator da lista dos possiveis candidatos
+                                    possiveisCandidatos.remove(candidato); //remove o ator da lista dos possiveis candidatos
+                                    filmesPossiveisCandidatos.remove(indiceFilmeCandidato); //remove o filme que foi escolhido do ator da lista de possiveis candidatos
+                                    filmesPossiveisCandidatos.remove(indiceCandidato); //remove o filme que não foi escolhido
                                 } else {
                                     System.out.println("Esse ator não participa no filme que inseriu.\n");
                                 }
                             } else {
-                                if (filme.getAtrizPrincipal() == candidato) {
-                                    p.nomeiaAtor(candidato, filme);
-                                    possiveisCandidatos.remove(indiceFilmeCandidato);
-                                    indiceCandidato = possiveisCandidatos.indexOf(candidato);
-                                    possiveisCandidatos.remove(candidato);
-                                    filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
-                                    filmesPossiveisCandidatos.remove(indiceCandidato);
+                                if (filme.getAtrizPrincipal() == candidato) { //se a atriz principal desse filme for o ator principal escolhido
+                                    p.nomeiaAtor(candidato, filme); //coloca a atriz nos candidatos do prémio
+                                    possiveisCandidatos.remove(indiceFilmeCandidato); //remove a atriz da lista dos possiveis candidatos (do filme escolhido)
+                                    indiceCandidato = possiveisCandidatos.indexOf(candidato); //indice da atriz da lista dos possiveis candidatos
+                                    possiveisCandidatos.remove(candidato); //remove a atriz da lista dos possiveis candidatos
+                                    filmesPossiveisCandidatos.remove(indiceFilmeCandidato);  //remove o filme que foi escolhido da atriz da lista de possiveis candidatos
+                                    filmesPossiveisCandidatos.remove(indiceCandidato); //remove o filme que não foi escolhido
                                 } else {
                                     System.out.println("Essa atriz não participa no filme que inseriu.\n");
                                 }
@@ -599,25 +608,26 @@ public class FestivalCinema {
      * principais (mesma lógica que em Ator, true-Ator, false-Atriz
      */
     private void escolherAtoresSecundariosCandidatos(Premio p, boolean homem) {
-        if (p.getAtoresCandidatos().size() != 4) {
-            ArrayList<Ator> possiveisCandidatos = new ArrayList<>();
-            ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>();
+        if (p.getAtoresCandidatos().size() != 4) { //se ainda não foram escolhidos os candidatos
+            ArrayList<Ator> possiveisCandidatos = new ArrayList<>(); //lista com os possiveis atores candidatos
+            ArrayList<Filme> filmesPossiveisCandidatos = new ArrayList<>(); //lista com os filmes dos possiveis atores candidatos
             int i = 1;
             int contaCandidatosPossiveis = 0;
             for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
                 for (Ator a : filme.getAtoresSecundarios()) {
                     if (a.getGenero() == homem) {
                         System.out.printf("%d. %s em %s\n", i, a.getNome(), filme.getNome());
-                        possiveisCandidatos.add(a);
-                        filmesPossiveisCandidatos.add(filme);
-                        if (!possiveisCandidatos.contains(a)) {
+                        if (!possiveisCandidatos.contains(a)) { //se o ator aparece em mais do que 1 filme, só conta como 1 candidato
                             contaCandidatosPossiveis++;
                         }
+                        possiveisCandidatos.add(a);
+                        filmesPossiveisCandidatos.add(filme);
+
                         i++;
                     }
                 }
             }
-            if (contaCandidatosPossiveis < 4) {
+            if (contaCandidatosPossiveis < 4) { //se há menos de 4 candidatos diferentes
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
@@ -627,25 +637,25 @@ public class FestivalCinema {
                 System.out.println("Indique o nome " + (homem ? " do ator candidato: " : "da atriz candidata: "));
                 String nome = scan.nextLine().trim();
                 try {
-                    indiceCandidato = indexOfByActorName(nome, possiveisCandidatos);
-                    Ator candidato = possiveisCandidatos.get(indiceCandidato);
-                    if (indiceCandidato == possiveisCandidatos.lastIndexOf(candidato)) {
+                    indiceCandidato = indexOfByActorName(nome, possiveisCandidatos); //posicao do filme do ator candidato na lista de filmes candidatos
+                    Ator candidato = possiveisCandidatos.get(indiceCandidato); //ator correspondente ao indice
+                    if (indiceCandidato == possiveisCandidatos.lastIndexOf(candidato)) { //se o ator/atriz só participa num filme
                         p.nomeiaAtor(candidato, filmesPossiveisCandidatos.get(indiceCandidato));
-                        possiveisCandidatos.remove(indiceCandidato);
-                        filmesPossiveisCandidatos.remove(indiceCandidato);
+                        possiveisCandidatos.remove(indiceCandidato); //remove o ator dos possiveis candidatos
+                        filmesPossiveisCandidatos.remove(indiceCandidato); //remove o filme do ator dos filmes candidatos
                     } else {
                         System.out.println((homem ? "Esse ator" : "Essa atriz") + " participa em 2 filmes, a qual se refere?");
                         String nomeFilme = scan.nextLine();
                         try {
-                            indiceFilmeCandidato = indexOfByFilmName(nomeFilme, filmesPossiveisCandidatos);
-                            Filme filme = filmesPossiveisCandidatos.get(indiceFilmeCandidato);
-                            if (filme.getAtoresSecundarios().contains(candidato)) {
-                                p.nomeiaAtor(candidato, filme);
-                                possiveisCandidatos.remove(indiceFilmeCandidato);
+                            indiceFilmeCandidato = indexOfByFilmName(nomeFilme, filmesPossiveisCandidatos); //posicao do filme escolhido
+                            Filme filme = filmesPossiveisCandidatos.get(indiceFilmeCandidato);  //filme escolhido
+                            if (filme.getAtoresSecundarios().contains(candidato)) { //se o ator escolhido pertence a esse filme
+                                p.nomeiaAtor(candidato, filme); //insere na lista de candidatos do premio o ator escolhido
+                                possiveisCandidatos.remove(indiceFilmeCandidato); //remove o ator dos possiveis candidatos
                                 indiceCandidato = possiveisCandidatos.indexOf(candidato);
-                                possiveisCandidatos.remove(candidato);
-                                filmesPossiveisCandidatos.remove(indiceFilmeCandidato);
-                                filmesPossiveisCandidatos.remove(indiceCandidato);
+                                possiveisCandidatos.remove(candidato); //remove a outra ocorrencia do ator nos possiveis candidatos (o outro filme)
+                                filmesPossiveisCandidatos.remove(indiceFilmeCandidato); //remove o filme escolhido
+                                filmesPossiveisCandidatos.remove(indiceCandidato); //remove o outro filme do ator
                             } else {
                                 System.out.println((homem ? "Esse ator" : "Essa atriz") + " não participa no filme que inseriu.\n");
                             }
@@ -667,18 +677,18 @@ public class FestivalCinema {
      *
      */
     private void escolherPremioCarreira(Premio p) {
-        if (p.getAtoresCandidatos().size() != 4) {
+        if (p.getAtoresCandidatos().size() != 4) { //se ainda não foram escolhidos os candidatos
             ArrayList<Ator> possiveisCandidatos = new ArrayList<>();
             int i = 1;
             for (int posição1 = 0; posição1 < atores.size(); posição1++) {
-                if (atores.get(posição1).getAnosCarreira() > 20) {
+                if (atores.get(posição1).getAnosCarreira() > 20) { //se o ator tem mais de 20 anos de carreira
                     System.out.printf("%d. %s\n", i, atores.get(posição1).getNome());
                     possiveisCandidatos.add(atores.get(posição1));
                     i++;
                 }
             }
             int indiceCandidato;
-            if (i < 5) {
+            if (i < 5) { //se há pelo menos 4 candidatos
                 System.out.println("\nNão há candidatos suficientes para esta categoria.");
                 return;
             }
@@ -686,10 +696,10 @@ public class FestivalCinema {
                 System.out.print("Indique o nome do candidato: ");
                 String escolhido = scan.nextLine().trim();
                 try {
-                    indiceCandidato = indexOfByActorName(escolhido, possiveisCandidatos);
-                    Ator candidato = possiveisCandidatos.get(indiceCandidato);
-                    p.nomeiaAtor(candidato);
-                    possiveisCandidatos.remove(indiceCandidato);
+                    indiceCandidato = indexOfByActorName(escolhido, possiveisCandidatos); //posicao do ator candidato na lista de candidatos
+                    Ator candidato = possiveisCandidatos.get(indiceCandidato); //ator correspondente
+                    p.nomeiaAtor(candidato); //insere o ator nos candidatos do prémio
+                    possiveisCandidatos.remove(indiceCandidato); //remove o ator dos possiveis candidatos
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Por favor, escolha um candidato válido.");
                 }
@@ -1223,10 +1233,10 @@ public class FestivalCinema {
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) {
                 out.println(separador); //imprime-se o separador
-                for (int linha = 0; linha < premio.getPontuacoes().size(); linha++) { 
-                //percorremos a lista de pontuações para ter as pontuações de cada candidato
+                for (int linha = 0; linha < premio.getPontuacoes().size(); linha++) {
+                    //percorremos a lista de pontuações para ter as pontuações de cada candidato
                     for (int coluna = 0; coluna < premio.getPontuacoes().get(linha).size(); coluna++) {
-                    //percorremos a lista com as pontuações do candidato e grava-se as pontuações, separadas pelo asterisco
+                        //percorremos a lista com as pontuações do candidato e grava-se as pontuações, separadas pelo asterisco
                         out.print(premio.getPontuacoes().get(linha).get(coluna) + "*");
                     }
                     out.println(); //fazemos parágrafo
