@@ -175,7 +175,7 @@ public class Premio {
             } else {
                 System.out.println("Pontuações não atribuídas");
             }
-        } catch (NullPointerException | IndexOutOfBoundsException e) { //se ocorre uma destas exceções é que ainda não foram definidos os candidatos
+        } catch (IndexOutOfBoundsException e) { //se ocorre IndexOutOfBoundsException é que ainda não foram definidos os candidatos
             System.out.println("Não tem candidatos.");
         }
     }
