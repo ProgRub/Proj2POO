@@ -818,7 +818,7 @@ public class FestivalCinema {
                         ano++;
                     }
                     edicoes.add(new Edicao(numEdicao, ano));
-                    System.out.print("\nOpções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Peritos\n(t): Carregar Tudo\nOpção: ");
+                    System.out.print("\nOpções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Tudo (sem pontuações)\n(t): Carregar Tudo\nOpção: ");
                     opcao = scan.nextLine().trim();
                     try {
                         switch (opcao.toLowerCase()) {
@@ -827,12 +827,15 @@ public class FestivalCinema {
                                 carregaAtores();
                                 break;
                             case "p":
-                                carregaPeritos();
+                                carregaFilmes();
+                                carregaAtores();
+                                carregaCandidatos();
                                 break;
                             case "c":
                                 carregaFilmes();
                                 carregaAtores();
-                                carregaCandidatos(); //ESTE MÉTODO PRECISA DA LISTA DE FILMES E ATORES PARA FUNCIONAR!
+                                carregaPeritos();
+                                carregaCandidatos();
                                 break;
                             case "t":
                                 carregaFilmes();
