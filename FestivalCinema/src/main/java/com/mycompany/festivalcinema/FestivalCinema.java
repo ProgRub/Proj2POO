@@ -438,8 +438,7 @@ public class FestivalCinema {
                 }
             }
         }
-    }
-
+    
     /**
      * método que permite o utilizador escolher os melhores realizadores
      * (devolve os filmes dos melhores realizadores)
