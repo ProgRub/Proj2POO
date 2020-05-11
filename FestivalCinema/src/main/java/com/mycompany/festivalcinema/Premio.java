@@ -46,14 +46,6 @@ public class Premio {
         this.pontuacoes.get(candidato).set(perito, pontuacao);
     }
 
-    protected void setFilmes(ArrayList<Filme> filmes) {
-        this.filmes = filmes;
-    }
-
-    protected void setAtores(ArrayList<Ator> atores) {
-        this.atores = atores;
-    }
-
     protected void nomeiaFilme(Filme filme) {
         this.filmes.add(filme);
     }
