@@ -5,20 +5,16 @@ import java.util.ArrayList;
 public class Ator extends Pessoa {
 
     private int anosCarreira;
-    private int numFilmesEdiçãoAtual;
-    private int numFilmesTotal;
     private final ArrayList<Filme> filmesParticipa;
 
     protected Ator(String nome, boolean genero, int anosCarreira) {
         super(nome, genero);
         this.anosCarreira = anosCarreira;
-        this.numFilmesTotal = 0;
-        this.numFilmesEdiçãoAtual = 0;
-        filmesParticipa = new ArrayList<>(0);
+        this.filmesParticipa = new ArrayList<>(0);
     }
 
-    protected void resetNumFilmesEdicaoAtual() {
-        this.numFilmesEdiçãoAtual = 0;
+    protected void resetFilmesEdicaoAtual() {
+        this.filmesParticipa.clear();
     }
 
     protected void incrementaAnosCarreira() {
@@ -31,7 +27,7 @@ public class Ator extends Pessoa {
      * false caso contrario
      */
     protected boolean podeInserirFilme() {
-        return numFilmesEdiçãoAtual < 2;
+        return this.filmesParticipa.size() < 2;
     }
 
     /**
@@ -42,8 +38,6 @@ public class Ator extends Pessoa {
      */
     protected void inserirFilme(Filme filme) {
         this.filmesParticipa.add(filme);
-        this.numFilmesEdiçãoAtual++;
-        this.numFilmesTotal++;
     }
 
     protected int getAnosCarreira() {
@@ -55,20 +49,20 @@ public class Ator extends Pessoa {
     }
 
     protected int getnumFilmesEdiçãoAtual() {
-        return numFilmesEdiçãoAtual;
+        return this.filmesParticipa.size();
     }
 
     @Override
     public String toString() {
         String ator = super.toString();
         ator += "Anos de Carreira: " + anosCarreira + "\n";
-        if (this.numFilmesTotal != 0) {
+        if (!this.filmesParticipa.isEmpty()) {
             ator += "Filmes em que participa: \n";
             for (Filme f : this.filmesParticipa) {
                 ator += f.getNome() + "\n";
             }
         } else {
-            ator += "Não participa em nenhum filme desta edição.";
+            ator += "Não participa em nenhum filme desta edição.\n";
         }
         return ator;
     }

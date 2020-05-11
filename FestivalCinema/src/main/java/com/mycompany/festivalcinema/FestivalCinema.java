@@ -15,11 +15,6 @@ public class FestivalCinema {
     private int numEdicao; //numEdicao - 1 dá o índice da edição na lista edicoes da edicao com número numEdicao
     private final Scanner scan;
     private boolean quebra;
-    private final String ficheiroFilmes;
-    private final String ficheiroAtores;
-    private final String ficheiroPeritos;
-    private final String ficheiroCandidatos;
-    private final String ficheiroPontuacoes;
     private String opcao;
 
     public FestivalCinema() {
@@ -30,11 +25,6 @@ public class FestivalCinema {
         this.numEdicao = 0;
         this.scan = new Scanner(System.in, "cp1252");
         this.quebra = false;
-        this.ficheiroFilmes = "Filmes.txt";
-        this.ficheiroAtores = "Atores.txt";
-        this.ficheiroPeritos = "Peritos.txt";
-        this.ficheiroCandidatos = "Candidatos.txt";
-        this.ficheiroPontuacoes = "Pontuacoes.txt";
     }
 
     public void menu() {
@@ -90,7 +80,17 @@ public class FestivalCinema {
                     opcao = scan.nextLine().trim();
                     switch (opcao) {
                         case "a":
-                            listarAtores();
+                            System.out.print("\nOpções:\n(a): Listar da Edição Atual\n(t): Listar de todas as Edições\nOpção: ");
+                            opcao = scan.nextLine().trim();
+                            limparConsola();
+                            switch (opcao) {
+                                case "a":
+                                    listarAtores(true);
+                                    break;
+                                case "t":
+                                    listarAtores(false);
+                                    break;
+                            }
                             break;
                         case "f":
                             boolean imprimiu = false;
@@ -139,7 +139,7 @@ public class FestivalCinema {
                         }
                     }
                     for (Ator a : atores) {
-                        a.resetNumFilmesEdicaoAtual();
+                        a.resetFilmesEdicaoAtual();
                     }
                     novoOuCarregar();
                     for (Ator a : atores) {
@@ -332,14 +332,21 @@ public class FestivalCinema {
      * Método que lista todos os Atores criados (quer carregados de um ficheiro
      * quer criados pelo teclado)
      */
-    private void listarAtores() {
+    private void listarAtores(boolean atual) {
         boolean existe = false; //false se não existem atores na edição
         for (Ator ator : this.atores) {
-            System.out.println(ator);
-            existe = true;
+            if (ator.getnumFilmesEdiçãoAtual() > 0 && atual) {
+                System.out.println(ator);
+                existe = true;
+            } else if (!atual) {
+                System.out.println(ator);
+                existe = true;
+            }
         }
-        if (!existe) {
-            System.out.println("\nNão existem atores nesta edição.");
+        if (!existe && atual) {
+            System.out.println("Não existem atores que participem num filme desta edição.");
+        } else if (!existe && !atual) {
+            System.out.println("Não existem atores no programa.");
         }
     }
 
@@ -792,7 +799,7 @@ public class FestivalCinema {
      *
      * @return o inteiro que o utilizador inserir
      */
-    protected int recebeInteiro() {
+    private int recebeInteiro() {
         String aux;
         int num;
         while (true) {//não sai do while enquanto o utilizador não inserir um número
@@ -891,7 +898,7 @@ public class FestivalCinema {
         boolean cria;
         String line;
         int indexFilmes = 0;
-        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroAtores);
+        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\Atores.txt");
         BufferedReader lerDados = new BufferedReader(inStream);
         line = lerDados.readLine();
         while (line != null) {
@@ -977,7 +984,7 @@ public class FestivalCinema {
         String nomeRealizador;
         boolean generoRealizador;
         String line;
-        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroFilmes);
+        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\Filmes.txt");
         BufferedReader lerDados = new BufferedReader(inStream);
         line = lerDados.readLine(); //ler a primeira linha, que é, se houver, o nome do primeiro filme
         while (line != null) {
@@ -1005,7 +1012,7 @@ public class FestivalCinema {
     private void carregaPeritos() throws IOException {
         String nomePerito;
         boolean generoPerito;
-        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroPeritos);
+        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\Peritos.txt");
         BufferedReader lerDados = new BufferedReader(inStream);
         String line;
         line = lerDados.readLine();//ler a primeira linha, que é, se houver, o nome do primeiro perito
@@ -1029,7 +1036,7 @@ public class FestivalCinema {
         Premio premio;
         boolean vazio;
         int indexPremios = 0;
-        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroCandidatos);
+        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\Candidatos.txt");
         BufferedReader lerDados = new BufferedReader(inStream);
         String line;
         line = lerDados.readLine().trim();
@@ -1100,7 +1107,7 @@ public class FestivalCinema {
         final int NUMPERITOS = edicoes.get(numEdicao - 1).getPeritos().size();
         String pontos = ""; //varíavel que guarda o valor da pontuação que se lê
         int indexPremios = -1;
-        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\" + ficheiroPontuacoes);
+        FileReader inStream = new FileReader("Edicao" + numEdicao + "\\Pontuacoes.txt");
         BufferedReader lerDados = new BufferedReader(inStream);
         String line;
         line = lerDados.readLine().trim();
@@ -1134,7 +1141,7 @@ public class FestivalCinema {
      */
     private void gravaAtores() throws IOException {
         String separador = "--------------------------------";
-        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroAtores);
+        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Atores.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
@@ -1166,7 +1173,7 @@ public class FestivalCinema {
      * Método que permite gravar os filmes num ficheiro
      */
     private void gravaFilmes() throws IOException {
-        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroFilmes);
+        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Filmes.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) { //percorremos a lista de filmes para gravá-los
@@ -1182,7 +1189,7 @@ public class FestivalCinema {
      */
     private void gravaCandidatos() throws IOException {
         String separador = "--------------------------------";
-        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroCandidatos);
+        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Candidatos.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
         int indexPremio = 0;
         try ( PrintWriter out = new PrintWriter(bW)) {
@@ -1217,7 +1224,7 @@ public class FestivalCinema {
      * Método que permite gravar os peritos num ficheiro
      */
     private void gravaPeritos() throws IOException {
-        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroPeritos);
+        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Peritos.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Perito perito : edicoes.get(numEdicao - 1).getPeritos()) { //percorremos a lista de peritos para gravá-los
@@ -1233,7 +1240,7 @@ public class FestivalCinema {
      */
     private void gravaPontuações() throws IOException {
         String separador = "--------------------------------";
-        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\" + ficheiroPontuacoes);
+        FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Pontuacoes.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
         try ( PrintWriter out = new PrintWriter(bW)) {
             for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) {
