@@ -742,7 +742,7 @@ public class FestivalCinema {
                     System.out.println("Não há peritos para pontuar esta categoria.\n");
                     return;
                 }
-                premio.determinaVencedor();
+                premio.ordenaPontuações();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Não há candidatos para esta categoria.\n");
             }
@@ -845,7 +845,7 @@ public class FestivalCinema {
                                 carregaPontuacoes();
                                 for (Premio p : edicoes.get(numEdicao - 1).getPremios()) { //faz-se este ciclo para sabermos logo no início
                                     //do programa os filmes mais premiados, já que todos os dados, incluindo nomeados e as suas pontuações, foram carregados
-                                    p.determinaVencedor();
+                                    p.ordenaPontuações();
                                 }
                                 break;
                             default:

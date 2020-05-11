@@ -88,18 +88,20 @@ public class Premio {
      * Método que calcula as médias das pontuações atribuídas aos candidatos
      *
      */
-    protected void calcularMedias() {
-        int tam = pontuacoes.get(0).size(); //vê quantas possíveis pontuações foram atribuídas ao candidato
-        for (int linha = 0; linha < 4; linha++) {
-            double somaPontuaçõesCandidato = 0;
-            int numPontuacoes = 0;
-            for (int coluna = 0; coluna < tam; coluna++) {
-                somaPontuaçõesCandidato += pontuacoes.get(linha).get(coluna);
-                if (pontuacoes.get(linha).get(coluna) != 0) { //certificar que foi pontuado (se é 0 significa que não foi pontuado)
-                    numPontuacoes++;
+    private void calcularMedias() {
+        if (mediasPontuacoes[0] == 0) {
+            int tam = pontuacoes.get(0).size(); //vê quantas possíveis pontuações foram atribuídas ao candidato
+            for (int linha = 0; linha < 4; linha++) {
+                double somaPontuaçõesCandidato = 0;
+                int numPontuacoes = 0;
+                for (int coluna = 0; coluna < tam; coluna++) {
+                    somaPontuaçõesCandidato += pontuacoes.get(linha).get(coluna);
+                    if (pontuacoes.get(linha).get(coluna) != 0) { //certificar que foi pontuado (se é 0 significa que não foi pontuado)
+                        numPontuacoes++;
+                    }
                 }
+                mediasPontuacoes[linha] = somaPontuaçõesCandidato / numPontuacoes;
             }
-            mediasPontuacoes[linha] = somaPontuaçõesCandidato / numPontuacoes;
         }
     }
 
@@ -111,6 +113,7 @@ public class Premio {
      * exceção tratado noutro lugar
      */
     protected void ordenaPontuações() throws IndexOutOfBoundsException {
+        calcularMedias();
         int n = mediasPontuacoes.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -119,6 +122,8 @@ public class Premio {
                 }
             }
         }
+        empateVencedores();
+        determinaVencedor();
     }
 
     /**
@@ -151,9 +156,7 @@ public class Premio {
     protected void imprimePontuações() {
         System.out.println("\n- " + nome + ": ");
         try {
-            calcularMedias();
             ordenaPontuações(); //se não houver candidatos, é atirada a IndexOutOfBoundsException e apanhada aqui
-            empateVencedores();
             if (!Double.isNaN(mediasPontuacoes[0])) { //verifica se no vetor das médias das pontuações, na posição do vencedor aparece NaN (Not a Number)
                 //pois se aparece então as pontuações ainda não foram atribuídas
                 for (int i = 0; i < mediasPontuacoes.length; ++i) {
@@ -186,9 +189,9 @@ public class Premio {
      * pontuações ainda não foram atribuídas)
      */
     protected void vencedorCategoria() {
-        determinaVencedor();
         System.out.print(nome + ": ");
         try {
+            ordenaPontuações(); //se não houver candidatos, é atirada a IndexOutOfBoundsException e apanhada aqui
             if (!Double.isNaN(mediasPontuacoes[0])) { //verifica se no vetor das médias das pontuações, na posição do vencedor aparece NaN (Not a Number)
                 //pois se aparece então as pontuações ainda não foram atribuídas
                 if (atores != null) {//se o prémio for para um ator/atriz
@@ -216,10 +219,7 @@ public class Premio {
      * Este método guarda em vencedor o filme que tem o candidato que ganhou o
      * prémio
      */
-    protected void determinaVencedor() {
-        calcularMedias();
-        ordenaPontuações();
-        empateVencedores();
+    private void determinaVencedor() {
         if (!Double.isNaN(mediasPontuacoes[0])) {//verifica se no vetor das médias das pontuações, na posição 0 aparece NaN (Not a Number)
             //pois se aparece então as pontuações ainda não foram atribuídas
             if (filmes != null && vencedor == null) { //certifica que o vencedor só é definido uma vez para não se aumentar 
