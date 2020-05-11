@@ -98,7 +98,7 @@ public class Edicao {
             indice++;
         }
     }
-    
+
     /**
      * Método que lista os filmes com pelo menos um prémio
      */
@@ -141,7 +141,7 @@ public class Edicao {
                     }
                 } else {
                     for (int i = 0; i < 4; i++) {
-                        System.out.println("- " + premio.getFilmesCandidatos().get(i).getRealizador().getNome() + " por "+premio.getFilmesCandidatos().get(i).getNome());
+                        System.out.println("- " + premio.getFilmesCandidatos().get(i).getRealizador().getNome() + " por " + premio.getFilmesCandidatos().get(i).getNome());
                     }
                 }
             } catch (NullPointerException | IndexOutOfBoundsException e) {

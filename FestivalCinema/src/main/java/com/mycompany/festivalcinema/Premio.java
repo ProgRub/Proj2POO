@@ -1,6 +1,7 @@
 package com.mycompany.festivalcinema;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Premio {
@@ -159,19 +160,28 @@ public class Premio {
         try {
             double[] pont = ordenaPontuações(mediasPontuações()); //se não houver candidatos, é atirada a IndexOutOfBoundsException e apanhada aqui
             pont = empateVencedores(pont);
-            if (!Double.isNaN(pont[0])) {
+            if (!Double.isNaN(pont[0])) { //verifica se no vetor das médias das pontuações, na posição do vencedor aparece NaN (Not a Number)
+                //pois se aparece então as pontuações ainda não foram atribuídas
                 for (int i = 0; i < pont.length; ++i) {
-                    if (atores != null) {   //se o prémio for para um ator/atriz
-                        System.out.print(atores.get(i).getNome() + ": ");
-                    } else {  //se o prémio for para um filme
-                        System.out.print(filmes.get(i).getNome() + ": ");
+                    if (atores != null) {//se o prémio for para um ator/atriz
+                        if (!this.nome.contains("Carreira")) { //se não for o prémio Carreira, indica-se por qual filme o vencedor participou
+                            System.out.println(atores.get(0).getNome() + " em " + vencedor.getNome());
+                        } else { //se for o prémio carreira só se imprime o nome do ator
+                            System.out.println(atores.get(0).getNome());
+                        }
+                    } else {//se o prémio for para um filme
+                        if (this.nome.contains("Realizador")) { //se for o prémio de Melhor Realizador, indica-se este e o filme que ele direcionou
+                            System.out.println(vencedor.getRealizador().getNome() + " por " + vencedor.getNome());
+                        } else { //se não, só se imprime o nome do filme
+                            System.out.println(vencedor.getNome());
+                        }
                     }
-                    System.out.printf("%.2f\n", pont[i]); //imprime pontuação
+                    System.out.printf(": %.2f\n", pont[i]); //imprime pontuação
                 }
             } else {
                 System.out.println("Pontuações não atribuídas");
             }
-        } catch (NullPointerException | IndexOutOfBoundsException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) { //se ocorre uma destas exceções é que ainda não foram definidos os candidatos
             System.out.println("Não tem candidatos.");
         }
     }
@@ -185,20 +195,20 @@ public class Premio {
         determinaVencedor();
         System.out.print(nome + ": ");
         try {
-            if (atores != null) {
-                if (!this.nome.contains("Carreira")) {
+            if (atores != null) {//se o prémio for para um ator/atriz
+                if (!this.nome.contains("Carreira")) {//se não for o prémio Carreira, indica-se por qual filme o vencedor participou
                     System.out.println(atores.get(0).getNome() + " em " + vencedor.getNome() + "\n");
-                } else {
+                } else {//se for o prémio carreira só se imprime o nome do ator
                     System.out.println(atores.get(0).getNome() + "\n");
                 }
-            } else {
-                if (this.nome.contains("Realizador")) {
+            } else {//se o prémio for para um filme
+                if (this.nome.contains("Realizador")) {//se for o prémio de Melhor Realizador, indica-se este e o filme que ele direcionou
                     System.out.println(vencedor.getRealizador().getNome() + " por " + vencedor.getNome() + "\n");
-                } else {
+                } else {//se não, só se imprime o nome do filme
                     System.out.println(vencedor.getNome() + "\n");
                 }
             }
-        } catch (NullPointerException | IndexOutOfBoundsException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {//se ocorre uma destas exceções é que ainda não foram definidos os candidatos
             System.out.println("Ainda sem vencedor.\n");
         }
     }
@@ -208,11 +218,13 @@ public class Premio {
      * prémio
      */
     protected void determinaVencedor() {
-        if ((atores != null && atores.size() > 0) || (filmes != null && filmes.size() > 0)) {
+        if (filmes != null && filmes.size() > 0) {
             double[] pont = ordenaPontuações(mediasPontuações());
             pont = empateVencedores(pont);
-            if (!Double.isNaN(pont[0])) {
-                if (filmes != null && vencedor == null) {
+            if (!Double.isNaN(pont[0])) {//verifica se no vetor das médias das pontuações, na posição 0 aparece NaN (Not a Number)
+                //pois se aparece então as pontuações ainda não foram atribuídas
+                if (filmes != null && vencedor == null) { //certifica que o vencedor só é definido uma vez para não se aumentar 
+                    //o número de prémios em cada vez que esta função é chamada
                     this.vencedor = filmes.get(0);
                     this.vencedor.incrementaNumeroPremios();
                 }
@@ -228,26 +240,46 @@ public class Premio {
      * @return o vetor das medias pontuacoes, para guardar as modificações
      */
     private double[] empateVencedores(double[] mediasPontuacoes) {
-        if (mediasPontuacoes[0] == mediasPontuacoes[1]) { //verifica se há empate para primeiro
-            double[] desviosPadrao = new double[4];
-            desviosPadrao[0] = desvioPadrao(mediasPontuacoes, 0);
-            desviosPadrao[1] = desvioPadrao(mediasPontuacoes, 1);
-            desviosPadrao[2] = 0;
-            desviosPadrao[3] = 0;
-            if (mediasPontuacoes[2] == mediasPontuacoes[0]) { //verifica se há empate para primeiro entre 3 candidatos
-                desviosPadrao[2] = desvioPadrao(mediasPontuacoes, 2);
-            }
-            if (mediasPontuacoes[3] == mediasPontuacoes[0]) { //verifica se todos os candidatos estão empatados
-                desviosPadrao[3] = desvioPadrao(mediasPontuacoes, 3);
-            }
-            for (int i = 0; i < desviosPadrao.length; i++) {
-                for (int j = 0; j < desviosPadrao.length - i - 1; j++) {
-                    if (desviosPadrao[j] > desviosPadrao[j + 1]) {
-                        swap(mediasPontuacoes, j, j + 1);
-                    }
+        double[] desviosPadrao = {-1, -1, -1, -1}; //preenchemos o array assim por questões de verificação
+        int n = 0;
+//        System.out.println(Arrays.toString(desviosPadrao));
+        for (int i = 0; i < mediasPontuacoes.length - 1; i++) {//percorremos o vetor das médias (já ordenado) a verificar se houve empates
+            if (mediasPontuacoes[i] == mediasPontuacoes[i + 1]) { //se há empate, será entre posições consecutivas e calcula-se o desvio padrão dos candidatos
+                if (desviosPadrao[i] == -1) { //para certificar que não se calcula o desvio padrão demasiadas vezes
+                    desviosPadrao[i] = desvioPadrao(mediasPontuacoes, i);
+                    n++;
+                }
+                if (desviosPadrao[i + 1] == -1) {
+                    desviosPadrao[i + 1] = desvioPadrao(mediasPontuacoes, i + 1);
+                    n++;
                 }
             }
         }
+        //bubble sort para organizar segundo os desvios padrão, se houver empate
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4 - 1; j++) {
+                if (mediasPontuacoes[j] == mediasPontuacoes[j + 1] && desviosPadrao[j] > desviosPadrao[j + 1]) {
+                    swap(mediasPontuacoes, j, j + 1);
+                }
+            }
+        }
+//        if (mediasPontuacoes[0] == mediasPontuacoes[1]) { //verifica se há empate para primeiro
+//            desviosPadrao[0] = desvioPadrao(mediasPontuacoes, 0);
+//            desviosPadrao[1] = desvioPadrao(mediasPontuacoes, 1);
+//            desviosPadrao[2] = 0;
+//            desviosPadrao[3] = 0;
+//            if (mediasPontuacoes[2] == mediasPontuacoes[0]) { //verifica se há empate para primeiro entre 3 candidatos
+//                desviosPadrao[2] = desvioPadrao(mediasPontuacoes, 2);
+//                n++;
+//            }
+//            if (mediasPontuacoes[3] == mediasPontuacoes[0]) { //verifica se todos os candidatos estão empatados
+//                desviosPadrao[3] = desvioPadrao(mediasPontuacoes, 3);
+//                n++;
+//            }
+//        }
+        System.out.println(nome);
+        System.out.println(n);
+        System.out.println(Arrays.toString(desviosPadrao));
         return mediasPontuacoes;
     }
 

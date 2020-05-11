@@ -29,16 +29,16 @@ public class Perito extends Pessoa {
         System.out.printf((this.getGenero() ? "O perito %s " : "A perita %s ") + "atribui ao candidato a pontuação: ", this.getNome());
         String aux;
         double pontuacao;
-        while (true) {
+        while (true) { //não sai do while enquanto o utilizador não inserir um número
             aux = scan.nextLine();
             try {
                 pontuacao = Double.parseDouble(aux);
-                break;
-            } catch (NumberFormatException e) {
+                break; //só chega aqui se o parseDouble não atirar a NumberFormatException
+            } catch (NumberFormatException e) { //entra aqui se não é inserido um número
                 System.out.println("A pontuação deve ser um número!");
             }
         }
-        if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int) pontuacao) {
+        if (pontuacao > 0 && pontuacao <= 10 && pontuacao == (int) pontuacao) { //verifica-se se a pontuação atribuída é inteira e se está entre 1 e 10, inclusive
             premio.setPontuacao(indiceCandidato, indicePerito, (int) pontuacao);
             return true;
         }
