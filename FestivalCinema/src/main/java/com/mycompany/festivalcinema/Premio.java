@@ -79,6 +79,10 @@ public class Premio {
         return vencedor;
     }
 
+    protected double[] getMediasPontuacoes() {
+        return mediasPontuacoes;
+    }
+
     @Override
     public String toString() {
         return nome;
