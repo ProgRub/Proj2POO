@@ -53,8 +53,8 @@ public class Edicao {
 
     protected void inserePerito(Perito perito) {
         this.peritos.add(perito);
-        for (Premio p : this.premios) {
-            for (ArrayList<Integer> lista : p.getPontuacoes()) {
+        for (Premio p : this.premios) { //acede a cada prémio
+            for (ArrayList<Integer> lista : p.getPontuacoes()) { //acede à lista de pontuações de cada candidato
                 lista.add(0); //coloca a pontuação 0 (não avaliado), em cada candidato do prémio
             }
         }
@@ -103,10 +103,10 @@ public class Edicao {
      * Método que lista os filmes com pelo menos um prémio
      */
     protected void listarFilmesMaisPremiados() {
-        boolean semPremiados = true;
+        boolean semPremiados = true; //true se nenhum filme foi premiado
         System.out.println("\nFILMES MAIS PREMIADOS: ");
         for (Filme filme : this.filmes) {
-            if (filme.getNumeroPremios() > 0) {
+            if (filme.getNumeroPremios() > 0) { //se o filme tiver pelo menos 1 prémio
                 System.out.println(filme.getNome() + ": " + filme.getNumeroPremios());
                 semPremiados = false;
             }
@@ -126,20 +126,20 @@ public class Edicao {
             System.out.println();
             System.out.println(premio + ":");
             try {
-                if (contaPremios <= 4) {
+                if (contaPremios <= 4) { //se o prémio está relacionado com atores
                     for (int i = 0; i < 4; i++) {
                         System.out.printf("- %s em %s\n", premio.getAtoresCandidatos().get(i).getNome(), premio.getFilmesCandidatos().get(i).getNome());
                     }
-                } else if (contaPremios > 4 && contaPremios != 6 && contaPremios != 9) {
+                } else if (contaPremios > 4 && contaPremios != 6 && contaPremios != 9) { //se o prémio está relacionado com filmes
                     for (int i = 0; i < 4; i++) {
                         System.out.println("- " + premio.getFilmesCandidatos().get(i).getNome());
 
                     }
-                } else if (contaPremios == 9) {
+                } else if (contaPremios == 9) { //se é o prémio carreira
                     for (int i = 0; i < 4; i++) {
                         System.out.println("- " + premio.getAtoresCandidatos().get(i).getNome());
                     }
-                } else {
+                } else { //se é o prémio de melhor realizador
                     for (int i = 0; i < 4; i++) {
                         System.out.println("- " + premio.getFilmesCandidatos().get(i).getRealizador().getNome() + " por "+premio.getFilmesCandidatos().get(i).getNome());
                     }
