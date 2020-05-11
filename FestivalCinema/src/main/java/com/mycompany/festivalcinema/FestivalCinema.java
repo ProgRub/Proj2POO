@@ -247,7 +247,6 @@ public class FestivalCinema {
             genero = scan.nextLine().trim();
         }
         Perito perito = new Perito(nome, genero.equalsIgnoreCase("M"));
-        edicoes.get(numEdicao - 1).inserePerito(perito);
         for (Perito peritoExistente : edicoes.get(numEdicao - 1).getPeritos()) { //verifica se o perito criado já existe
             if (perito.equals(peritoExistente)) {
                 System.out.println("Esse perito já existe.");
