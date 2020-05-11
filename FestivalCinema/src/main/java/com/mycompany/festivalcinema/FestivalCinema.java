@@ -43,7 +43,7 @@ public class FestivalCinema {
         ano = recebeInteiro();
         novoOuCarregar();
         quebra = false;
-        //limparConsola();
+        limparConsola();
         while (!quebra) {
             System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano);
             System.out.print("Opções:\n(c): Criar\n(l): Listar\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
