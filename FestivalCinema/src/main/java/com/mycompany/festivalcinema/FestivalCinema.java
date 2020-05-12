@@ -443,7 +443,6 @@ public class FestivalCinema {
 
     /**
      * método que permite o utilizador escolher os melhores realizadores
-     * (devolve os filmes dos melhores realizadores)
      *
      */
     private void escolherRealizadorCandidatos(Premio p) {
@@ -726,7 +725,11 @@ public class FestivalCinema {
             try {
                 if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz") || premio.getNome().contains("Carreira")) {
                     for (int indiceCandidato = 0; indiceCandidato < 4; indiceCandidato++) {
-                        System.out.printf("\nCANDIDATO %d: %s em %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome(), premio.getFilmesCandidatos().get(indiceCandidato).getNome());
+                        if (premio.getNome().contains("Carreira")) {
+                            System.out.printf("\nCANDIDATO %d: %s ", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
+                        } else {
+                            System.out.printf("\nCANDIDATO %d: %s em %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome(), premio.getFilmesCandidatos().get(indiceCandidato).getNome());
+                        }
                         for (Perito p : edicoes.get(numEdicao - 1).getPeritos()) {
                             pontuou = true;
                             while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(numEdicao - 1).getPeritos().indexOf(p), scan)) {
@@ -737,7 +740,7 @@ public class FestivalCinema {
                 } else {
                     for (int indiceCandidato = 0; indiceCandidato < 4; indiceCandidato++) {
                         if (premio.getNome().contains("Realizador")) {
-                            System.out.printf("\nCANDIDATO %d: %s por %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getRealizador().getNome(),premio.getFilmesCandidatos().get(indiceCandidato).getNome());
+                            System.out.printf("\nCANDIDATO %d: %s por %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getRealizador().getNome(), premio.getFilmesCandidatos().get(indiceCandidato).getNome());
                         } else {
                             System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getFilmesCandidatos().get(indiceCandidato).getNome());
                         }
@@ -1143,7 +1146,7 @@ public class FestivalCinema {
         String separador = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Atores.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
                 out.println(separador); //inserimos o separador sempre que gravamos um filme novo
                 if (filme.getAtorPrincipal() != null) {
@@ -1175,7 +1178,7 @@ public class FestivalCinema {
     private void gravaFilmes() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Filmes.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) { //percorremos a lista de filmes para gravá-los
                 //grava-se o nome do filme, o género e o nome do realizador e o género deste
                 out.printf("%s\n%s\n%s\n%s\n", filme.getNome(), filme.getGenero(), filme.getRealizador().getNome(), (filme.getRealizador().getGenero() ? "M" : "F"));
@@ -1192,7 +1195,7 @@ public class FestivalCinema {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Candidatos.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
         int indexPremio = 0;
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) { //percorremos a lista de prémios
                 out.println(separador); //grava-se o separador
                 if (indexPremio < 4) { //se é um prémio de ator/atriz principal ou secundário grava-se o nome do candidato
@@ -1226,7 +1229,7 @@ public class FestivalCinema {
     private void gravaPeritos() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Peritos.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Perito perito : edicoes.get(numEdicao - 1).getPeritos()) { //percorremos a lista de peritos para gravá-los
                 //grava-se o nome e o género do perito, em linhas diferentes
                 out.printf("%s\n%s\n", perito.getNome(), (perito.getGenero() ? "M" : "F"));
@@ -1242,7 +1245,7 @@ public class FestivalCinema {
         String separador = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Pontuacoes.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try ( PrintWriter out = new PrintWriter(bW)) {
+        try (PrintWriter out = new PrintWriter(bW)) {
             for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) {
                 out.println(separador); //imprime-se o separador
                 for (int linha = 0; linha < premio.getPontuacoes().size(); linha++) {
