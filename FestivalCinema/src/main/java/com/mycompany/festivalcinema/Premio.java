@@ -123,6 +123,53 @@ public class Premio {
     }
 
     /**
+     * Verifica se houve empates entre os candidatos, o desempate será feito
+     * calculando os desvios padrões
+     *
+     * @param mediasPontuacoes
+     * @return o vetor das medias pontuacoes, para guardar as modificações
+     */
+    private void empateVencedores() {
+        double[] desviosPadrao = {-1, -1, -1, -1}; //preenchemos o array assim por questões de verificação
+        for (int i = 0; i < mediasPontuacoes.length - 1; i++) {//percorremos o vetor das médias (já ordenado) a verificar se houve empates
+            if (mediasPontuacoes[i] == mediasPontuacoes[i + 1]) { //se há empate, será entre posições consecutivas e calcula-se o desvio padrão dos candidatos
+                if (desviosPadrao[i] == -1) { //para certificar que não se calcula o desvio padrão demasiadas vezes
+                    desviosPadrao[i] = desvioPadrao(i);
+                }
+                if (desviosPadrao[i + 1] == -1) { //para certificar que não se calcula o desvio padrão demasiadas vezes
+                    desviosPadrao[i + 1] = desvioPadrao(i + 1);
+                }
+            }
+        }
+        //Bubble sort para organizar segundo os desvios padrão, se houver empate, quem tem menor desvio padrão "ganha"
+        for (int i = 0; i < mediasPontuacoes.length; i++) {
+            for (int j = 0; j < mediasPontuacoes.length - i - 1; j++) {
+                if (mediasPontuacoes[j] == mediasPontuacoes[j + 1] && desviosPadrao[j] > desviosPadrao[j + 1]) {
+                    swap(j, j + 1);
+                    double aux = desviosPadrao[j]; //trocar o desvio padrão da posição j com j+1
+                    desviosPadrao[j] = desviosPadrao[j + 1]; //se não a ordem dos candidatos ficaria incorreta
+                    desviosPadrao[j + 1] = aux;
+                }
+            }
+        }
+    }
+
+    /**
+     * Este método guarda em vencedor o filme que tem o candidato que ganhou o
+     * prémio
+     */
+    private void determinaVencedor() {
+        if (!Double.isNaN(mediasPontuacoes[0])) {//verifica se no vetor das médias das pontuações, na posição 0 aparece NaN (Not a Number)
+            //pois se aparece então as pontuações ainda não foram atribuídas
+            if (filmes != null && vencedor == null) { //certifica que o vencedor só é definido uma vez para não se aumentar 
+                //o número de prémios em cada vez que esta função é chamada
+                this.vencedor = filmes.get(0);
+                this.vencedor.incrementaNumeroPremios();
+            }
+        }
+    }
+
+    /**
      * Este método é um auxiliar aos bubble sort's que usamos, troca toda a
      * informação do candidato na posição i com a informação do candidato na
      * posição j
@@ -143,6 +190,25 @@ public class Premio {
         if (this.filmes != null) {
             Collections.swap(this.filmes, i, j);
         }
+    }
+
+    /**
+     * Este método vai calcular o desvio padrão das pontuações atribuídas ao
+     * candidato especificado por posCandidato
+     *
+     * @param mediasPontuacoes - o vetor que contém as médias das pontuações dos
+     * candidatos
+     * @param posCandidato - a posição do candidato do qual calcular o desvio
+     * padrão
+     * @return o valor de desvio padrão
+     */
+    private double desvioPadrao(int posCandidato) {
+        double soma = 0;
+        int tam = pontuacoes.get(posCandidato).size();
+        for (int i = 0; i < tam; i++) {
+            soma += Math.pow((double) pontuacoes.get(posCandidato).get(i) - mediasPontuacoes[posCandidato], 2);
+        }
+        return Math.sqrt(soma / mediasPontuacoes.length);
     }
 
     /**
@@ -209,72 +275,6 @@ public class Premio {
         } catch (NullPointerException | IndexOutOfBoundsException e) {//se ocorre uma destas exceções é que ainda não foram definidos os candidatos
             System.out.println("Ainda sem vencedor.\n");
         }
-    }
-
-    /**
-     * Este método guarda em vencedor o filme que tem o candidato que ganhou o
-     * prémio
-     */
-    private void determinaVencedor() {
-        if (!Double.isNaN(mediasPontuacoes[0])) {//verifica se no vetor das médias das pontuações, na posição 0 aparece NaN (Not a Number)
-            //pois se aparece então as pontuações ainda não foram atribuídas
-            if (filmes != null && vencedor == null) { //certifica que o vencedor só é definido uma vez para não se aumentar 
-                //o número de prémios em cada vez que esta função é chamada
-                this.vencedor = filmes.get(0);
-                this.vencedor.incrementaNumeroPremios();
-            }
-        }
-    }
-
-    /**
-     * Verifica se houve empates entre os candidatos, o desempate será feito
-     * calculando os desvios padrões
-     *
-     * @param mediasPontuacoes
-     * @return o vetor das medias pontuacoes, para guardar as modificações
-     */
-    private void empateVencedores() {
-        double[] desviosPadrao = {-1, -1, -1, -1}; //preenchemos o array assim por questões de verificação
-        for (int i = 0; i < mediasPontuacoes.length - 1; i++) {//percorremos o vetor das médias (já ordenado) a verificar se houve empates
-            if (mediasPontuacoes[i] == mediasPontuacoes[i + 1]) { //se há empate, será entre posições consecutivas e calcula-se o desvio padrão dos candidatos
-                if (desviosPadrao[i] == -1) { //para certificar que não se calcula o desvio padrão demasiadas vezes
-                    desviosPadrao[i] = desvioPadrao(i);
-                }
-                if (desviosPadrao[i + 1] == -1) { //para certificar que não se calcula o desvio padrão demasiadas vezes
-                    desviosPadrao[i + 1] = desvioPadrao(i + 1);
-                }
-            }
-        }
-        //Bubble sort para organizar segundo os desvios padrão, se houver empate, quem tem menor desvio padrão "ganha"
-        for (int i = 0; i < mediasPontuacoes.length; i++) {
-            for (int j = 0; j < mediasPontuacoes.length - i - 1; j++) {
-                if (mediasPontuacoes[j] == mediasPontuacoes[j + 1] && desviosPadrao[j] > desviosPadrao[j + 1]) {
-                    swap(j, j + 1);
-                    double aux = desviosPadrao[j]; //trocar o desvio padrão da posição j com j+1
-                    desviosPadrao[j] = desviosPadrao[j + 1]; //se não a ordem dos candidatos ficaria incorreta
-                    desviosPadrao[j + 1] = aux;
-                }
-            }
-        }
-    }
-
-    /**
-     * Este método vai calcular o desvio padrão das pontuações atribuídas ao
-     * candidato especificado por posCandidato
-     *
-     * @param mediasPontuacoes - o vetor que contém as médias das pontuações dos
-     * candidatos
-     * @param posCandidato - a posição do candidato do qual calcular o desvio
-     * padrão
-     * @return o valor de desvio padrão
-     */
-    private double desvioPadrao(int posCandidato) {
-        double soma = 0;
-        int tam = pontuacoes.get(posCandidato).size();
-        for (int i = 0; i < tam; i++) {
-            soma += Math.pow((double) pontuacoes.get(posCandidato).get(i) - mediasPontuacoes[posCandidato], 2);
-        }
-        return Math.sqrt(soma / mediasPontuacoes.length);
     }
 
     @Override

@@ -986,6 +986,7 @@ public class FestivalCinema {
         String generoFilme;
         String nomeRealizador;
         boolean generoRealizador;
+        Realizador realizador;
         String line;
         FileReader inStream = new FileReader("Edicao" + numEdicao + "\\Filmes.txt");
         BufferedReader lerDados = new BufferedReader(inStream);
@@ -995,11 +996,13 @@ public class FestivalCinema {
             generoFilme = lerDados.readLine().trim(); //ler a linha que indica o género do filme
             nomeRealizador = lerDados.readLine().trim(); //ler a linha que indica o nome do realizador
             generoRealizador = lerDados.readLine().trim().equals("M"); //ler a linha que indica o género do realizador
-            Realizador realizador = new Realizador(nomeRealizador, generoRealizador);
-            for (Filme f : edicoes.get(numEdicao - 1).getFilmes()) {//percorremos a lista de filmes para ver se o realizador já foi criado
-                if (f.getRealizador().equals(realizador)) {//se foi, inserimos no filme realizador previamente criado e não um novo
-                    realizador = f.getRealizador();
-                    break;
+            realizador = new Realizador(nomeRealizador, generoRealizador);
+            for (int i = 0; i < numEdicao; i++) {
+                for (Filme f : edicoes.get(i).getFilmes()) {//percorremos a lista de filmes para ver se o realizador já foi criado
+                    if (f.getRealizador().equals(realizador)) {//se foi, inserimos no filme realizador previamente criado e não um novo
+                        realizador = f.getRealizador();
+                        break;
+                    }
                 }
             }
             Filme filme = new Filme(nomeFilme, generoFilme, numEdicao, realizador); //cria-se o filme
@@ -1146,30 +1149,29 @@ public class FestivalCinema {
         String separador = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Atores.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try (PrintWriter out = new PrintWriter(bW)) {
-            for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
-                out.println(separador); //inserimos o separador sempre que gravamos um filme novo
-                if (filme.getAtorPrincipal() != null) {
-                    //verifica-se se o filme tem ator principal e imprime-se o separador "Ator Principal", e imprime-se o seu nome, M (género) e os seus anos de carreira
-                    out.printf("Ator principal:\n%s\nM\n%d\n", filme.getAtorPrincipal().getNome(), filme.getAtorPrincipal().getAnosCarreira());
-                } else {
-                    //se não imprime-se o separador "Ator Principal", VAZIO,VAZIO e 0
-                    out.println("Ator principal:\nVAZIO\nVAZIO\n0");
-                }
-                if (filme.getAtrizPrincipal() != null) {
-                    //verifica-se se o filme tem atriz principal e imprime-se o separador "Atriz Principal", o seu nome, F (género) e os seus anos de carreira
-                    out.printf("Atriz principal:\n%s\nF\n%d\n", filme.getAtrizPrincipal().getNome(), filme.getAtrizPrincipal().getAnosCarreira());
-                } else {
-                    //se não imprime-se o separador "Atriz Principal", VAZIO,VAZIO e 0
-                    out.println("Atriz principal:\nVAZIO\nVAZIO\n0");
-                }
-                out.println("Atores Secundarios:"); //imprime-se este separador para sinalizar que daqui para a frente estão gravados os atores secundários
-                for (Ator atorSec : filme.getAtoresSecundarios()) { //imprime-se o nome, género e os anos de carreira de atorSec
-                    out.printf("%s\n%s\n%d\n", atorSec.getNome(), (atorSec.getGenero() ? "M" : "F"), atorSec.getAnosCarreira());
-                }
+        PrintWriter out = new PrintWriter(bW);
+        for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) {
+            out.println(separador); //inserimos o separador sempre que gravamos um filme novo
+            if (filme.getAtorPrincipal() != null) {
+                //verifica-se se o filme tem ator principal e imprime-se o separador "Ator Principal", e imprime-se o seu nome, M (género) e os seus anos de carreira
+                out.printf("Ator principal:\n%s\nM\n%d\n", filme.getAtorPrincipal().getNome(), filme.getAtorPrincipal().getAnosCarreira());
+            } else {
+                //se não imprime-se o separador "Ator Principal", VAZIO,VAZIO e 0
+                out.println("Ator principal:\nVAZIO\nVAZIO\n0");
             }
-            out.close();
+            if (filme.getAtrizPrincipal() != null) {
+                //verifica-se se o filme tem atriz principal e imprime-se o separador "Atriz Principal", o seu nome, F (género) e os seus anos de carreira
+                out.printf("Atriz principal:\n%s\nF\n%d\n", filme.getAtrizPrincipal().getNome(), filme.getAtrizPrincipal().getAnosCarreira());
+            } else {
+                //se não imprime-se o separador "Atriz Principal", VAZIO,VAZIO e 0
+                out.println("Atriz principal:\nVAZIO\nVAZIO\n0");
+            }
+            out.println("Atores Secundarios:"); //imprime-se este separador para sinalizar que daqui para a frente estão gravados os atores secundários
+            for (Ator atorSec : filme.getAtoresSecundarios()) { //imprime-se o nome, género e os anos de carreira de atorSec
+                out.printf("%s\n%s\n%d\n", atorSec.getNome(), (atorSec.getGenero() ? "M" : "F"), atorSec.getAnosCarreira());
+            }
         }
+        out.close();
     }
 
     /**
@@ -1178,13 +1180,12 @@ public class FestivalCinema {
     private void gravaFilmes() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Filmes.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try (PrintWriter out = new PrintWriter(bW)) {
-            for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) { //percorremos a lista de filmes para gravá-los
-                //grava-se o nome do filme, o género e o nome do realizador e o género deste
-                out.printf("%s\n%s\n%s\n%s\n", filme.getNome(), filme.getGenero(), filme.getRealizador().getNome(), (filme.getRealizador().getGenero() ? "M" : "F"));
-            }
-            out.close();
+        PrintWriter out = new PrintWriter(bW);
+        for (Filme filme : edicoes.get(numEdicao - 1).getFilmes()) { //percorremos a lista de filmes para gravá-los
+            //grava-se o nome do filme, o género e o nome do realizador e o género deste
+            out.printf("%s\n%s\n%s\n%s\n", filme.getNome(), filme.getGenero(), filme.getRealizador().getNome(), (filme.getRealizador().getGenero() ? "M" : "F"));
         }
+        out.close();
     }
 
     /**
@@ -1195,32 +1196,31 @@ public class FestivalCinema {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Candidatos.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
         int indexPremio = 0;
-        try (PrintWriter out = new PrintWriter(bW)) {
-            for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) { //percorremos a lista de prémios
-                out.println(separador); //grava-se o separador
-                if (indexPremio < 4) { //se é um prémio de ator/atriz principal ou secundário grava-se o nome do candidato
-                    //e o filme no qual ele participa, em linhas diferentes
-                    for (int candidato = 0; candidato < premio.getAtoresCandidatos().size(); candidato++) {
-                        out.printf("%s\n%s\n", premio.getAtoresCandidatos().get(candidato).getNome(), premio.getFilmesCandidatos().get(candidato).getNome());
-                    }
-                } else if (indexPremio == 5) { //se é o prémio de melhor realizador grava-se o nome do realizador nomeado
-                    for (int candidato = 0; candidato < premio.getFilmesCandidatos().size(); candidato++) {
-                        out.println(premio.getFilmesCandidatos().get(candidato).getRealizador().getNome());
-                    }
-                } else if (indexPremio == 4 || (indexPremio > 5 && indexPremio < 8)) { //se é um prémio dado a um filme grava-se
-                    //o nome do filme nomeado
-                    for (int candidato = 0; candidato < premio.getFilmesCandidatos().size(); candidato++) {
-                        out.println(premio.getFilmesCandidatos().get(candidato).getNome());
-                    }
-                } else { //por último, se é o prémio carreira só se grava o nome do nomeado ao prémio
-                    for (int candidato = 0; candidato < premio.getAtoresCandidatos().size(); candidato++) {
-                        out.println(premio.getAtoresCandidatos().get(candidato).getNome());
-                    }
+        PrintWriter out = new PrintWriter(bW);
+        for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) { //percorremos a lista de prémios
+            out.println(separador); //grava-se o separador
+            if (indexPremio < 4) { //se é um prémio de ator/atriz principal ou secundário grava-se o nome do candidato
+                //e o filme no qual ele participa, em linhas diferentes
+                for (int candidato = 0; candidato < premio.getAtoresCandidatos().size(); candidato++) {
+                    out.printf("%s\n%s\n", premio.getAtoresCandidatos().get(candidato).getNome(), premio.getFilmesCandidatos().get(candidato).getNome());
                 }
-                indexPremio++; //avança-se para o próximo prémio
+            } else if (indexPremio == 5) { //se é o prémio de melhor realizador grava-se o nome do realizador nomeado
+                for (int candidato = 0; candidato < premio.getFilmesCandidatos().size(); candidato++) {
+                    out.println(premio.getFilmesCandidatos().get(candidato).getRealizador().getNome());
+                }
+            } else if (indexPremio == 4 || (indexPremio > 5 && indexPremio < 8)) { //se é um prémio dado a um filme grava-se
+                //o nome do filme nomeado
+                for (int candidato = 0; candidato < premio.getFilmesCandidatos().size(); candidato++) {
+                    out.println(premio.getFilmesCandidatos().get(candidato).getNome());
+                }
+            } else { //por último, se é o prémio carreira só se grava o nome do nomeado ao prémio
+                for (int candidato = 0; candidato < premio.getAtoresCandidatos().size(); candidato++) {
+                    out.println(premio.getAtoresCandidatos().get(candidato).getNome());
+                }
             }
-            out.close();
+            indexPremio++; //avança-se para o próximo prémio
         }
+        out.close();
     }
 
     /**
@@ -1229,13 +1229,12 @@ public class FestivalCinema {
     private void gravaPeritos() throws IOException {
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Peritos.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try (PrintWriter out = new PrintWriter(bW)) {
-            for (Perito perito : edicoes.get(numEdicao - 1).getPeritos()) { //percorremos a lista de peritos para gravá-los
-                //grava-se o nome e o género do perito, em linhas diferentes
-                out.printf("%s\n%s\n", perito.getNome(), (perito.getGenero() ? "M" : "F"));
-            }
-            out.close();
+        PrintWriter out = new PrintWriter(bW);
+        for (Perito perito : edicoes.get(numEdicao - 1).getPeritos()) { //percorremos a lista de peritos para gravá-los
+            //grava-se o nome e o género do perito, em linhas diferentes
+            out.printf("%s\n%s\n", perito.getNome(), (perito.getGenero() ? "M" : "F"));
         }
+        out.close();
     }
 
     /**
@@ -1245,20 +1244,19 @@ public class FestivalCinema {
         String separador = "--------------------------------";
         FileWriter outStream = new FileWriter("Edicao" + numEdicao + "\\Pontuacoes.txt");
         BufferedWriter bW = new BufferedWriter(outStream);
-        try (PrintWriter out = new PrintWriter(bW)) {
-            for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) {
-                out.println(separador); //imprime-se o separador
-                for (int linha = 0; linha < premio.getPontuacoes().size(); linha++) {
-                    //percorremos a lista de pontuações para ter as pontuações de cada candidato
-                    for (int coluna = 0; coluna < premio.getPontuacoes().get(linha).size(); coluna++) {
-                        //percorremos a lista com as pontuações do candidato e grava-se as pontuações, separadas pelo asterisco
-                        out.print(premio.getPontuacoes().get(linha).get(coluna) + "*");
-                    }
-                    out.println(); //fazemos parágrafo
+        PrintWriter out = new PrintWriter(bW);
+        for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) {
+            out.println(separador); //imprime-se o separador
+            for (int linha = 0; linha < premio.getPontuacoes().size(); linha++) {
+                //percorremos a lista de pontuações para ter as pontuações de cada candidato
+                for (int coluna = 0; coluna < premio.getPontuacoes().get(linha).size(); coluna++) {
+                    //percorremos a lista com as pontuações do candidato e grava-se as pontuações, separadas pelo asterisco
+                    out.print(premio.getPontuacoes().get(linha).get(coluna) + "*");
                 }
+                out.println(); //fazemos parágrafo
             }
-            out.close();
         }
+        out.close();
     }
 
     /**
