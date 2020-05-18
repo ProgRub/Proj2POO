@@ -36,12 +36,12 @@ public class FestivalCinema {
         limparConsola();
         while (!quebra) {
             System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano);
-            System.out.print("Opções:\n(c): Criar\n(l): Listar\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
+            System.out.print("Opções:\n(c): Criar\n(l): Listar\n(p): Atribuir Papel\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
             opcao = scan.nextLine().trim();
             limparConsola();
             switch (opcao.toLowerCase()) {
                 case "c":
-                    System.out.print("Opções:\n(f): Criar Filme\n(a): Criar Ator/Atriz\n(e): Criar Perito\n(p): Atribui Papel\n(c): Escolher candidatos\n(s): Atribuir Pontuação\nOpção: ");
+                    System.out.print("Opções:\n(f): Criar Filme\n(a): Criar Ator/Atriz\n(p): Criar Perito\n(c): Escolher candidatos\n(s): Atribuir Pontuação\nOpção: ");
                     opcao = scan.nextLine().trim();
                     limparConsola();
                     switch (opcao) {
@@ -51,7 +51,7 @@ public class FestivalCinema {
                         case "a":
                             criarAtor();
                             break;
-                        case "e":
+                        case "p":
                             boolean parar = false;
                             while (!parar) {
                                 criarPerito();
@@ -62,9 +62,6 @@ public class FestivalCinema {
                                 }
                             }
                             break;
-                        case "p":
-                            atribuirPapel();
-                            break;
                         case "c":
                             escolherCandidatos();
                             break;
@@ -72,15 +69,16 @@ public class FestivalCinema {
                             pontuarCandidatos(escolherPremio());
                             break;
                         default:
-                            System.out.println("\nPor favor selecione uma das opções disponíveis.");
+                            System.out.println("Por favor selecione uma das opções disponíveis.");
                     }
                     break;
                 case "l":
-                    System.out.print("\nOpções:\n(a): Listar Atores\n(f): Listar Filmes\n(p): Listar Prémios\n(i): Consultar Edições\nOpção: ");
+                    System.out.print("Opções:\n(a): Listar Atores\n(f): Listar Filmes\n(p): Listar Prémios\n(i): Consultar Edições\nOpção: ");
                     opcao = scan.nextLine().trim();
+                    limparConsola();
                     switch (opcao) {
                         case "a":
-                            System.out.print("\nOpções:\n(a): Listar da Edição Atual\n(t): Listar de todas as Edições\nOpção: ");
+                            System.out.print("Opções:\n(a): Listar da Edição Atual\n(t): Listar de todas as Edições\nOpção: ");
                             opcao = scan.nextLine().trim();
                             limparConsola();
                             switch (opcao) {
@@ -109,6 +107,7 @@ public class FestivalCinema {
                         case "p":
                             System.out.print("\n(p): Listar Categorias\n(c): Listar Candidatos\n(o): Listar Candidatos (Ordenados por Avaliação)\n(v): Listar Vencedores\nOpção: ");
                             opcao = scan.nextLine().trim();
+                            limparConsola();
                             switch (opcao) {
                                 case "p":
                                     edicoes.get(numEdicao - 1).imprimePremios();
@@ -122,19 +121,24 @@ public class FestivalCinema {
                                 case "v":
                                     edicoes.get(numEdicao - 1).listarVencedores();
                                     break;
+                                default:
+                                    System.out.println("Por favor selecione uma das opções disponíveis.");
                             }
                             break;
                         case "i":
                             consultarEdicoes();
                             break;
                         default:
-                            System.out.println("\nPor favor selecione uma das opções disponíveis.");
+                            System.out.println("Por favor selecione uma das opções disponíveis.");
                     }
+                    break;
+                case "p":
+                    atribuirPapel();
                     break;
                 case "h":
                     for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) {
-                        if (Double.isNaN(premio.getMediasPontuacoes()[0])) {
-                            System.out.println("\nAinda não avaliou este prémio.");
+                        if (Double.isNaN(premio.getMediasPontuacoes()[0]) && !((premio.getAtoresCandidatos() != null && premio.getAtoresCandidatos().isEmpty()) || (premio.getFilmesCandidatos() != null && premio.getFilmesCandidatos().isEmpty()))) {
+                            System.out.println("Ainda não avaliou o prémio " + premio + ".");
                             pontuarCandidatos(premio);
                         }
                     }
@@ -148,8 +152,9 @@ public class FestivalCinema {
                     quebra = false;
                     break;
                 case "g":
-                    System.out.print("\nOpções:\n(a): Gravar Atores e Filmes\n(c): Gravar Atores, Filmes e Candidatos\n(p): Gravar Peritos\n(t): Gravar Tudo\nOpção: ");
+                    System.out.print("Opções:\n(a): Gravar Atores e Filmes\n(c): Gravar Atores, Filmes e Candidatos\n(p): Gravar Peritos\n(t): Gravar Tudo\nOpção: ");
                     opcao = scan.nextLine().trim();
+                    limparConsola();
                     try {
                         switch (opcao) {
                             case "a":
@@ -182,7 +187,7 @@ public class FestivalCinema {
                     quebra = true;
                     break;
                 default:
-                    System.out.println("\nPor favor selecione uma das opções disponíveis.");
+                    System.out.println("Por favor selecione uma das opções disponíveis.");
             }
         }
     }
@@ -230,7 +235,11 @@ public class FestivalCinema {
         System.out.print("Anos de carreira do Ator/Atriz: ");
         int anosCarreira = recebeInteiro();
         Ator ator = new Ator(nome, genero.equalsIgnoreCase("M"), anosCarreira);
-        atores.add(ator); //adiciona o ator criado no array de atores
+        if (!atores.contains(ator)) {
+            atores.add(ator); //adiciona o ator criado no array de atores
+        } else {
+            System.out.println((genero.equalsIgnoreCase("M") ? "Esse ator " : "Essa atriz ") + "já existe!");
+        }
     }
 
     /**
@@ -246,11 +255,9 @@ public class FestivalCinema {
             genero = scan.nextLine().trim();
         }
         Perito perito = new Perito(nome, genero.equalsIgnoreCase("M"));
-        for (Perito peritoExistente : edicoes.get(numEdicao - 1).getPeritos()) { //verifica se o perito criado já existe
-            if (perito.equals(peritoExistente)) {
-                System.out.println("Esse perito já existe.");
-                return;
-            }
+        if (edicoes.get(numEdicao - 1).getPeritos().contains(perito)) {
+            System.out.println("Esse perito já existe.");
+            return;
         }
         edicoes.get(numEdicao - 1).inserePerito(perito); //insere o perito na lista de peritos da edição, caso ele não exista
     }
@@ -287,19 +294,20 @@ public class FestivalCinema {
                 String nomeFilme = scan.nextLine().trim();
                 try {
                     Filme casting = edicoes.get(numEdicao - 1).getFilmes().get(indexOfByFilmName(nomeFilme, edicoes.get(numEdicao - 1).getFilmes())); //guarda o filme no qual se pretende inserir o ator
-                    System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
-                    String papel = scan.nextLine().trim();
+                    String papel = "";
                     while (!(papel.equalsIgnoreCase("P") || papel.equalsIgnoreCase("S"))) {//verifica que inseriu uma opção válida
-                        System.out.print("Opção inválida (P-Principal ou S-Secundário).\nOpção: ");
+                        System.out.println("Qual o papel do ator/atriz (P-Principal ou S-Secundário)?");
                         papel = scan.nextLine().trim();
-                    }
-                    switch (papel.toLowerCase()) {
-                        case "p": //se pretende-se que o ator/atriz seja principal
-                            casting.insereAtor(mudar, true); //ver o método insereAtor em Filmes
-                            break;
-                        case "s": //se pretende-se que o ator/atriz seja secundário/a
-                            casting.insereAtor(mudar, false); //ver o método insereAtor em Filmes
-                            break;
+                        switch (papel.toLowerCase()) {
+                            case "p": //se pretende-se que o ator/atriz seja principal
+                                casting.insereAtor(mudar, true); //ver o método insereAtor em Filmes
+                                break;
+                            case "s": //se pretende-se que o ator/atriz seja secundário/a
+                                casting.insereAtor(mudar, false); //ver o método insereAtor em Filmes
+                                break;
+                            default:
+                                System.out.println("Opção inválida.");
+                        }
                     }
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Esse filme não existe (possivelmente escreveu mal o nome).");
@@ -395,10 +403,11 @@ public class FestivalCinema {
                 + "(7) Melhor Argumento\n"
                 + "(8) Melhor Cinematografia\n"
                 + "(9) Prémio Carreira"
-                + "\nOPÇÃO: ");
+                + "\nOpção: ");
         while (true) { //até não escolher uma opção válida
             try {
                 int opcaoPremio = recebeInteiro();
+                limparConsola();
                 return edicoes.get(numEdicao - 1).getPremios().get(opcaoPremio - 1);
             } catch (IndexOutOfBoundsException e) {
                 System.out.print("Escolha uma opção válida.\nOPÇÃO: ");
@@ -412,7 +421,7 @@ public class FestivalCinema {
      */
     private void escolherFilmesCandidatos(Premio p) {
         if (p.getFilmesCandidatos().size() == 4) { //se já foram escolhidos os candidatos
-            System.out.println("\nOs candidatos para este prémio já foram escolhidos.\n");
+            System.out.println("Os candidatos para este prémio já foram escolhidos.\n");
             return;
         }
         ArrayList<Filme> possiveisCandidatos = new ArrayList<>(); //lista com os candidatos possiveis
@@ -501,8 +510,7 @@ public class FestivalCinema {
                 }
             }
         } else {
-            System.out.println("\nOs candidatos para este prémio já foram escolhidos.\n");
-
+            System.out.println("Os candidatos para este prémio já foram escolhidos.\n");
         }
     }
 
@@ -600,7 +608,7 @@ public class FestivalCinema {
                 }
             }
         } else {
-            System.out.println("\nOs candidatos para este prémio já foram escolhidos.\n");
+            System.out.println("Os candidatos para este prémio já foram escolhidos.\n");
         }
     }
 
@@ -672,7 +680,7 @@ public class FestivalCinema {
                 }
             }
         } else {
-            System.out.println("\nOs candidatos para este prémio já foram escolhidos.\n");
+            System.out.println("Os candidatos para este prémio já foram escolhidos.\n");
         }
     }
 
@@ -709,7 +717,7 @@ public class FestivalCinema {
                 }
             }
         } else {
-            System.out.println("\nOs candidatos para este prémio já foram escolhidos.\n");
+            System.out.println("Os candidatos para este prémio já foram escolhidos.\n");
         }
     }
 
@@ -719,21 +727,21 @@ public class FestivalCinema {
      * @param premio - Prémio no qual se pretende pontuar os candidatos
      */
     private void pontuarCandidatos(Premio premio) {
-        System.out.println("\nAVALIAÇÃO DO PRÉMIO: " + premio.toString().toUpperCase());
+        System.out.println("AVALIAÇÃO DO PRÉMIO: " + premio.toString().toUpperCase());
         if (premio.getVencedor() == null) {
             boolean pontuou = false;
             try {
                 if (premio.getNome().contains("Ator") || premio.getNome().contains("Atriz") || premio.getNome().contains("Carreira")) {
                     for (int indiceCandidato = 0; indiceCandidato < 4; indiceCandidato++) {
                         if (premio.getNome().contains("Carreira")) {
-                            System.out.printf("\nCANDIDATO %d: %s ", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
+                            System.out.printf("\nCANDIDATO %d: %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome());
                         } else {
                             System.out.printf("\nCANDIDATO %d: %s em %s\n", indiceCandidato + 1, premio.getAtoresCandidatos().get(indiceCandidato).getNome(), premio.getFilmesCandidatos().get(indiceCandidato).getNome());
                         }
                         for (Perito p : edicoes.get(numEdicao - 1).getPeritos()) {
                             pontuou = true;
                             while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(numEdicao - 1).getPeritos().indexOf(p), scan)) {
-                                System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+                                System.out.println("O valor precisa de ser entre 1 e 10 (inclusive) e inteiro!");
                             }
                         }
                     }
@@ -747,7 +755,7 @@ public class FestivalCinema {
                         for (Perito p : edicoes.get(numEdicao - 1).getPeritos()) {
                             pontuou = true;
                             while (!p.inserePontuacao(premio, indiceCandidato, edicoes.get(numEdicao - 1).getPeritos().indexOf(p), scan)) {
-                                System.out.println("O valor precisa de ser entre 1 e 10 e inteiro!");
+                                System.out.println("O valor precisa de ser entre 1 e 10 (inclusive) e inteiro!");
                             }
                         }
                     }
@@ -811,7 +819,7 @@ public class FestivalCinema {
                 num = Integer.parseInt(aux);
                 break;//só chega aqui se o parseInt não atirar a NumberFormatException
             } catch (NumberFormatException e) {//entra aqui se não é inserido um número
-                System.out.println("Insira um número!");
+                System.out.println("Insira um número inteiro!");
             }
         }
         return num;
@@ -822,8 +830,9 @@ public class FestivalCinema {
      */
     private void novoOuCarregar() {
         while (!quebra) {
-            System.out.print("(n): Começar um novo programa\n(c): Carregar dados\nOpção: ");
+            System.out.print("(n): Começar uma nova edição\n(c): Carregar dados\nOpção: ");
             opcao = scan.nextLine().trim();
+            limparConsola();
             switch (opcao) {
                 case "c":
                     quebra = true;
@@ -832,8 +841,9 @@ public class FestivalCinema {
                         ano++;
                     }
                     edicoes.add(new Edicao(numEdicao, ano));
-                    System.out.print("\nOpções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Tudo (sem pontuações)\n(t): Carregar Tudo (com pontuações)\nOpção: ");
+                    System.out.print("Opções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Tudo (sem pontuações)\n(t): Carregar Tudo (com pontuações)\nOpção: ");
                     opcao = scan.nextLine().trim();
+                    limparConsola();
                     try {
                         switch (opcao.toLowerCase()) {
                             case "a":
@@ -869,7 +879,7 @@ public class FestivalCinema {
                                 if (numEdicao > 1) {
                                     ano--;
                                 }
-                                System.out.println("\nPor favor selecione uma das opções disponíveis.");
+                                System.out.println("Por favor selecione uma das opções disponíveis.");
                         }
                     } catch (IOException e) {
                         System.out.println("\nErro ao carregar os dados.");
@@ -884,7 +894,7 @@ public class FestivalCinema {
                     quebra = true;
                     break;
                 default:
-                    System.out.println("\nPor favor selecione uma das opções disponíveis.");
+                    System.out.println("Por favor selecione uma das opções disponíveis.");
             }
         }
     }
@@ -1046,7 +1056,7 @@ public class FestivalCinema {
         BufferedReader lerDados = new BufferedReader(inStream);
         String line;
         line = lerDados.readLine().trim();
-        while (line != null) {
+        while (line != null && indexPremios < 9) {
             vazio = false;
             premio = edicoes.get(numEdicao - 1).getPremios().get(indexPremios); //guardar em premio o prémio dos quais estamos a carregar os candidatos
             if (indexPremios < 4) {
@@ -1082,7 +1092,7 @@ public class FestivalCinema {
                 }
             } else if (indexPremios == 8) {
                 while (premio.getAtoresCandidatos().size() < 4) {
-                    nomeAtor = lerDados.readLine().trim();//lê-mos a linha, que ou é o nome do ator ou o separador, se não há candidatos para ler
+                    nomeAtor = lerDados.readLine();//lê-mos a linha, que ou é o nome do ator ou o separador, se não há candidatos para ler
                     if (nomeAtor == null || nomeAtor.contains("----------")) {//se não há candidatos para ler, ou já se chegou ao fim do ficheiro, saímos do while
                         vazio = true;
                         break;

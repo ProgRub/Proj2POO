@@ -16,7 +16,7 @@ public class Premio {
         this.nome = nome;
         this.filmes = new ArrayList<>(0);
         this.atores = new ArrayList<>(0);
-        this.mediasPontuacoes = new double[4];
+        this.mediasPontuacoes =new double[4];
         //se o prémio for relacionado exclusivamente com filme (Melhor filme, melhor realizador, etc.)
         //pomos a lista dos atores a nula por questões de memória e tratamento de exceções
         if (!(nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira"))) {
@@ -85,7 +85,7 @@ public class Premio {
      *
      */
     private void calcularMedias() {
-        if (mediasPontuacoes[0] == 0) {
+        if (mediasPontuacoes[0] == 0 || Double.isNaN(mediasPontuacoes[0])) {
             int tam = pontuacoes.get(0).size(); //vê quantas possíveis pontuações foram atribuídas ao candidato
             for (int linha = 0; linha < 4; linha++) {
                 double somaPontuaçõesCandidato = 0;
