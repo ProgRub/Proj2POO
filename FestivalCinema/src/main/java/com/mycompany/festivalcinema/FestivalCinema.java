@@ -217,7 +217,11 @@ public class FestivalCinema {
             }
         }
         Filme filme = new Filme(nome, genero, numEdicao, realizador);
-        edicoes.get(numEdicao - 1).insereFilmes(filme); //insere na lista de filmes da edição atual o filme criado
+        if (!edicoes.get(numEdicao - 1).getFilmes().contains(filme)) { //se o filme criado não existir na edição
+            edicoes.get(numEdicao - 1).insereFilmes(filme); //insere na lista de filmes da edição atual o filme criado
+        } else {
+            System.out.println("Esse filme já existe na edição.");
+        }
     }
 
     /**
@@ -354,7 +358,7 @@ public class FestivalCinema {
         if (!existe && atual) {
             System.out.println("Não existem atores que participem num filme desta edição.");
         } else if (!existe && !atual) {
-            System.out.println("Não existem atores no programa.");
+            System.out.println("Não existem atores no festival.");
         }
     }
 
@@ -728,6 +732,13 @@ public class FestivalCinema {
      */
     private void pontuarCandidatos(Premio premio) {
         System.out.println("AVALIAÇÃO DO PRÉMIO: " + premio.toString().toUpperCase());
+        if (premio.getNome().contains("Carreira")) {
+            if (premio.getMediasPontuacoes()[0] != 0) {
+                System.out.println("Os candidatos já foram pontuados para esta categoria.\n");
+                return;
+            }
+        }
+
         if (premio.getVencedor() == null) {
             boolean pontuou = false;
             try {
@@ -850,12 +861,12 @@ public class FestivalCinema {
                                 carregaFilmes();
                                 carregaAtores();
                                 break;
-                            case "p":
+                            case "c":
                                 carregaFilmes();
                                 carregaAtores();
                                 carregaCandidatos();
                                 break;
-                            case "c":
+                            case "p":
                                 carregaFilmes();
                                 carregaAtores();
                                 carregaPeritos();
