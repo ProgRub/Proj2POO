@@ -124,6 +124,6 @@ public class Filme {
             return false;
         }
         Filme filme = (Filme) obj;
-        return this.nome.equalsIgnoreCase(filme.nome) && this.genero.equalsIgnoreCase(filme.genero) && this.realizador.equals(filme.realizador);
+        return this.nome.equalsIgnoreCase(filme.nome);
     }
 }
