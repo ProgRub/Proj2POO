@@ -76,7 +76,7 @@ public class Edicao {
      * Método que lista todos os filmes da edição
      */
     protected void imprimeFilmes() {
-        System.out.println("\nEDIÇÃO: " + this.numEdicao);
+        System.out.println("EDIÇÃO: " + this.numEdicao);
         if (filmes.isEmpty()) {
             System.out.println("! NÃO HÁ FILMES REGISTADOS !");
         } else {
@@ -91,7 +91,7 @@ public class Edicao {
      * Método que lista os Premios a premiar na edição atual
      */
     protected void imprimePremios() {
-        System.out.println("\nCATEGORIAS A PREMIAR:");
+        System.out.println("CATEGORIAS A PREMIAR:");
         int indice = 0;
         while (indice < premios.size()) {
             System.out.println(premios.get(indice));
@@ -104,7 +104,7 @@ public class Edicao {
      */
     protected void listarFilmesMaisPremiados() {
         boolean semPremiados = true; //true se nenhum filme foi premiado
-        System.out.println("\nFILMES MAIS PREMIADOS: ");
+        System.out.println("FILMES MAIS PREMIADOS: ");
         for (Filme filme : this.filmes) {
             if (filme.getNumeroPremios() > 0) { //se o filme tiver pelo menos 1 prémio
                 System.out.println(filme.getNome() + ": " + filme.getNumeroPremios());
@@ -121,7 +121,7 @@ public class Edicao {
      */
     protected void listarCandidatos() {
         int contaPremios = 1;
-        System.out.println("\nCANDIDATOS AOS PRÉMIOS:");
+        System.out.println("CANDIDATOS AOS PRÉMIOS:");
         for (Premio premio : this.premios) {
             System.out.println();
             System.out.println(premio + ":");
@@ -155,7 +155,7 @@ public class Edicao {
      * Método que lista os vencedores dos prémios
      */
     protected void listarVencedores() {
-        System.out.println("\nVENCEDORES:");
+        System.out.println("VENCEDORES:");
         for (Premio premio : this.premios) {
             premio.vencedorCategoria();
         }
@@ -166,7 +166,7 @@ public class Edicao {
      * ordem da sua pontuação
      */
     protected void listarPontuaçõesOrdenadas() {
-        System.out.println("\nPONTUAÇÕES: ");
+        System.out.println("PONTUAÇÕES: ");
         for (Premio premio : this.premios) {
             premio.imprimePontuações();
         }

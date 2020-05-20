@@ -1,0 +1,81 @@
+--------------------------------
+Ator principal:
+Daniel Craig
+M
+16
+Atriz principal:
+Ana de Armas
+F
+7
+Atores Secundarios:
+Chris Evans
+M
+10
+Toni Collette
+F
+31
+--------------------------------
+Ator principal:
+Joaquin Phoenix
+M
+21
+Atriz principal:
+Zazie Beetz
+F
+5
+Atores Secundarios:
+Robert De Niro
+M
+42
+--------------------------------
+Ator principal:
+Himesh Patel
+M
+9
+Atriz principal:
+Lily James
+F
+8
+Atores Secundarios:
+--------------------------------
+Ator principal:
+Bradley Cooper
+M
+19
+Atriz principal:
+Lady Gaga
+F
+5
+Atores Secundarios:
+--------------------------------
+Ator principal:
+Ansel Elgort
+M
+10
+Atriz principal:
+Lily James
+F
+8
+Atores Secundarios:
+Jon Hamm
+M
+23
+Kevin Spacey
+M
+29
+--------------------------------
+Ator principal:
+Samuel L. Jackson
+M
+42
+Atriz principal:
+Jennifer Lawrence
+F
+11
+Atores Secundarios:
+Kristen Bell
+F
+43
+Mila Kunis
+F
+11

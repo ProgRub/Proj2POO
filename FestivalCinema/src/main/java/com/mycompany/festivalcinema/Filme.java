@@ -6,17 +6,15 @@ public class Filme {
 
     private final String nome;
     private final String genero;
-    private final int edição;
     private int numeroPremios;
     private final Realizador realizador;
     private Ator AtorPrincipal;
     private Ator AtrizPrincipal;
     private final ArrayList<Ator> atoresSecundarios;
 
-    protected Filme(String nome, String genero, int edição, Realizador realizador) {
+    protected Filme(String nome, String genero, Realizador realizador) {
         this.nome = nome;
         this.genero = genero;
-        this.edição = edição;
         this.realizador = realizador;
         this.AtorPrincipal = null;
         this.AtrizPrincipal = null;
@@ -79,7 +77,7 @@ public class Filme {
                 this.AtrizPrincipal = ator;
                 ator.inserirFilme(this); //insere o filme na lista de filmes em que o atriz participa
             } else {
-                System.out.println(this.nome + " já tem " + (ator.getGenero() ? " um ator principal!" : " uma atriz principal!"));
+                System.out.println(this.nome + " já tem" + (ator.getGenero() ? " um ator principal!" : " uma atriz principal!"));
             }
         } else {
             if (ator == this.AtorPrincipal || ator == this.AtrizPrincipal) { //evita que o ator seja inserido como secundário se já é principal
