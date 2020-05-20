@@ -37,12 +37,12 @@ public class FestivalCinema {
         while (!quebra) {
             System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano);
             System.out.print("Opções:\n(c): Criar\n(l): Listar\n(p): Atribuir Papel\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
-            opcao = scan.nextLine().trim();
+            opcao = scan.nextLine().trim().toLowerCase();
             limparConsola();
             switch (opcao.toLowerCase()) {
                 case "c":
                     System.out.print("Opções:\n(f): Criar Filme\n(a): Criar Ator/Atriz\n(p): Criar Perito\n(c): Escolher candidatos\n(s): Atribuir Pontuação\nOpção: ");
-                    opcao = scan.nextLine().trim();
+                    opcao = scan.nextLine().trim().toLowerCase();
                     limparConsola();
                     switch (opcao) {
                         case "f":
@@ -74,12 +74,12 @@ public class FestivalCinema {
                     break;
                 case "l":
                     System.out.print("Opções:\n(a): Listar Atores\n(f): Listar Filmes\n(p): Listar Prémios\n(i): Consultar Edições\nOpção: ");
-                    opcao = scan.nextLine().trim();
+                    opcao = scan.nextLine().trim().toLowerCase();
                     limparConsola();
                     switch (opcao) {
                         case "a":
                             System.out.print("Opções:\n(a): Listar da Edição Atual\n(t): Listar de todas as Edições\nOpção: ");
-                            opcao = scan.nextLine().trim();
+                            opcao = scan.nextLine().trim().toLowerCase();
                             limparConsola();
                             switch (opcao) {
                                 case "a":
@@ -116,7 +116,7 @@ public class FestivalCinema {
 
                         case "p":
                             System.out.print("Opções:(p): Listar Categorias\n(c): Listar Candidatos\n(o): Listar Candidatos (Ordenados por Avaliação)\n(v): Listar Vencedores\nOpção: ");
-                            opcao = scan.nextLine().trim();
+                            opcao = scan.nextLine().trim().toLowerCase();
                             limparConsola();
                             switch (opcao) {
                                 case "p":
@@ -146,12 +146,6 @@ public class FestivalCinema {
                     atribuirPapel();
                     break;
                 case "h":
-                    for (Premio premio : edicoes.get(numEdicao - 1).getPremios()) { //percorrer a lista de prémios e verificar se ainda há prémios com candidatos por pontuar
-                        if ((Double.isNaN(premio.getMediasPontuacoes()[0]) || premio.getMediasPontuacoes()[0] == 0) && !((premio.getAtoresCandidatos() != null && premio.getAtoresCandidatos().isEmpty()) || (premio.getFilmesCandidatos() != null && premio.getFilmesCandidatos().isEmpty()))) {
-                            System.out.println("Ainda não avaliou o prémio " + premio + ".");
-                            pontuarCandidatos(premio);
-                        }
-                    }
                     for (Ator a : atores) {
                         a.resetFilmesEdicaoAtual();
                     }
@@ -163,7 +157,7 @@ public class FestivalCinema {
                     break;
                 case "g":
                     System.out.print("Opções:\n(a): Gravar Atores e Filmes\n(c): Gravar Atores, Filmes e Candidatos\n(p): Gravar Peritos\n(t): Gravar Tudo\nOpção: ");
-                    opcao = scan.nextLine().trim();
+                    opcao = scan.nextLine().trim().toLowerCase();
                     limparConsola();
                     try {
                         switch (opcao) {
@@ -848,7 +842,7 @@ public class FestivalCinema {
     private void novoOuCarregar() {
         while (!quebra) {
             System.out.print("(n): Começar uma nova edição\n(c): Carregar dados\nOpção: ");
-            opcao = scan.nextLine().trim();
+            opcao = scan.nextLine().trim().toLowerCase();
             limparConsola();
             switch (opcao) {
                 case "c":
@@ -859,7 +853,7 @@ public class FestivalCinema {
                     }
                     edicoes.add(new Edicao(numEdicao, ano));
                     System.out.print("Opções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Tudo (sem pontuações)\n(t): Carregar Tudo (com pontuações)\nOpção: ");
-                    opcao = scan.nextLine().trim();
+                    opcao = scan.nextLine().trim().toLowerCase();
                     limparConsola();
                     try {
                         switch (opcao.toLowerCase()) {
