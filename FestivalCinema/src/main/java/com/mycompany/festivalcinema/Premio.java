@@ -16,7 +16,7 @@ public class Premio {
         this.nome = nome;
         this.filmes = new ArrayList<>(0);
         this.atores = new ArrayList<>(0);
-        this.mediasPontuacoes =new double[4];
+        this.mediasPontuacoes = new double[4];
         //se o prémio for relacionado exclusivamente com filme (Melhor filme, melhor realizador, etc.)
         //pomos a lista dos atores a nula por questões de memória e tratamento de exceções
         if (!(nome.contains("Ator") || nome.contains("Atriz") || nome.contains("Carreira"))) {
@@ -106,7 +106,7 @@ public class Premio {
      * os candidatos obtiveram, através de um bubble sort.
      *
      * @throws IndexOutOfBoundsException - se não houver candidatos atira esta
-     * exceção tratado noutro lugar
+     * exceção tratada noutro lugar
      */
     protected void ordenaPontuações() throws IndexOutOfBoundsException {
         calcularMedias();
@@ -124,10 +124,9 @@ public class Premio {
 
     /**
      * Verifica se houve empates entre os candidatos, o desempate será feito
-     * calculando os desvios padrões
+     * calculando os desvios padrões e verificando que tem o menor desvio padrão
+     * nas suas pontuações
      *
-     * @param mediasPontuacoes
-     * @return o vetor das medias pontuacoes, para guardar as modificações
      */
     private void empateVencedores() {
         double[] desviosPadrao = {-1, -1, -1, -1}; //preenchemos o array assim por questões de verificação
@@ -174,10 +173,6 @@ public class Premio {
      * informação do candidato na posição i com a informação do candidato na
      * posição j
      *
-     * @param mediasPontuacoes - o vetor que contém as médias das pontuações dos
-     * candidatos
-     * @param i
-     * @param j
      */
     private void swap(int i, int j) throws IndexOutOfBoundsException {
         double aux = mediasPontuacoes[i];
@@ -196,8 +191,6 @@ public class Premio {
      * Este método vai calcular o desvio padrão das pontuações atribuídas ao
      * candidato especificado por posCandidato
      *
-     * @param mediasPontuacoes - o vetor que contém as médias das pontuações dos
-     * candidatos
      * @param posCandidato - a posição do candidato do qual calcular o desvio
      * padrão
      * @return o valor de desvio padrão

@@ -21,7 +21,7 @@ public class Perito extends Pessoa {
      * candidato estamos a atribuir a pontuação
      * @param indicePerito - coluna na matriz das pontuações que indica o perito
      * que atribui a pontuação
-     * @param scan - o scanner
+     * @param scan - o scanner para ler a pontuação
      * @return true se a pontuação inserida é valida (entre 1 e 10 e inteira),
      * false caso contrário
      */

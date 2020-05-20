@@ -27,6 +27,11 @@ public class FestivalCinema {
         this.quebra = false;
     }
 
+    /**
+     * O método que trata do display das opções possíveis, de receber a opção
+     * que o utilizador escolheu e chamar o método que trata da operação que o
+     * utilizador escolheu
+     */
     public void menu() {
         System.out.println("\t\t\tFESTIVAL CINEMA");
         System.out.print("\nIndique o ano da edição do festival: ");
@@ -347,6 +352,10 @@ public class FestivalCinema {
     /**
      * Método que lista todos os Atores criados (quer carregados de um ficheiro
      * quer criados pelo teclado)
+     *
+     * @param atual - se for false, então é para imprimir todos os atores
+     * previamente criados no programa, se for true só se imprime os atores que
+     * participam em filmes na edição corrente
      */
     private void listarAtores(boolean atual) {
         boolean existe = false; //false se não existem atores na edição
@@ -425,6 +434,8 @@ public class FestivalCinema {
     /**
      * Método que permite o utilizador escolher os filmes candidatos para um
      * dado prémio
+     *
+     * @param p - prémio ao qual pretende-se nomear filmes
      */
     private void escolherFilmesCandidatos(Premio p) {
         if (p.getFilmesCandidatos().size() == 4) { //se já foram escolhidos os candidatos
@@ -461,8 +472,9 @@ public class FestivalCinema {
     }
 
     /**
-     * método que permite o utilizador escolher os melhores realizadores
+     * Método que permite o utilizador escolher os melhores realizadores
      *
+     * @param p - prémio ao qual pretende-se nomear realizadores
      */
     private void escolherRealizadorCandidatos(Premio p) {
         if (p.getFilmesCandidatos().size() != 4) { //se ainda não foram escolhidos os candidatos
@@ -527,9 +539,10 @@ public class FestivalCinema {
     }
 
     /**
-     * método que permite o utilizador escolher os atores (e as atrizes)
+     * Método que permite o utilizador escolher os atores (ou as atrizes)
      * principais
      *
+     * @param p - prémio ao qual se pretende nomear atores
      * @param homem - indica se é para escolher atores principais ou atrizes
      * principais (mesma lógica que em Ator, true-Ator, false-Atriz)
      */
@@ -623,11 +636,12 @@ public class FestivalCinema {
     }
 
     /**
-     * Método que permite o utilizador escolher os atores (ou atrizes)
-     * secundários nomeados
+     * Método que permite o utilizador escolher os atores (ou as atrizes)
+     * secundários
      *
-     * @param homem - indica se é para escolher atores principais ou atrizes
-     * principais (mesma lógica que em Ator, true-Ator, false-Atriz
+     * @param p - prémio ao qual se pretende nomear atores
+     * @param homem - indica se é para escolher atores secundários ou atrizes
+     * secundárias (mesma lógica que em Ator, true-Ator, false-Atriz)
      */
     private void escolherAtoresSecundariosCandidatos(Premio p, boolean homem) {
         if (p.getAtoresCandidatos().size() != 4) { //se ainda não foram escolhidos os candidatos
@@ -698,6 +712,7 @@ public class FestivalCinema {
     /**
      * Método que permite ao utilizador escolher os nomeados ao Prémio Carreira
      *
+     * @param p - prémio ao qual se pretende nomear os atores
      */
     private void escolherPremioCarreira(Premio p) {
         if (p.getAtoresCandidatos().size() != 4) { //se ainda não foram escolhidos os candidatos
@@ -794,10 +809,13 @@ public class FestivalCinema {
     }
 
     /**
-     * Método que permite encontrar um Ator na lista de Atores pelo nome
+     * Método que permite encontrar o índice de um Ator numa lista de atores
+     * pelo nome
      *
      * @param nome - nome do Ator a pesquisar na lista
-     * @return Ator encontrado, se não for encontrado nenhum retorna null
+     * @param atores - lista na qual procurar o ator
+     * @return o índice do ator na lista, se o ator não está na lista retorna-se
+     * -1
      */
     private int indexOfByActorName(String nome, ArrayList<Ator> atores) {
         for (Ator a : atores) {
@@ -814,7 +832,7 @@ public class FestivalCinema {
      *
      * @param nome - nome do filme que pretende-se encontrar
      * @param filmes - lista de filmes em que procurar
-     * @return o filme, se foi encontrado. Caso contrário, retorna null
+     * @return o índice do filme, se foi encontrado. Caso contrário, retorna -1
      */
     private int indexOfByFilmName(String nome, ArrayList<Filme> filmes) {
         for (Filme f : filmes) {
@@ -828,7 +846,7 @@ public class FestivalCinema {
     /**
      * Método que trata de receber inteiros e a possível exceção associada
      *
-     * @return o inteiro que o utilizador inserir
+     * @return o inteiro que o utilizador inseriu
      */
     private int recebeInteiro() {
         String aux;
