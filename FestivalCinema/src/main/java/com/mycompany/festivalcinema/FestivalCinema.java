@@ -304,7 +304,7 @@ public class FestivalCinema {
                     System.out.println("Ainda não foram criados filmes na edição atual!");
                     return;
                 }
-                System.out.println("Em que filme este " + (mudar.getGenero() ? "ator" : "atriz") + " participará?");
+                System.out.println("Em que filme " + (mudar.getGenero() ? "este ator" : "esta atriz") + " participará?");
                 String nomeFilme = scan.nextLine().trim();
                 try {
                     Filme casting = edicoes.get(numEdicao - 1).getFilmes().get(indexOfByFilmName(nomeFilme, edicoes.get(numEdicao - 1).getFilmes())); //guarda o filme no qual se pretende inserir o ator

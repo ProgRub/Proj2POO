@@ -79,6 +79,6 @@ public class Ator extends Pessoa {
             return false;
         }
         Ator comparar = (Ator) obj;
-        return this.anosCarreira == comparar.anosCarreira && this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome());
+        return this.getGenero() == comparar.getGenero() && this.getNome().equalsIgnoreCase(comparar.getNome());
     }
 }
