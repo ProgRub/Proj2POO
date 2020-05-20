@@ -91,19 +91,29 @@ public class FestivalCinema {
                             }
                             break;
                         case "f":
-                            boolean imprimiu = false;
-                            consultarEdicoes();
-                            while (!imprimiu) {
-                                try {
-                                    System.out.print("\nInsira o número da edição.\nOpção: ");
-                                    int opcaoPremio = recebeInteiro();
-                                    edicoes.get(opcaoPremio - 1).imprimeFilmes();
-                                    imprimiu = true;
-                                } catch (IndexOutOfBoundsException e) {
-                                    System.out.print("\nEssa edição não existe.\n");
-                                }
+                            System.out.print("\nOpções:\n(f): Listar Filmes\n(p): Listar Filmes Mais Premiados\nOpção: ");
+                            opcao = scan.nextLine();
+                            switch (opcao) {
+                                case "f":
+                                    boolean imprimiu = false;
+                                    consultarEdicoes();
+                                    while (!imprimiu) {
+                                        try {
+                                            System.out.print("\nInsira o número da edição.\nOpção: ");
+                                            int opcaoPremio = recebeInteiro();
+                                            edicoes.get(opcaoPremio - 1).imprimeFilmes();
+                                            imprimiu = true;
+                                        } catch (IndexOutOfBoundsException e) {
+                                            System.out.print("\nEssa edição não existe.\n");
+                                        }
+                                    }
+                                    break;
+                                case "p":
+                                    edicoes.get(numEdicao - 1).listarFilmesMaisPremiados();
+                                    break;
                             }
                             break;
+
                         case "p":
                             System.out.print("\n(p): Listar Categorias\n(c): Listar Candidatos\n(o): Listar Candidatos (Ordenados por Avaliação)\n(v): Listar Vencedores\nOpção: ");
                             opcao = scan.nextLine().trim();
@@ -453,6 +463,7 @@ public class FestivalCinema {
             }
         }
     }
+   
 
     /**
      * método que permite o utilizador escolher os melhores realizadores
