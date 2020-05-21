@@ -38,7 +38,6 @@ public class FestivalCinema {
         ano = recebeInteiro();
         novoOuCarregar();
         quebra = false;
-        limparConsola();
         while (!quebra) {
             System.out.print("Opções:\n(c): Criar\n(l): Listar\n(p): Atribuir Papel\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
             opcao = scan.nextLine().trim().toLowerCase();
@@ -73,7 +72,7 @@ public class FestivalCinema {
                             pontuarCandidatos(escolherPremio());
                             break;
                         default:
-                            System.out.println("Por favor selecione uma das opções disponíveis.");
+                            System.out.println("Opção inválida.");
                     }
                     break;
                 case "l":
@@ -92,6 +91,8 @@ public class FestivalCinema {
                                 case "t":
                                     listarAtores(false);
                                     break;
+                                default:
+                                    System.out.println("Opção inválida.");
                             }
                             break;
                         case "f":
@@ -116,6 +117,8 @@ public class FestivalCinema {
                                 case "p":
                                     edicoes.get(numEdicao - 1).listarFilmesMaisPremiados();
                                     break;
+                                default:
+                                    System.out.println("Opção inválida.");
                             }
                             break;
 
@@ -137,14 +140,14 @@ public class FestivalCinema {
                                     edicoes.get(numEdicao - 1).listarVencedores();
                                     break;
                                 default:
-                                    System.out.println("Por favor selecione uma das opções disponíveis.");
+                                    System.out.println("Opção inválida.");
                             }
                             break;
                         case "i":
                             consultarEdicoes();
                             break;
                         default:
-                            System.out.println("Por favor selecione uma das opções disponíveis.");
+                            System.out.println("Opção inválida.");
                     }
                     break;
                 case "p":
@@ -186,7 +189,7 @@ public class FestivalCinema {
                                 gravaPontuações();
                                 break;
                             default:
-                                System.out.println("Por favor selecione uma das opções disponíveis.");
+                                System.out.println("Opção inválida.");
                         }
                     } catch (IOException e) {
                         System.out.println("Erro ao gravar os dados.\n");
@@ -196,7 +199,7 @@ public class FestivalCinema {
                     quebra = true;
                     break;
                 default:
-                    System.out.println("Por favor selecione uma das opções disponíveis.");
+                    System.out.println("Opção inválida.");
             }
         }
     }
@@ -871,6 +874,7 @@ public class FestivalCinema {
         while (!quebra) {
             System.out.print("(n): Começar uma nova edição\n(c): Carregar dados\nOpção: ");
             opcao = scan.nextLine().trim().toLowerCase();
+            limparConsola();
             switch (opcao) {
                 case "c":
                     quebra = true;
@@ -881,6 +885,7 @@ public class FestivalCinema {
                     edicoes.add(new Edicao(numEdicao, ano));
                     System.out.print("Opções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Tudo (sem pontuações)\n(t): Carregar Tudo (com pontuações)\nOpção: ");
                     opcao = scan.nextLine().trim().toLowerCase();
+                    limparConsola();
                     try {
                         switch (opcao.toLowerCase()) {
                             case "a":
@@ -916,7 +921,7 @@ public class FestivalCinema {
                                 if (numEdicao > 1) {
                                     ano--;
                                 }
-                                System.out.println("Por favor selecione uma das opções disponíveis.");
+                                System.out.println("Opção inválida.");
                         }
                     } catch (IOException e) {
                         System.out.println("Erro ao carregar os dados.");
@@ -931,7 +936,7 @@ public class FestivalCinema {
                     quebra = true;
                     break;
                 default:
-                    System.out.println("Por favor selecione uma das opções disponíveis.");
+                    System.out.println("Opção inválida.");
             }
         }
     }
