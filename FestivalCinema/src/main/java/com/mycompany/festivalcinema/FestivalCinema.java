@@ -40,7 +40,6 @@ public class FestivalCinema {
         quebra = false;
         limparConsola();
         while (!quebra) {
-            System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano);
             System.out.print("Opções:\n(c): Criar\n(l): Listar\n(p): Atribuir Papel\n(h): Nova Edição\n(g): Gravar Dados\n(s): Sair\nOpção: ");
             opcao = scan.nextLine().trim().toLowerCase();
             limparConsola();
@@ -98,6 +97,7 @@ public class FestivalCinema {
                         case "f":
                             System.out.print("Opções:\n(f): Listar Filmes\n(p): Listar Filmes Mais Premiados\nOpção: ");
                             opcao = scan.nextLine().trim();
+                            limparConsola();
                             switch (opcao) {
                                 case "f":
                                     boolean imprimiu = false;
@@ -120,7 +120,7 @@ public class FestivalCinema {
                             break;
 
                         case "p":
-                            System.out.print("Opções:(p): Listar Categorias\n(c): Listar Candidatos\n(o): Listar Candidatos (Ordenados por Avaliação)\n(v): Listar Vencedores\nOpção: ");
+                            System.out.print("Opções:\n(p): Listar Categorias\n(c): Listar Candidatos\n(o): Listar Candidatos (Ordenados por Avaliação)\n(v): Listar Vencedores\nOpção: ");
                             opcao = scan.nextLine().trim().toLowerCase();
                             limparConsola();
                             switch (opcao) {
@@ -795,6 +795,7 @@ public class FestivalCinema {
                         }
                     }
                 }
+                limparConsola();
                 if (!pontuou) { //se pontuou é false, como já foi dito, não há peritos para pontuar o prémio e informa-se o utilizador
                     System.out.println("Não há peritos para pontuar esta categoria.\n");
                     return;
@@ -870,7 +871,6 @@ public class FestivalCinema {
         while (!quebra) {
             System.out.print("(n): Começar uma nova edição\n(c): Carregar dados\nOpção: ");
             opcao = scan.nextLine().trim().toLowerCase();
-            limparConsola();
             switch (opcao) {
                 case "c":
                     quebra = true;
@@ -881,7 +881,6 @@ public class FestivalCinema {
                     edicoes.add(new Edicao(numEdicao, ano));
                     System.out.print("Opções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Tudo (sem pontuações)\n(t): Carregar Tudo (com pontuações)\nOpção: ");
                     opcao = scan.nextLine().trim().toLowerCase();
-                    limparConsola();
                     try {
                         switch (opcao.toLowerCase()) {
                             case "a":
@@ -1326,5 +1325,6 @@ public class FestivalCinema {
         } catch (AWTException e) {
             System.out.print("ERRO\n");
         }
+        System.out.printf("\t\t\t%dª Edição do Festival de Cinema %d\n", numEdicao, ano);
     }
 }

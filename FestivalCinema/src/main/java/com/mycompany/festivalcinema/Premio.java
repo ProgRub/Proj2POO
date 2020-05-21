@@ -223,7 +223,7 @@ public class Premio {
                         }
                     } else {//se o prémio for para um filme
                         if (this.nome.contains("Realizador")) { //se for o prémio de Melhor Realizador, indica-se este e o filme que ele direcionou
-                            System.out.print(filmes.get(i).getRealizador().getNome() + " por " + vencedor.getNome());
+                            System.out.print(filmes.get(i).getRealizador().getNome() + " por " + filmes.get(i).getNome());
                         } else { //se não, só se imprime o nome do filme
                             System.out.print(filmes.get(i).getNome());
                         }
