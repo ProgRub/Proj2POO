@@ -874,7 +874,6 @@ public class FestivalCinema {
         while (!quebra) {
             System.out.print("(n): Começar uma nova edição\n(c): Carregar dados\nOpção: ");
             opcao = scan.nextLine().trim().toLowerCase();
-            limparConsola();
             switch (opcao) {
                 case "c":
                     quebra = true;
@@ -885,23 +884,25 @@ public class FestivalCinema {
                     edicoes.add(new Edicao(numEdicao, ano));
                     System.out.print("Opções:\n(a): Carregar Atores e Filmes\n(c): Carregar Atores, Filmes e Candidatos\n(p): Carregar Tudo (sem pontuações)\n(t): Carregar Tudo (com pontuações)\nOpção: ");
                     opcao = scan.nextLine().trim().toLowerCase();
-                    limparConsola();
                     try {
                         switch (opcao.toLowerCase()) {
                             case "a":
                                 carregaFilmes();
                                 carregaAtores();
+                                limparConsola();
                                 break;
                             case "c":
                                 carregaFilmes();
                                 carregaAtores();
                                 carregaCandidatos();
+                                limparConsola();
                                 break;
                             case "p":
                                 carregaFilmes();
                                 carregaAtores();
                                 carregaPeritos();
                                 carregaCandidatos();
+                                limparConsola();
                                 break;
                             case "t":
                                 carregaFilmes();
@@ -913,6 +914,7 @@ public class FestivalCinema {
                                     //do programa os filmes mais premiados, já que todos os dados, incluindo nomeados e as suas pontuações, foram carregados
                                     p.ordenaPontuações();
                                 }
+                                limparConsola();
                                 break;
                             default:
                                 quebra = false;
@@ -934,6 +936,7 @@ public class FestivalCinema {
                     }
                     edicoes.add(new Edicao(numEdicao, ano));
                     quebra = true;
+                    limparConsola();
                     break;
                 default:
                     System.out.println("Opção inválida.");
